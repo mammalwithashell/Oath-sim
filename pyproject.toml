@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oath-rl"
+version = "0.1.0"
+description = "Oath: Chronicles of Empire & Exile — RL Simulator"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.24",
+    "pettingzoo>=1.24",
+    "gymnasium>=0.29",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-timeout>=2.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+timeout = 60
+
+[tool.setuptools.packages.find]
+include = ["oath*"]
