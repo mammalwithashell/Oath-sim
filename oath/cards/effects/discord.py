@@ -8,7 +8,7 @@ from oath.cards.effects._helpers import (
     always_true, gain_favor, gain_favor_from_banks, gain_secrets,
     gain_warbands, gain_supply,
 )
-from oath.enums import EffectTrigger, ModifierType, Role, Suit, MAX_ADVISERS
+from oath.enums import EffectTrigger, ModifierType, Role, Suit, MAX_ADVISERS, MAX_SITES
 from oath.cards.database import get_card
 
 if TYPE_CHECKING:
@@ -347,12 +347,14 @@ register_effect(87, CardEffect(
 
 # ── ID 88: Zealots ──────────────────────────────────────────────
 # Battle Plan: If defending force larger, sacrificed warbands add 3 each.
-# Simplified: +3 attack dice.
+# Simplified: +3 attack dice if defending force is larger.
 def _zealots_execute(gs: 'GameState', player_index: int) -> 'GameState':
     cs = gs.compound_state
     if cs is None:
         return gs
-    cs.campaign_attack_dice += 3
+    # Only apply if defending force is larger than attacking force
+    if cs.campaign_defense_dice > cs.campaign_attack_dice:
+        cs.campaign_attack_dice += 3
     return gs
 
 register_effect(88, CardEffect(
@@ -562,15 +564,18 @@ register_effect(100, CardEffect(
 
 # ── ID 101: Bandit Chief ────────────────────────────────────────
 # When Played: Kill 1 warband at each site.
-# Simplified: gain 2 warbands.
 def _bandit_chief_execute(gs: 'GameState', player_index: int) -> 'GameState':
-    return gain_warbands(gs, player_index, 2)
+    for i in range(MAX_SITES):
+        site = gs.sites[i]
+        if site.is_faceup and site.warbands > 0:
+            site.warbands -= 1
+    return gs
 
 register_effect(101, CardEffect(
     trigger=EffectTrigger.WHEN_PLAYED,
     condition=always_true,
     execute=_bandit_chief_execute,
-    description="When Played: Gain 2 warbands (simplified from kill 1 warband at each site)",
+    description="When Played: Kill 1 warband at each site",
 ))
 
 

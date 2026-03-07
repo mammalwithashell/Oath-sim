@@ -73,19 +73,22 @@ register_effect(24, CardEffect(
 
 
 # ── ID 49: Extra Provisions ──────────────────────────────────────
-# Battle Plan: +2 attack dice.
+# Battle Plan: +2 dice (attack dice for attacker, defense dice for defender).
 def _extra_provisions_execute(gs: 'GameState', player_index: int) -> 'GameState':
     cs = gs.compound_state
     if cs is None:
         return gs
-    cs.campaign_attack_dice += 2
+    if cs.campaign_attacker == player_index:
+        cs.campaign_attack_dice += 2
+    else:
+        cs.campaign_defense_dice += 2
     return gs
 
 register_effect(49, CardEffect(
     trigger=EffectTrigger.BATTLE_PLAN,
     condition=always_true,
     execute=_extra_provisions_execute,
-    description="Battle Plan: +2 attack dice",
+    description="Battle Plan: +2 dice",
 ))
 
 
@@ -275,10 +278,18 @@ register_effect(132, CardEffect(
 
 
 # ── ID 133: Village Constable ────────────────────────────────────
-# Battle Plan: ±2 defense dice.
+# Battle Plan: ±2 defense dice, unless your enemy has the People's Favor.
 def _village_constable_execute(gs: 'GameState', player_index: int) -> 'GameState':
     cs = gs.compound_state
     if cs is None:
+        return gs
+    # Determine enemy
+    if cs.campaign_attacker == player_index:
+        enemy = cs.campaign_defender
+    else:
+        enemy = cs.campaign_attacker
+    # Don't apply if enemy holds People's Favor
+    if enemy is not None and gs.peoples_favor_holder == enemy:
         return gs
     if cs.campaign_defender == player_index:
         cs.campaign_defense_dice += 2
@@ -290,7 +301,7 @@ register_effect(133, CardEffect(
     trigger=EffectTrigger.BATTLE_PLAN,
     condition=always_true,
     execute=_village_constable_execute,
-    description="Battle Plan: ±2 defense dice",
+    description="Battle Plan: ±2 defense dice (unless enemy has People's Favor)",
 ))
 
 
@@ -377,10 +388,18 @@ register_effect(137, CardEffect(
 
 
 # ── ID 138: The Great Levy ───────────────────────────────────────
-# Battle Plan: ±3 defense dice, ignore skulls.
+# Battle Plan: ±3 defense dice and ignore skulls, unless enemy has People's Favor.
 def _the_great_levy_execute(gs: 'GameState', player_index: int) -> 'GameState':
     cs = gs.compound_state
     if cs is None:
+        return gs
+    # Determine enemy
+    if cs.campaign_attacker == player_index:
+        enemy = cs.campaign_defender
+    else:
+        enemy = cs.campaign_attacker
+    # Don't apply if enemy holds People's Favor
+    if enemy is not None and gs.peoples_favor_holder == enemy:
         return gs
     if cs.campaign_defender == player_index:
         cs.campaign_defense_dice += 3
@@ -434,21 +453,16 @@ register_effect(140, CardEffect(
 
 
 # ── ID 141: Book Binders ─────────────────────────────────────────
-# Modifier(Search): When Vision played, gain 2 favor
-# (simplified: gain 1 favor from Hearth bank).
+# Modifier(Search): When Vision played, gain 2 favor from any bank.
 def _book_binders_execute(gs: 'GameState', player_index: int) -> 'GameState':
-    hearth_idx = int(Suit.HEARTH)
-    if gs.favor_banks[hearth_idx] > 0:
-        gs.favor_banks[hearth_idx] -= 1
-        gs.players[player_index].favor += 1
-    return gs
+    return gain_favor_from_banks(gs, player_index, 2)
 
 register_effect(141, CardEffect(
     trigger=EffectTrigger.MODIFIER,
     modifier_type=ModifierType.SEARCH,
     condition=always_true,
     execute=_book_binders_execute,
-    description="Search: Gain 1 favor from Hearth bank (when Vision played)",
+    description="Search: Gain 2 favor from any bank (when Vision played)",
 ))
 
 
@@ -467,17 +481,16 @@ register_effect(142, CardEffect(
 
 
 # ── ID 143: Saddle Makers ────────────────────────────────────────
-# Modifier(Search): When Nomad/Order played, gain 2 favor
-# (simplified: gain 1 favor).
+# Modifier(Search): When Nomad/Order played, gain 2 favor from matching bank.
 def _saddle_makers_execute(gs: 'GameState', player_index: int) -> 'GameState':
-    return gain_favor_from_banks(gs, player_index, 1)
+    return gain_favor_from_banks(gs, player_index, 2)
 
 register_effect(143, CardEffect(
     trigger=EffectTrigger.MODIFIER,
     modifier_type=ModifierType.SEARCH,
     condition=always_true,
     execute=_saddle_makers_execute,
-    description="Search: Gain 1 favor when Nomad/Order card played",
+    description="Search: Gain 2 favor when Nomad/Order card played",
 ))
 
 

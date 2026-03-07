@@ -104,15 +104,21 @@ register_effect(25, CardEffect(
 
 
 # ── ID 31: Ancient Binding ───────────────────────────────────────
-# ACTION: Each player burns all secrets except last (simplified: gain 2 secrets)
+# ACTION: Each player burns all secrets except last.
 def _ancient_binding_execute(gs: 'GameState', player_index: int) -> 'GameState':
-    return gain_secrets(gs, player_index, 2)
+    for i in range(len(gs.players)):
+        player = gs.players[i]
+        if player.secrets > 1:
+            excess = player.secrets - 1
+            player.secrets = 1
+            gs.shared_secrets += excess
+    return gs
 
 register_effect(31, CardEffect(
     trigger=EffectTrigger.ACTION,
     condition=always_true,
     execute=_ancient_binding_execute,
-    description="Action: Gain 2 secrets (simplified from burn-all-secrets)",
+    description="Action: Each player burns all secrets except last",
 ))
 
 
@@ -488,19 +494,22 @@ register_effect(167, CardEffect(
 
 
 # ── ID 168: Storm Caller ─────────────────────────────────────────
-# BATTLE_PLAN: +2 attack dice
+# BATTLE_PLAN: +2 dice (attack dice for attacker, defense dice for defender).
 def _storm_caller_execute(gs: 'GameState', player_index: int) -> 'GameState':
     cs = gs.compound_state
     if cs is None:
         return gs
-    cs.campaign_attack_dice += 2
+    if cs.campaign_attacker == player_index:
+        cs.campaign_attack_dice += 2
+    else:
+        cs.campaign_defense_dice += 2
     return gs
 
 register_effect(168, CardEffect(
     trigger=EffectTrigger.BATTLE_PLAN,
     condition=always_true,
     execute=_storm_caller_execute,
-    description="Battle Plan: +2 attack dice",
+    description="Battle Plan: +2 dice",
 ))
 
 

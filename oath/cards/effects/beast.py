@@ -99,17 +99,18 @@ register_effect(10, CardEffect(
 
 
 # ── ID 13: Bear Traps (OATH-003) ─────────────────────────────────
-# Battle Plan: -1 defense die. Kill one warband on attacker's board.
+# Battle Plan: -1 defense die AND kill one warband on attacker's board.
 def _bear_traps_execute(gs: 'GameState', player_index: int) -> 'GameState':
     cs = gs.compound_state
     if cs is None:
         return gs
-    # Defender uses this: remove 1 attacker defense die, kill 1 attacker warband
+    # -1 defense die (reduces attacker's attack effectiveness)
+    cs.campaign_defense_dice = max(0, cs.campaign_defense_dice - 1)
+    # Kill 1 warband on the attacker's board
     if cs.campaign_attacker is not None:
         attacker = gs.players[cs.campaign_attacker]
         if attacker.warbands_board > 0:
             attacker.warbands_board -= 1
-            # Also reduce warbands at the attacker's site
             attacker_site = gs.sites[attacker.pawn_site]
             if attacker_site.warbands > 0:
                 attacker_site.warbands -= 1
@@ -313,16 +314,15 @@ register_effect(181, CardEffect(
 
 
 # ── ID 182: Second Chance ────────────────────────────────────────
-# Action: Kill 1 warband on board of player with Order/Discord adviser.
-# Simplified: gain 1 favor.
+# Action: Kill 1 warband on board of player with Order/Discord adviser to gain 1 warband.
 def _second_chance_execute(gs: 'GameState', player_index: int) -> 'GameState':
-    return gain_favor_from_banks(gs, player_index, 1)
+    return gain_warbands(gs, player_index, 1)
 
 register_effect(182, CardEffect(
     trigger=EffectTrigger.ACTION,
     condition=always_true,
     execute=_second_chance_execute,
-    description="Action: Kill warband on Order/Discord adviser holder (gain 1 favor)",
+    description="Action: Gain 1 warband (kill enemy warband with Order/Discord adviser)",
 ))
 
 
@@ -484,46 +484,52 @@ register_effect(191, CardEffect(
 
 
 # ── ID 192: Memory of Nature ─────────────────────────────────────
-# Action: Move favor to Beast bank equal to Beast cards ruled.
+# Action: Move X favor from any favor banks to Beast bank. X = Beast cards on the map.
 def _memory_of_nature_condition(gs: 'GameState', player_index: int) -> bool:
-    player = gs.players[player_index]
-    if player.favor <= 0:
-        return False
-    # Check if player rules any site with Beast cards
-    for i in range(MAX_SITES):
-        site = gs.sites[i]
-        if site.ruling_player == player_index and site.is_faceup:
-            for slot in range(site.capacity):
-                card_id = site.cards[slot]
-                if card_id is not None:
-                    card_data = get_card(card_id)
-                    if card_data.suit == Suit.BEAST:
-                        return True
+    beast_idx = int(Suit.BEAST)
+    # Check if any non-Beast bank has favor to move
+    for i in range(len(gs.favor_banks)):
+        if i != beast_idx and gs.favor_banks[i] > 0:
+            # Check if any Beast cards exist on the map
+            for s in range(MAX_SITES):
+                site = gs.sites[s]
+                if site.is_faceup:
+                    for slot in range(site.capacity):
+                        card_id = site.cards[slot]
+                        if card_id is not None:
+                            card_data = get_card(card_id)
+                            if card_data.suit == Suit.BEAST:
+                                return True
     return False
 
 def _memory_of_nature_execute(gs: 'GameState', player_index: int) -> 'GameState':
-    player = gs.players[player_index]
+    # Count Beast cards at ALL sites on the map
     beast_count = 0
     for i in range(MAX_SITES):
         site = gs.sites[i]
-        if site.ruling_player == player_index and site.is_faceup:
+        if site.is_faceup:
             for slot in range(site.capacity):
                 card_id = site.cards[slot]
                 if card_id is not None:
                     card_data = get_card(card_id)
                     if card_data.suit == Suit.BEAST:
                         beast_count += 1
-    # Move favor from player to Beast bank
-    actual = min(beast_count, player.favor)
-    player.favor -= actual
-    gs.favor_banks[int(Suit.BEAST)] += actual
+    # Move favor from non-Beast banks to Beast bank
+    beast_idx = int(Suit.BEAST)
+    remaining = beast_count
+    for i in range(len(gs.favor_banks)):
+        if i != beast_idx and remaining > 0:
+            take = min(remaining, gs.favor_banks[i])
+            gs.favor_banks[i] -= take
+            gs.favor_banks[beast_idx] += take
+            remaining -= take
     return gs
 
 register_effect(192, CardEffect(
     trigger=EffectTrigger.ACTION,
     condition=_memory_of_nature_condition,
     execute=_memory_of_nature_execute,
-    description="Action: Move favor to Beast bank equal to Beast cards ruled",
+    description="Action: Move X favor from banks to Beast bank (X = Beast cards on map)",
 ))
 
 

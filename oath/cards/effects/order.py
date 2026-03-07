@@ -173,23 +173,23 @@ register_effect(104, CardEffect(
 
 
 # ── ID 105: Outriders ─────────────────────────────────────────────
-# Battle Plan: Ignore all skulls rolled (set skulls to 0)
+# Battle Plan: Ignore all skulls YOU roll (your own warbands are not killed).
+# Approximated as +2 defense dice (since skulls hurt your own force).
 def _outriders_execute(gs: 'GameState', player_index: int) -> 'GameState':
     cs = gs.compound_state
     if cs is None:
         return gs
-    # Set attack result to 0 to ignore skulls (damage to attacker's force)
     if cs.campaign_attacker == player_index:
-        cs.campaign_defense_result = 0
-    elif cs.campaign_defender == player_index:
-        cs.campaign_attack_result = 0
+        cs.campaign_attack_dice += 2
+    else:
+        cs.campaign_defense_dice += 2
     return gs
 
 register_effect(105, CardEffect(
     trigger=EffectTrigger.BATTLE_PLAN,
     condition=always_true,
     execute=_outriders_execute,
-    description="Battle Plan: Ignore all skulls rolled",
+    description="Battle Plan: Ignore all skulls you roll (+2 dice approximation)",
 ))
 
 
@@ -514,15 +514,19 @@ register_effect(124, CardEffect(
 
 
 # ── ID 125: Encirclement ──────────────────────────────────────────
-# Battle Plan: ±2 defense dice (conditional on larger force, simplified to always)
+# Battle Plan: ±2 defense dice if your force is larger than your enemy's.
 def _encirclement_execute(gs: 'GameState', player_index: int) -> 'GameState':
     cs = gs.compound_state
     if cs is None:
         return gs
     if cs.campaign_attacker == player_index:
-        cs.campaign_attack_dice += 2
+        # Attacker: apply only if attack force > defense force
+        if cs.campaign_attack_dice > cs.campaign_defense_dice:
+            cs.campaign_attack_dice += 2
     elif cs.campaign_defender == player_index:
-        cs.campaign_defense_dice = max(0, cs.campaign_defense_dice - 2)
+        # Defender: apply only if defense force > attack force
+        if cs.campaign_defense_dice > cs.campaign_attack_dice:
+            cs.campaign_defense_dice = max(0, cs.campaign_defense_dice - 2)
     return gs
 
 register_effect(125, CardEffect(
