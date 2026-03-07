@@ -39,11 +39,18 @@ class OathEnv:
         render_mode: Optional[str] = None,
         seed: Optional[int] = None,
         first_game: bool = True,
+        clockwork_prince: bool = False,
     ):
         self.num_players = num_players
         self.render_mode = render_mode
         self._seed = seed
         self._first_game = first_game
+        self._clockwork_prince = clockwork_prince
+        self._prince_agent = None
+
+        if clockwork_prince:
+            from oath.agents.clockwork_prince import ClockworkPrinceAgent
+            self._prince_agent = ClockworkPrinceAgent(seed=seed)
 
         self.possible_agents = [f"player_{i}" for i in range(num_players)]
         self.agents: list[str] = []
@@ -99,8 +106,17 @@ class OathEnv:
             self.truncations[agent] = False
             self.infos[agent] = {}
 
+        # Reset Clockwork Prince if active
+        if self._prince_agent is not None:
+            self._prince_agent.reset()
+
         # Auto-advance through wake phase for first player
+        # (also auto-plays Clockwork Prince if active)
         self._auto_advance_phases()
+
+        # Update agent selection to match current player after auto-advance
+        if self.game_state and not self.game_state.is_game_over:
+            self.agent_selection = f"player_{self.game_state.current_player_index}"
 
     def step(self, action: Optional[int]):
         """Apply an action for the current agent."""
@@ -311,7 +327,11 @@ class OathEnv:
             pass  # Stubs
 
     def _auto_advance_phases(self):
-        """Auto-advance through wake phase to act phase."""
+        """Auto-advance through wake phase to act phase.
+
+        If Clockwork Prince is active and it's the Chancellor's turn,
+        auto-play the entire turn so exile agents never see it.
+        """
         gs = self.game_state
         if gs is None:
             return
@@ -327,8 +347,70 @@ class OathEnv:
             do_wake_phase(gs)
             start_act_phase(gs)
 
+        # If Clockwork Prince is active and it's Chancellor's turn, auto-play
+        if (self._clockwork_prince and self._prince_agent is not None
+                and gs.current_player_index == 0
+                and gs.phase == Phase.ACT
+                and not gs.is_game_over):
+            self._run_clockwork_prince()
+
+    def _run_clockwork_prince(self):
+        """Execute the Clockwork Prince's entire turn automatically."""
+        gs = self.game_state
+        prince = self._prince_agent
+        prince.set_game_state(gs)
+        prince.start_turn()
+
+        max_steps = 100  # Safety limit to prevent infinite loops
+        for _ in range(max_steps):
+            if gs.is_game_over:
+                self._handle_game_over()
+                return
+
+            # Check if Chancellor's turn ended (moved to REST or next player)
+            if gs.phase == Phase.REST:
+                break
+            if gs.phase != Phase.ACT and not gs.in_compound_action:
+                break
+
+            obs = self.observe("player_0")
+            action = prince.act(obs)
+
+            # Validate action is legal
+            mask = obs["action_mask"]
+            if mask[action] < 0.5:
+                # Illegal action — end turn if possible
+                if mask[43] > 0.5:
+                    action = 43
+                else:
+                    # Pick first legal action as fallback
+                    legal = np.where(np.array(mask) > 0.5)[0]
+                    if len(legal) == 0:
+                        break
+                    action = int(legal[0])
+
+            decoded = self.action_decoder.decode(action)
+            self._apply_action(gs, 0, decoded)
+
+        # Handle rest phase transition
+        if gs.phase == Phase.REST and not gs.is_game_over:
+            do_rest_phase(gs)
+            advance_turn(gs)
+
+            if gs.is_game_over:
+                self._handle_game_over()
+                return
+
+            # Recursively advance phases (handles next player's wake,
+            # or another Prince turn if round wraps)
+            self._auto_advance_phases()
+
     def _advance_agent(self):
-        """Advance to the next agent in turn order."""
+        """Advance to the next agent in turn order.
+
+        When Clockwork Prince is active, player_0 is auto-played so we
+        skip directly to the current (non-Chancellor) player.
+        """
         gs = self.game_state
         if gs is None or self._agent_selector is None:
             return
