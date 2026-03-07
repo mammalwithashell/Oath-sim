@@ -113,6 +113,11 @@ class GameState:
     # Citizenship offer pending
     pending_citizenship_target: Optional[int] = None
 
+    # Transient modifier scratch space (reset after each use)
+    _modifier_int: int = 0
+    _modifier_bool: bool = False
+    _effect_depth: int = 0
+
     @property
     def in_compound_action(self) -> bool:
         return self.compound_state is not None

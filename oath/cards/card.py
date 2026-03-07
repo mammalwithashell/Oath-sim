@@ -23,6 +23,7 @@ class CardData:
     starting_favor: int = 0  # Favor placed on site when revealed
     starting_secrets: int = 0  # Secrets placed on site when revealed
     defense: int = 0  # Site defense value
+    oath_id: Optional[str] = None  # Official ID e.g. "OATH-042"
 
 
 @dataclass

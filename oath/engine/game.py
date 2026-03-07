@@ -18,6 +18,8 @@ from oath.cards.database import (
     get_card, get_first_game_denizen_ids, get_first_game_site_ids,
     get_first_game_relic_ids, get_vision_ids, get_all_denizen_ids,
 )
+from oath.cards.effects import get_wake_effects, get_rest_effects
+from oath.enums import MAX_ADVISERS
 
 
 def create_initial_state(
@@ -189,6 +191,19 @@ def advance_turn(gs: GameState) -> GameState:
     return gs
 
 
+def do_wake_phase(gs: GameState) -> GameState:
+    """Execute wake phase: trigger WAKE effects on faceup advisers."""
+    player = gs.current_player
+    pi = gs.current_player_index
+    for slot in range(MAX_ADVISERS):
+        card_id = player.advisers[slot]
+        if card_id is not None and player.adviser_faceup[slot]:
+            for effect in get_wake_effects(card_id):
+                if effect.condition(gs, pi):
+                    gs = effect.execute(gs, pi)
+    return gs
+
+
 def start_act_phase(gs: GameState) -> GameState:
     """Transition from wake to act phase."""
     gs.phase = Phase.ACT
@@ -198,7 +213,17 @@ def start_act_phase(gs: GameState) -> GameState:
 def do_rest_phase(gs: GameState) -> GameState:
     """Execute the automated rest phase for the current player."""
     player = gs.current_player
-    player.supply = _calculate_supply_refresh(gs, gs.current_player_index)
+    pi = gs.current_player_index
+    player.supply = _calculate_supply_refresh(gs, pi)
+
+    # Trigger REST effects on faceup advisers
+    for slot in range(MAX_ADVISERS):
+        card_id = player.advisers[slot]
+        if card_id is not None and player.adviser_faceup[slot]:
+            for effect in get_rest_effects(card_id):
+                if effect.condition(gs, pi):
+                    gs = effect.execute(gs, pi)
+
     return gs
 
 

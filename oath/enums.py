@@ -56,6 +56,16 @@ class EffectTrigger(IntEnum):
     BATTLE_PLAN = 3
     WAKE = 4
     PERSISTENT = 5
+    REST = 6
+
+
+class ModifierType(IntEnum):
+    TRAVEL = 0
+    SEARCH = 1
+    MUSTER = 2
+    TRADE = 3
+    CAMPAIGN = 4
+    RECOVER = 5
 
 
 class Phase(IntEnum):

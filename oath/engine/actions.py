@@ -17,7 +17,10 @@ from oath.state.game_state import GameState, CompoundState, ActionRecord
 from oath.state.player_state import PlayerState
 from oath.state.site_state import SiteState
 from oath.cards.database import get_card
-from oath.cards.effects import get_action_effects, get_modifier_effects
+from oath.cards.effects import (
+    get_action_effects, get_modifier_effects, get_when_played_effects,
+)
+from oath.enums import ModifierType
 
 
 class IllegalActionError(Exception):
@@ -42,11 +45,15 @@ def travel_cost(gs: GameState, player_index: int, target_site: int) -> int:
         cost = 1  # Same region but different site still costs 1
 
     # Check for travel modifiers from advisers
+    gs._modifier_int = cost
     for slot in range(MAX_ADVISERS):
         card_id = player.advisers[slot]
         if card_id is not None and player.adviser_faceup[slot]:
-            for effect in get_modifier_effects(card_id):
-                pass  # Modifier effects handled in card_effects module
+            for effect in get_modifier_effects(card_id, ModifierType.TRAVEL):
+                if effect.condition(gs, player_index):
+                    gs = effect.execute(gs, player_index)
+    cost = gs._modifier_int
+    gs._modifier_int = 0
 
     return max(0, cost)
 
@@ -411,6 +418,11 @@ def execute_search_play(
         player.adviser_faceup[slot] = (destination == "adviser_up")
     else:
         raise IllegalActionError(f"Invalid destination: {destination}")
+
+    # Trigger WHEN_PLAYED effects
+    for effect in get_when_played_effects(card_id):
+        if effect.condition(gs, player_index):
+            gs = effect.execute(gs, player_index)
 
     cs.cards_remaining[card_index] = False
     _finish_search_if_done(gs, player_index)

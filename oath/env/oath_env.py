@@ -16,6 +16,7 @@ from oath.enums import (
 from oath.state.game_state import GameState
 from oath.engine.game import (
     create_initial_state, advance_turn, start_act_phase, do_rest_phase,
+    do_wake_phase,
 )
 from oath.engine.win_conditions import check_start_of_turn_wins
 from oath.env.action_decoder import ActionDecoder, DecodedAction
@@ -323,6 +324,7 @@ class OathEnv:
                 gs.winner = winner
                 self._handle_game_over()
                 return
+            do_wake_phase(gs)
             start_act_phase(gs)
 
     def _advance_agent(self):
