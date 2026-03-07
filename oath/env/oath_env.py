@@ -40,12 +40,15 @@ class OathEnv:
         seed: Optional[int] = None,
         first_game: bool = True,
         clockwork_prince: bool = False,
+        chronicle_mode: bool = False,
     ):
         self.num_players = num_players
         self.render_mode = render_mode
         self._seed = seed
         self._first_game = first_game
         self._clockwork_prince = clockwork_prince
+        self._chronicle_mode = chronicle_mode
+        self._chronicle_state = None  # ChronicleState persists between resets
         self._prince_agent = None
 
         if clockwork_prince:
@@ -84,14 +87,28 @@ class OathEnv:
         return spaces.Discrete(NUM_ACTIONS)
 
     def reset(self, seed: Optional[int] = None, options: Optional[dict] = None):
-        """Reset the environment to a new game."""
+        """Reset the environment to a new game.
+
+        In chronicle_mode, if a previous game ended, the chronicle is applied
+        automatically and the next game uses the resulting ChronicleState.
+        """
         if seed is not None:
             self._seed = seed
+
+        # Apply chronicle from previous game if in chronicle mode
+        if (self._chronicle_mode and self.game_state is not None
+                and self.game_state.is_game_over):
+            from oath.engine.chronicle import apply_chronicle
+            self._chronicle_state = apply_chronicle(
+                self.game_state,
+                prev_chronicle=self._chronicle_state,
+            )
 
         self.game_state = create_initial_state(
             num_players=self.num_players,
             seed=self._seed,
-            first_game=self._first_game,
+            first_game=self._first_game and self._chronicle_state is None,
+            chronicle=self._chronicle_state,
         )
 
         self.agents = list(self.possible_agents)

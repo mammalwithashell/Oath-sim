@@ -496,3 +496,104 @@ def _extract_card_ids(gs: GameState, player_index: int) -> dict:
         "site_cards": np.array(site_cards, dtype=np.int32),
         "self_advisers": np.array(self_advisers, dtype=np.int32),
     }
+
+
+# ── Chronicle Citizenship Observation ──────────────────────────────
+
+CHRONICLE_OBS_SIZE = 50
+
+
+def encode_chronicle_citizenship_observation(
+    gs: GameState,
+    player_index: int,
+    new_oath_goal: int,
+    new_successor_goal: int,
+) -> np.ndarray:
+    """Encode observation for chronicle citizenship decision.
+
+    This special observation is used between games when an Exile
+    must decide whether to accept citizenship. It encodes:
+    1. New oath goal (one-hot, 4)
+    2. New successor goal (one-hot, 4)
+    3. Player's resources (6)
+    4. Chancellor's resources (6)
+    5. Resource comparison (4)
+    6. Sites controlled by player and Chancellor (4)
+    7. Banners held (4)
+    8. World deck suit distribution hint (6)
+    9. Relics held (2)
+    10. Misc features (14)
+    """
+    from oath.enums import NUM_OATH_GOALS, NUM_SUCCESSOR_GOALS
+
+    obs = np.zeros(CHRONICLE_OBS_SIZE, dtype=np.float32)
+    offset = 0
+
+    player = gs.players[player_index]
+    chancellor = gs.players[0]
+
+    # New oath goal one-hot (4)
+    obs[offset + new_oath_goal] = 1.0
+    offset += NUM_OATH_GOALS
+
+    # New successor goal one-hot (4)
+    obs[offset + new_successor_goal] = 1.0
+    offset += NUM_SUCCESSOR_GOALS
+
+    # Player resources (6)
+    obs[offset] = player.favor / MAX_FAVOR_TOTAL; offset += 1
+    obs[offset] = player.secrets / MAX_SECRETS_TOTAL; offset += 1
+    obs[offset] = player.warbands_board / MAX_WARBANDS_CHANCELLOR; offset += 1
+    obs[offset] = player.warbands_bank / MAX_WARBANDS_CHANCELLOR; offset += 1
+    obs[offset] = len(player.relics) / 6.0; offset += 1
+    obs[offset] = gs.count_sites_ruled(player_index) / MAX_SITES; offset += 1
+
+    # Chancellor resources (6)
+    obs[offset] = chancellor.favor / MAX_FAVOR_TOTAL; offset += 1
+    obs[offset] = chancellor.secrets / MAX_SECRETS_TOTAL; offset += 1
+    obs[offset] = chancellor.warbands_board / MAX_WARBANDS_CHANCELLOR; offset += 1
+    obs[offset] = chancellor.warbands_bank / MAX_WARBANDS_CHANCELLOR; offset += 1
+    obs[offset] = len(chancellor.relics) / 6.0; offset += 1
+    obs[offset] = gs.count_sites_ruled(0) / MAX_SITES; offset += 1
+
+    # Resource comparison: player - chancellor (4)
+    obs[offset] = (player.favor - chancellor.favor) / MAX_FAVOR_TOTAL; offset += 1
+    obs[offset] = (player.secrets - chancellor.secrets) / MAX_SECRETS_TOTAL; offset += 1
+    my_sites = gs.count_sites_ruled(player_index)
+    ch_sites = gs.count_sites_ruled(0)
+    obs[offset] = (my_sites - ch_sites) / MAX_SITES; offset += 1
+    my_rb = len(player.relics)
+    ch_rb = len(chancellor.relics)
+    obs[offset] = (my_rb - ch_rb) / 6.0; offset += 1
+
+    # Banners held (4)
+    obs[offset] = 1.0 if gs.peoples_favor_holder == player_index else 0.0; offset += 1
+    obs[offset] = 1.0 if gs.darkest_secret_holder == player_index else 0.0; offset += 1
+    obs[offset] = 1.0 if gs.peoples_favor_holder == 0 else 0.0; offset += 1
+    obs[offset] = 1.0 if gs.darkest_secret_holder == 0 else 0.0; offset += 1
+
+    # World deck suit distribution hint (6)
+    # Count suits of remaining world deck cards
+    suit_counts = [0] * NUM_SUITS
+    for card_id in gs.world_deck:
+        card = get_card(card_id)
+        if card.suit is not None:
+            suit_counts[int(card.suit)] += 1
+    total = max(sum(suit_counts), 1)
+    for s in range(NUM_SUITS):
+        obs[offset] = suit_counts[s] / total; offset += 1
+
+    # Misc (fill remaining to CHRONICLE_OBS_SIZE)
+    # Oathkeeper holder
+    obs[offset] = 1.0 if gs.oathkeeper_holder == player_index else 0.0; offset += 1
+    obs[offset] = 1.0 if gs.oathkeeper_holder == 0 else 0.0; offset += 1
+
+    # Vision state
+    obs[offset] = 1.0 if player.revealed_vision is not None else 0.0; offset += 1
+    obs[offset] = gs.visions_drawn / MAX_VISIONS_DRAWN; offset += 1
+
+    # Pad remaining
+    while offset < CHRONICLE_OBS_SIZE:
+        offset += 1
+
+    return obs

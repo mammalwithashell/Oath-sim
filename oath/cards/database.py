@@ -296,3 +296,33 @@ def get_vision_ids() -> list[int]:
 def get_all_denizen_ids() -> list[int]:
     """Return all denizen card IDs."""
     return list(range(1, 200))
+
+
+def get_edifice_ids() -> list[int]:
+    """Return all edifice card IDs."""
+    return list(range(226, 231))
+
+
+def get_edifice_by_suit(suit: Suit) -> int | None:
+    """Return the edifice card_id for a given suit, or None if no edifice exists."""
+    for card_id in range(226, 231):
+        card = CARD_DB.get(card_id)
+        if card and card.suit == suit:
+            return card_id
+    return None
+
+
+def get_all_relic_ids() -> list[int]:
+    """Return all relic card IDs (211-220)."""
+    return list(range(211, 221))
+
+
+def get_denizens_by_suit(suit: Suit) -> list[int]:
+    """Return all denizen card IDs of a given suit."""
+    return [
+        cid for cid in range(1, 200)
+        if CARD_DB.get(cid) and CARD_DB[cid].suit == suit
+    ]
+
+
+GRAND_SCEPTER_ID = 211

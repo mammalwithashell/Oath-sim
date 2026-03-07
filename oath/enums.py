@@ -138,3 +138,27 @@ NUM_SUCCESSOR_GOALS = 4
 MAX_FAVOR_TOTAL = 36
 MAX_SECRETS_TOTAL = 20
 NUM_ACTIONS = 119
+
+# Clockwise suit order matching the favor bank layout on the map
+# (See rulebook section 8.4: the suit order for adding cards)
+SUIT_CLOCKWISE_ORDER = [
+    Suit.ARCANE, Suit.BEAST, Suit.DISCORD,
+    Suit.HEARTH, Suit.NOMAD, Suit.ORDER,
+]
+
+# Maps OathGoal to the corresponding SuccessorGoal
+OATH_TO_SUCCESSOR: dict[int, int] = {
+    OathGoal.SUPREMACY: SuccessorGoal.MOST_SITES,
+    OathGoal.PEOPLE: SuccessorGoal.PEOPLES_FAVOR,
+    OathGoal.DEVOTION: SuccessorGoal.DARKEST_SECRET,
+    OathGoal.SANCTUARY: SuccessorGoal.MOST_RELICS_BANNERS,
+}
+
+# Maps Vision card IDs to the OathGoal they correspond to
+VISION_TO_OATH_GOAL: dict[int, int] = {
+    221: OathGoal.SUPREMACY,   # Vision of Conquest
+    222: OathGoal.DEVOTION,     # Vision of Faith
+    223: OathGoal.PEOPLE,       # Vision of Rebellion
+    224: OathGoal.SANCTUARY,    # Vision of Sanctuary
+    # 225 (Conspiracy) has no corresponding oath goal
+}
