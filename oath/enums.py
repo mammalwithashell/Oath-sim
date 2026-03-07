@@ -38,6 +38,13 @@ class SuccessorGoal(IntEnum):
     PEOPLES_FAVOR = 3
 
 
+class WinType(IntEnum):
+    OATHKEEPER_DEFAULT = 0  # Chancellor kept oath through game end
+    USURPER = 1             # Held Usurper title through a full round
+    VISION = 2              # Exile met vision condition
+    SUCCESSOR = 3           # Citizen beat Chancellor on successor goal
+
+
 class TitleSide(IntEnum):
     OATHKEEPER = 0
     USURPER = 1

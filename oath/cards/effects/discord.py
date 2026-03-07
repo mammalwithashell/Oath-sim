@@ -20,14 +20,13 @@ if TYPE_CHECKING:
 def _naysayers_condition(gs: 'GameState', player_index: int) -> bool:
     # Check if any Exile holds the Oathkeeper title
     holder = gs.oathkeeper_holder
-    if holder is not None and holder != 0:
-        # Holder is not Chancellor (player 0)
+    if holder is not None and holder != gs.chancellor_index:
         if gs.players[holder].role in (Role.EXILE, Role.CITIZEN):
             return True
     return False
 
 def _naysayers_execute(gs: 'GameState', player_index: int) -> 'GameState':
-    chancellor = gs.players[0]
+    chancellor = gs.players[gs.chancellor_index]
     if chancellor.favor > 0:
         chancellor.favor -= 1
         gs.players[player_index].favor += 1

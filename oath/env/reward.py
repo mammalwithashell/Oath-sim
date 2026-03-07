@@ -117,11 +117,13 @@ def _citizen_rewards(
     reward = 0.0
     goal = new_state.successor_goal
 
+    chanc_idx = new_state.chancellor_index
+
     if goal == SuccessorGoal.MOST_SITES:
         my_sites = new_state.count_sites_ruled(player_idx)
-        chanc_sites = new_state.count_sites_ruled(0)
+        chanc_sites = new_state.count_sites_ruled(chanc_idx)
         old_my = prev_state.count_sites_ruled(player_idx)
-        old_chanc = prev_state.count_sites_ruled(0)
+        old_chanc = prev_state.count_sites_ruled(prev_state.chancellor_index)
         new_gap = my_sites - chanc_sites
         old_gap = old_my - old_chanc
         reward += (new_gap - old_gap) * 1.5 * SCALE
@@ -144,9 +146,9 @@ def _citizen_rewards(
 
     elif goal == SuccessorGoal.MOST_RELICS_BANNERS:
         my_count = _count_relics_and_banners(new_state, player_idx)
-        chanc_count = _count_relics_and_banners(new_state, 0)
+        chanc_count = _count_relics_and_banners(new_state, chanc_idx)
         old_my = _count_relics_and_banners(prev_state, player_idx)
-        old_chanc = _count_relics_and_banners(prev_state, 0)
+        old_chanc = _count_relics_and_banners(prev_state, prev_state.chancellor_index)
         new_gap = my_count - chanc_count
         old_gap = old_my - old_chanc
         reward += (new_gap - old_gap) * 1.5 * SCALE

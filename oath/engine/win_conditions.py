@@ -9,7 +9,7 @@ from __future__ import annotations
 from typing import Optional
 
 from oath.enums import (
-    OathGoal, SuccessorGoal, TitleSide, Role, MAX_ROUNDS,
+    OathGoal, SuccessorGoal, TitleSide, Role, WinType, MAX_ROUNDS,
 )
 from oath.state.game_state import GameState
 
@@ -68,39 +68,47 @@ def check_vision_win(gs: GameState, player_index: int) -> bool:
 def check_start_of_turn_wins(gs: GameState, player_index: int) -> Optional[int]:
     """Check all start-of-turn win conditions.
 
-    Returns winner index or None.
+    Returns winner index or None. Also sets gs.win_type.
     """
     # Usurper win check
     if check_usurper_win(gs, player_index):
+        gs.win_type = WinType.USURPER
         return player_index
 
     # Vision win check
     if check_vision_win(gs, player_index):
+        gs.win_type = WinType.VISION
         return player_index
 
     return None
 
 
 def _determine_winner(gs: GameState) -> int:
-    """Determine the winner when the game ends by die roll or round 8."""
+    """Determine the winner when the game ends by die roll or round 8.
+
+    Also sets gs.win_type to indicate how the winner won.
+    """
     # Check if any exile has met their vision condition
     for i, player in enumerate(gs.players):
         if player.role in (Role.EXILE, Role.CITIZEN) and player.revealed_vision is not None:
             if _check_vision_condition(gs, i, player.revealed_vision):
+                gs.win_type = WinType.VISION
                 return i
 
     # Check successor goal for citizens
     for i, player in enumerate(gs.players):
         if player.role == Role.CITIZEN:
             if _check_successor_goal(gs, i):
+                gs.win_type = WinType.SUCCESSOR
                 return i
 
     # Default: Oathkeeper wins
+    gs.win_type = WinType.OATHKEEPER_DEFAULT
     if gs.oathkeeper_holder is not None:
         return gs.oathkeeper_holder
 
-    # Fallback: Chancellor (player 0)
-    return 0
+    # Fallback: Chancellor
+    return gs.chancellor_index
 
 
 def _end_probability(round_number: int) -> float:
@@ -167,12 +175,12 @@ def _check_successor_goal(gs: GameState, player_index: int) -> bool:
 
     if goal == SuccessorGoal.MOST_SITES:
         my_sites = gs.count_sites_ruled(player_index)
-        chancellor_sites = gs.count_sites_ruled(0)
+        chancellor_sites = gs.count_sites_ruled(gs.chancellor_index)
         return my_sites > chancellor_sites
 
     elif goal == SuccessorGoal.MOST_RELICS_BANNERS:
         my_count = _count_relics_and_banners(gs, player_index)
-        chancellor_count = _count_relics_and_banners(gs, 0)
+        chancellor_count = _count_relics_and_banners(gs, gs.chancellor_index)
         return my_count > chancellor_count
 
     elif goal == SuccessorGoal.DARKEST_SECRET:

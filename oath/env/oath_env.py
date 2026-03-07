@@ -366,7 +366,7 @@ class OathEnv:
 
         # If Clockwork Prince is active and it's Chancellor's turn, auto-play
         if (self._clockwork_prince and self._prince_agent is not None
-                and gs.current_player_index == 0
+                and gs.current_player_index == gs.chancellor_index
                 and gs.phase == Phase.ACT
                 and not gs.is_game_over):
             self._run_clockwork_prince()
@@ -374,6 +374,8 @@ class OathEnv:
     def _run_clockwork_prince(self):
         """Execute the Clockwork Prince's entire turn automatically."""
         gs = self.game_state
+        chanc_idx = gs.chancellor_index
+        chanc_agent = f"player_{chanc_idx}"
         prince = self._prince_agent
         prince.set_game_state(gs)
         prince.start_turn()
@@ -390,7 +392,7 @@ class OathEnv:
             if gs.phase != Phase.ACT and not gs.in_compound_action:
                 break
 
-            obs = self.observe("player_0")
+            obs = self.observe(chanc_agent)
             action = prince.act(obs)
 
             # Validate action is legal
@@ -407,7 +409,7 @@ class OathEnv:
                     action = int(legal[0])
 
             decoded = self.action_decoder.decode(action)
-            self._apply_action(gs, 0, decoded)
+            self._apply_action(gs, chanc_idx, decoded)
 
         # Handle rest phase transition
         if gs.phase == Phase.REST and not gs.is_game_over:
@@ -450,6 +452,8 @@ class OathEnv:
             else:
                 self.rewards[agent] = -1.0
             self._cumulative_rewards[agent] += self.rewards[agent]
+            self.infos[agent]["winner"] = gs.winner
+            self.infos[agent]["win_type"] = gs.win_type
 
         self.agents = []
 

@@ -56,19 +56,30 @@ def create_initial_state(
         successor_goal=successor_goal,
     )
 
+    # Determine who is Chancellor this game
+    # In a chronicle, the last winner becomes Chancellor
+    chancellor_idx = 0
+    if chronicle is not None and chronicle.last_winner is not None:
+        chancellor_idx = chronicle.last_winner % num_players
+
     # Create players
     gs.players = []
+    # Build non-Chancellor role list from chronicle player_boards
+    non_chancellor_roles = []
+    if chronicle is not None:
+        non_chancellor_roles = list(chronicle.player_boards)
+    board_idx = 0
     for i in range(num_players):
-        if i == 0:
+        if i == chancellor_idx:
             role = Role.CHANCELLOR
             supply = 7
             warbands_bank = MAX_WARBANDS_CHANCELLOR
         else:
-            # Use chronicle player boards if available
-            if chronicle is not None and (i - 1) < len(chronicle.player_boards):
-                role = chronicle.player_boards[i - 1]
+            if board_idx < len(non_chancellor_roles):
+                role = non_chancellor_roles[board_idx]
             else:
                 role = Role.EXILE
+            board_idx += 1
             supply = 7
             warbands_bank = MAX_WARBANDS_EXILE
         gs.players.append(PlayerState(
@@ -79,8 +90,8 @@ def create_initial_state(
         ))
 
     # Turn order: Chancellor first, then others in order
-    gs.turn_order = list(range(num_players))
-    gs.current_player_index = 0
+    gs.turn_order = [chancellor_idx] + [i for i in range(num_players) if i != chancellor_idx]
+    gs.current_player_index = chancellor_idx
 
     # Set up sites
     if chronicle is not None and chronicle.chronicled_sites:
@@ -134,31 +145,35 @@ def create_initial_state(
     gs.darkest_secret_tokens = 1
 
     # Chancellor starts as Oathkeeper (on Oathkeeper side)
-    gs.oathkeeper_holder = 0
+    gs.oathkeeper_holder = chancellor_idx
     gs.oathkeeper_side = TitleSide.OATHKEEPER
 
     # If Oathkeeper of Devotion, Chancellor starts with Darkest Secret
     if oath_goal == OathGoal.DEVOTION:
-        gs.darkest_secret_holder = 0
+        gs.darkest_secret_holder = chancellor_idx
     # If Oathkeeper of People, Chancellor starts with People's Favor
     elif oath_goal == OathGoal.PEOPLE:
-        gs.peoples_favor_holder = 0
+        gs.peoples_favor_holder = chancellor_idx
 
-    # Place starting warbands
-    gs.players[0].pawn_site = 0
-    gs.sites[0].ruling_player = 0
+    # Place Chancellor starting warbands at site 0
+    gs.players[chancellor_idx].pawn_site = 0
+    gs.sites[0].ruling_player = chancellor_idx
     gs.sites[0].warbands = 3
-    gs.players[0].warbands_board = 3
-    gs.players[0].warbands_bank -= 3
+    gs.players[chancellor_idx].warbands_board = 3
+    gs.players[chancellor_idx].warbands_bank -= 3
 
-    # Give chancellor starting resources (2 favor + 1 secret)
-    gs.players[0].favor = 2
-    gs.players[0].secrets = 1
+    # Give Chancellor starting resources (2 favor + 1 secret)
+    gs.players[chancellor_idx].favor = 2
+    gs.players[chancellor_idx].secrets = 1
     gs.shared_secrets -= 1
 
-    # Each Exile/Citizen places 1 favor + 1 secret, 3 warbands on board
-    for i in range(1, num_players):
-        site_idx = min(i, MAX_SITES - 1)
+    # Each non-Chancellor places 1 favor + 1 secret, 3 warbands on board
+    exile_site = 1
+    for i in range(num_players):
+        if i == chancellor_idx:
+            continue
+        site_idx = min(exile_site, MAX_SITES - 1)
+        exile_site += 1
         gs.players[i].pawn_site = site_idx
         gs.players[i].favor = 1
         gs.players[i].secrets = 1

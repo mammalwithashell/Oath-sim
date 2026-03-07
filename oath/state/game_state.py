@@ -9,7 +9,7 @@ import numpy as np
 
 from oath.enums import (
     OathGoal, SuccessorGoal, TitleSide, Phase, CompoundStateType,
-    Role, Region, ActionType, MAX_ROUNDS,
+    Role, Region, ActionType, WinType, MAX_ROUNDS,
 )
 from oath.state.player_state import PlayerState
 from oath.state.site_state import SiteState
@@ -105,6 +105,7 @@ class GameState:
     # Game over
     is_game_over: bool = False
     winner: Optional[int] = None
+    win_type: Optional[WinType] = None
 
     # Supply spent this turn
     supply_spent_this_turn: int = 0
@@ -125,6 +126,14 @@ class GameState:
     @property
     def current_player(self) -> PlayerState:
         return self.players[self.current_player_index]
+
+    @property
+    def chancellor_index(self) -> int:
+        """Return the player index of the Chancellor."""
+        for i, p in enumerate(self.players):
+            if p.role == Role.CHANCELLOR:
+                return i
+        return 0
 
     def count_sites_ruled(self, player_index: int) -> int:
         return sum(1 for s in self.sites if s.ruling_player == player_index and s.is_faceup)

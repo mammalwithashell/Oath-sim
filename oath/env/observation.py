@@ -530,7 +530,8 @@ def encode_chronicle_citizenship_observation(
     offset = 0
 
     player = gs.players[player_index]
-    chancellor = gs.players[0]
+    chanc_idx = gs.chancellor_index
+    chancellor = gs.players[chanc_idx]
 
     # New oath goal one-hot (4)
     obs[offset + new_oath_goal] = 1.0
@@ -554,13 +555,13 @@ def encode_chronicle_citizenship_observation(
     obs[offset] = chancellor.warbands_board / MAX_WARBANDS_CHANCELLOR; offset += 1
     obs[offset] = chancellor.warbands_bank / MAX_WARBANDS_CHANCELLOR; offset += 1
     obs[offset] = len(chancellor.relics) / 6.0; offset += 1
-    obs[offset] = gs.count_sites_ruled(0) / MAX_SITES; offset += 1
+    obs[offset] = gs.count_sites_ruled(chanc_idx) / MAX_SITES; offset += 1
 
     # Resource comparison: player - chancellor (4)
     obs[offset] = (player.favor - chancellor.favor) / MAX_FAVOR_TOTAL; offset += 1
     obs[offset] = (player.secrets - chancellor.secrets) / MAX_SECRETS_TOTAL; offset += 1
     my_sites = gs.count_sites_ruled(player_index)
-    ch_sites = gs.count_sites_ruled(0)
+    ch_sites = gs.count_sites_ruled(chanc_idx)
     obs[offset] = (my_sites - ch_sites) / MAX_SITES; offset += 1
     my_rb = len(player.relics)
     ch_rb = len(chancellor.relics)
@@ -569,8 +570,8 @@ def encode_chronicle_citizenship_observation(
     # Banners held (4)
     obs[offset] = 1.0 if gs.peoples_favor_holder == player_index else 0.0; offset += 1
     obs[offset] = 1.0 if gs.darkest_secret_holder == player_index else 0.0; offset += 1
-    obs[offset] = 1.0 if gs.peoples_favor_holder == 0 else 0.0; offset += 1
-    obs[offset] = 1.0 if gs.darkest_secret_holder == 0 else 0.0; offset += 1
+    obs[offset] = 1.0 if gs.peoples_favor_holder == chanc_idx else 0.0; offset += 1
+    obs[offset] = 1.0 if gs.darkest_secret_holder == chanc_idx else 0.0; offset += 1
 
     # World deck suit distribution hint (6)
     # Count suits of remaining world deck cards
