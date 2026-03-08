@@ -35,16 +35,18 @@ def check_end_of_round_win(gs: GameState) -> Optional[int]:
 
 
 def check_usurper_win(gs: GameState, player_index: int) -> bool:
-    """Check if a player holding Usurper title wins at start of their turn.
+    """Check if an Exile holding the Usurper title wins at start of their turn.
 
-    An Usurper wins if they still hold the title at the START of their
-    next turn (survived a full round as Usurper).
+    Only Exiles can win as Usurper. Citizens are allied with the Chancellor
+    and win via the Successor goal instead.
     """
+    player = gs.players[player_index]
+    if player.role != Role.EXILE:
+        return False
     if gs.oathkeeper_holder != player_index:
         return False
     if gs.oathkeeper_side != TitleSide.USURPER:
         return False
-    # The usurper wins if they get back to their turn still holding it
     return True
 
 
