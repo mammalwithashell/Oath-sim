@@ -684,6 +684,10 @@ def execute_accept_citizenship(gs: GameState, player_index: int) -> GameState:
     cs = gs.compound_state
     if cs is None or cs.state_type != CompoundStateType.CITIZENSHIP_RESPONSE:
         raise IllegalActionError("Not in citizenship response state")
+    if cs.citizenship_target != player_index:
+        raise IllegalActionError(
+            f"Player {player_index} is not the citizenship target (target={cs.citizenship_target})"
+        )
 
     player = gs.players[player_index]
     player.role = Role.CITIZEN
@@ -702,6 +706,11 @@ def execute_accept_citizenship(gs: GameState, player_index: int) -> GameState:
 
 def execute_decline_citizenship(gs: GameState, player_index: int) -> GameState:
     """Exile declines citizenship offer."""
+    cs = gs.compound_state
+    if cs is not None and cs.citizenship_target != player_index:
+        raise IllegalActionError(
+            f"Player {player_index} is not the citizenship target (target={cs.citizenship_target})"
+        )
     gs.compound_state = None
     gs.pending_citizenship_target = None
     _record_action(gs, player_index, ActionType.DECLINE_CITIZENSHIP)

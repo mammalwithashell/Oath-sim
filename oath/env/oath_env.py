@@ -10,8 +10,8 @@ import numpy as np
 from gymnasium import spaces
 
 from oath.enums import (
-    Phase, NUM_ACTIONS, NUM_CARD_IDS, MAX_SITES, MAX_CARDS_PER_SITE,
-    MAX_ADVISERS, MAX_PLAYERS,
+    CompoundStateType, Phase, NUM_ACTIONS, NUM_CARD_IDS, MAX_SITES,
+    MAX_CARDS_PER_SITE, MAX_ADVISERS, MAX_PLAYERS,
 )
 from oath.state.game_state import GameState
 from oath.engine.game import (
@@ -172,10 +172,25 @@ class OathEnv:
             self._handle_game_over()
             return
 
-        # Check if compound action continues (same player)
+        # Check if compound action continues
         if gs.in_compound_action:
-            # Stay on same agent
+            # Citizenship response must be handled by the target, not the offerer
+            if (gs.compound_state.state_type == CompoundStateType.CITIZENSHIP_RESPONSE and
+                    gs.compound_state.citizenship_target is not None and
+                    gs.compound_state.citizenship_target != player_idx):
+                target_agent = f"player_{gs.compound_state.citizenship_target}"
+                if target_agent in self.agents:
+                    self.agent_selection = target_agent
+                    return
+            # Otherwise same player continues the compound action
             return
+
+        # After citizenship response resolved, return control to the current player
+        if player_idx != gs.current_player_index:
+            current_agent = f"player_{gs.current_player_index}"
+            if current_agent in self.agents:
+                self.agent_selection = current_agent
+                return
 
         # Check if act phase ended
         if gs.phase == Phase.REST:
@@ -188,19 +203,6 @@ class OathEnv:
 
             self._auto_advance_phases()
             self._advance_agent()
-        else:
-            # Still in act phase, but might need to advance for citizenship response
-            if (gs.compound_state and
-                gs.compound_state.citizenship_target is not None and
-                    gs.compound_state.citizenship_target != player_idx):
-                # Switch to citizenship target player
-                target_agent = f"player_{gs.compound_state.citizenship_target}"
-                if target_agent in self.agents:
-                    self.agent_selection = target_agent
-                    return
-
-            # Same player continues their act phase
-            pass
 
     def observe(self, agent: str) -> dict:
         """Get observation for the given agent."""

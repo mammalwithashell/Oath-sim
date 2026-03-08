@@ -212,7 +212,7 @@ class ChronicleEvaluator:
             game_index=game_index,
             winner=gs.winner if gs.winner is not None else 0,
             win_type=gs.win_type,
-            winner_role=gs.players[gs.winner].role if gs.winner is not None else Role.CHANCELLOR,
+            winner_role=initial_roles[gs.winner] if gs.winner is not None else Role.CHANCELLOR,
             oath_goal=initial_oath_goal,
             successor_goal=initial_successor_goal,
             round_number=gs.round_number,
