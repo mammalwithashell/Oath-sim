@@ -5,19 +5,36 @@ import { PLAYER_COLORS } from "../types/game";
 interface Props {
   log: ActionLogEntry[];
   aiActions: ActionLogEntry[];
+  visibleAiActionCount: number;
+  isAnimating: boolean;
 }
 
-export default function GameLog({ log, aiActions }: Props) {
+export default function GameLog({ log, aiActions, visibleAiActionCount, isAnimating }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // During animation, only show up to visibleAiActionCount of the AI actions.
+  // The log contains both old entries + new AI entries at the end.
+  // We need to hide AI entries beyond visibleAiActionCount.
+
+  const aiStartIndex = log.length - aiActions.length;
+  const visibleLog = isAnimating
+    ? log.slice(-50).filter((_, i) => {
+        const globalIdx = log.length - 50 + i;
+        if (globalIdx < 0) return false;
+        // If this entry is part of the AI batch, check if it's visible yet
+        const aiIdx = globalIdx - aiStartIndex;
+        if (aiIdx >= 0 && aiIdx < aiActions.length) {
+          return aiIdx < visibleAiActionCount;
+        }
+        return true;
+      })
+    : log.slice(-50);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [log.length]);
-
-  // Show the last 50 entries to avoid overwhelming the UI
-  const recentLog = log.slice(-50);
+  }, [visibleLog.length]);
 
   return (
     <div className="bg-slate-800/60 rounded-lg border border-slate-700">
@@ -30,16 +47,19 @@ export default function GameLog({ log, aiActions }: Props) {
         ref={scrollRef}
         className="p-2 max-h-48 overflow-y-auto space-y-0.5 text-xs font-mono"
       >
-        {recentLog.map((entry, i) => {
-          const isNew = aiActions.some(
+        {visibleLog.map((entry, i) => {
+          const isLatestAnimating = isAnimating && i === visibleLog.length - 1;
+          const isNew = !isAnimating && aiActions.some(
             (a) => a.action_id === entry.action_id && a.player === entry.player && a.description === entry.description
           );
           return (
             <div
               key={i}
-              className={`flex items-start gap-1.5 ${
+              className={`flex items-start gap-1.5 transition-colors duration-200 ${
                 entry.is_human
                   ? "text-sky-300"
+                  : isLatestAnimating
+                  ? "text-amber-300 font-medium"
                   : isNew
                   ? "text-slate-200"
                   : "text-slate-500"
@@ -55,7 +75,7 @@ export default function GameLog({ log, aiActions }: Props) {
             </div>
           );
         })}
-        {recentLog.length === 0 && (
+        {visibleLog.length === 0 && (
           <span className="text-slate-600">Game starting...</span>
         )}
       </div>

@@ -5,17 +5,29 @@ interface Props {
   player: PlayerState;
   isCurrentTurn: boolean;
   isHuman: boolean;
+  isHighlighted?: boolean;
+  highlightedAdviserSlots?: Set<number> | null;
 }
 
-export default function PlayerPanel({ player, isCurrentTurn, isHuman }: Props) {
+const GLOW_PLAYER = "ring-2 ring-amber-400/70 shadow-[0_0_20px_rgba(251,191,36,0.3)]";
+const GLOW_SLOT = "bg-amber-400/15 rounded-sm";
+
+export default function PlayerPanel({
+  player, isCurrentTurn, isHuman,
+  isHighlighted, highlightedAdviserSlots,
+}: Props) {
   const roleColor = ROLE_COLORS[player.role] || "text-slate-300";
   const bgColor = ROLE_BG_COLORS[player.role] || "bg-slate-800 border-slate-600";
 
+  const ringClass = isHighlighted
+    ? GLOW_PLAYER
+    : isCurrentTurn
+    ? "ring-2 ring-amber-400/60"
+    : "";
+
   return (
     <div
-      className={`rounded-lg border p-3 ${bgColor} ${
-        isCurrentTurn ? "ring-2 ring-amber-400/60" : ""
-      }`}
+      className={`rounded-lg border p-3 transition-shadow duration-300 ${bgColor} ${ringClass}`}
     >
       {/* Header */}
       <div className="flex items-center gap-2 mb-2">
@@ -64,17 +76,21 @@ export default function PlayerPanel({ player, isCurrentTurn, isHuman }: Props) {
           <span className="text-[10px] text-slate-500 uppercase tracking-wider">
             Advisers
           </span>
-          {player.advisers.map((adv, i) => (
-            <div key={i} className="flex items-center gap-1 text-xs">
-              <span className="text-slate-600">[{adv.slot ?? i}]</span>
-              <span className={adv.suit ? (SUIT_COLORS[adv.suit] || "text-slate-400") : "text-slate-400"}>
-                {adv.name}
-              </span>
-              <span className="text-slate-600">
-                {adv.faceup ? "^" : "v"}
-              </span>
-            </div>
-          ))}
+          {player.advisers.map((adv, i) => {
+            const advSlot = adv.slot ?? i;
+            const slotGlow = highlightedAdviserSlots?.has(advSlot) ? GLOW_SLOT : "";
+            return (
+              <div key={i} className={`flex items-center gap-1 text-xs px-1 py-0.5 -mx-1 transition-colors duration-300 ${slotGlow}`}>
+                <span className="text-slate-600">[{advSlot}]</span>
+                <span className={adv.suit ? (SUIT_COLORS[adv.suit] || "text-slate-400") : "text-slate-400"}>
+                  {adv.name}
+                </span>
+                <span className="text-slate-600">
+                  {adv.faceup ? "^" : "v"}
+                </span>
+              </div>
+            );
+          })}
         </div>
       )}
 

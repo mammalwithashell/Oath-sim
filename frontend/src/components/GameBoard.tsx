@@ -1,4 +1,4 @@
-import type { GameResponse } from "../types/game";
+import type { GameResponse, ActionHighlights, ActionLogEntry } from "../types/game";
 import BannerBar from "./BannerBar";
 import MapView from "./MapView";
 import PlayerPanel from "./PlayerPanel";
@@ -11,10 +11,35 @@ interface Props {
   onAction: (actionId: number) => void;
   onNewGame: () => void;
   loading: boolean;
+  activeHighlights: ActionHighlights | null;
+  isAnimating: boolean;
+  visibleAiActionCount: number;
+  animatingAction: ActionLogEntry | null;
 }
 
-export default function GameBoard({ data, onAction, onNewGame, loading }: Props) {
+export default function GameBoard({
+  data, onAction, onNewGame, loading,
+  activeHighlights, isAnimating, visibleAiActionCount, animatingAction,
+}: Props) {
   const gs = data.game_state;
+
+  // Compute per-site and per-player highlight flags
+  const highlightedSites = new Set(activeHighlights?.sites || []);
+  const highlightedPlayers = new Set(activeHighlights?.players || []);
+
+  // Card highlights: map of site_index → set of slot indices
+  const cardHighlights = new Map<number, Set<number>>();
+  for (const c of activeHighlights?.cards || []) {
+    if (!cardHighlights.has(c.site)) cardHighlights.set(c.site, new Set());
+    cardHighlights.get(c.site)!.add(c.slot);
+  }
+
+  // Adviser highlights: map of player_index → set of slot indices
+  const adviserHighlights = new Map<number, Set<number>>();
+  for (const a of activeHighlights?.advisers || []) {
+    if (!adviserHighlights.has(a.player)) adviserHighlights.set(a.player, new Set());
+    adviserHighlights.get(a.player)!.add(a.slot);
+  }
 
   return (
     <div className="min-h-screen bg-slate-900 flex flex-col">
@@ -23,7 +48,12 @@ export default function GameBoard({ data, onAction, onNewGame, loading }: Props)
       <div className="flex-1 flex overflow-hidden">
         {/* Left: Map */}
         <div className="flex-1 p-4 overflow-y-auto">
-          <MapView sites={gs.sites} players={gs.players} />
+          <MapView
+            sites={gs.sites}
+            players={gs.players}
+            highlightedSites={highlightedSites}
+            cardHighlights={cardHighlights}
+          />
         </div>
 
         {/* Right: Players + Actions + Log */}
@@ -36,12 +66,14 @@ export default function GameBoard({ data, onAction, onNewGame, loading }: Props)
                 player={player}
                 isCurrentTurn={player.index === gs.current_player_index}
                 isHuman={player.index === data.human_player_index}
+                isHighlighted={highlightedPlayers.has(player.index)}
+                highlightedAdviserSlots={adviserHighlights.get(player.index) || null}
               />
             ))}
           </div>
 
-          {/* Actions */}
-          {data.is_human_turn && (
+          {/* Actions — hidden during AI animation */}
+          {data.is_human_turn && !isAnimating && (
             <div className="px-3 pb-3">
               <ActionPanel
                 actions={data.legal_actions}
@@ -52,7 +84,21 @@ export default function GameBoard({ data, onAction, onNewGame, loading }: Props)
             </div>
           )}
 
-          {!data.is_human_turn && !gs.is_game_over && (
+          {/* Animating indicator */}
+          {isAnimating && animatingAction && (
+            <div className="px-3 pb-3">
+              <div className="bg-slate-800/60 rounded-lg border border-amber-500/30 p-4 text-center">
+                <div className="text-amber-400 text-sm font-medium mb-1">
+                  P{animatingAction.player} ({animatingAction.role})
+                </div>
+                <div className="text-slate-200 text-sm">
+                  {animatingAction.description}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {!data.is_human_turn && !gs.is_game_over && !isAnimating && (
             <div className="px-3 pb-3">
               <div className="bg-slate-800/60 rounded-lg border border-slate-700 p-4 text-center">
                 <span className="text-slate-400 text-sm">
@@ -64,17 +110,24 @@ export default function GameBoard({ data, onAction, onNewGame, loading }: Props)
 
           {/* Log */}
           <div className="px-3 pb-3 mt-auto">
-            <GameLog log={data.action_log} aiActions={data.ai_actions} />
+            <GameLog
+              log={data.action_log}
+              aiActions={data.ai_actions}
+              visibleAiActionCount={visibleAiActionCount}
+              isAnimating={isAnimating}
+            />
           </div>
         </div>
       </div>
 
       {/* Game over overlay */}
-      <GameOverModal
-        gs={gs}
-        humanPlayerIndex={data.human_player_index}
-        onNewGame={onNewGame}
-      />
+      {!isAnimating && (
+        <GameOverModal
+          gs={gs}
+          humanPlayerIndex={data.human_player_index}
+          onNewGame={onNewGame}
+        />
+      )}
     </div>
   );
 }

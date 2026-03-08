@@ -206,6 +206,96 @@ def _serialize_compound(gs: GameState) -> Optional[dict]:
     return result
 
 
+def serialize_action_highlights(
+    action_id: int, gs: GameState, player_index: int
+) -> dict:
+    """Extract structured highlight targets from an action for UI glow effects."""
+    decoded = _decoder.decode(action_id)
+    at = decoded.action_type
+    player = gs.players[player_index]
+    h: dict = {"sites": [], "cards": [], "advisers": [], "players": []}
+
+    # Travel → highlight destination site
+    if at == ActionType.TRAVEL and decoded.site_index is not None:
+        h["sites"].append(decoded.site_index)
+
+    # Muster / Trade → highlight card at player's current site
+    if at in (ActionType.MUSTER, ActionType.TRADE_FAVOR, ActionType.TRADE_SECRETS):
+        if decoded.card_slot is not None:
+            h["cards"].append({"site": player.pawn_site, "slot": decoded.card_slot})
+            h["sites"].append(player.pawn_site)
+
+    # Recover relic → highlight site
+    if at == ActionType.RECOVER and decoded.target_relic_slot is not None:
+        h["sites"].append(player.pawn_site)
+
+    # Recover banners
+    if at in (ActionType.RECOVER_PEOPLES_FAVOR, ActionType.RECOVER_DARKEST_SECRET):
+        h["players"].append(player_index)
+
+    # Flip adviser / Battle plan → highlight adviser
+    if at in (ActionType.MINOR_FLIP_ADVISER, ActionType.CAMPAIGN_BATTLE_PLAN):
+        if decoded.card_slot is not None:
+            h["advisers"].append({"player": player_index, "slot": decoded.card_slot})
+
+    # Use action → slots 0-2 are advisers, 3-5 are site cards
+    if at == ActionType.MINOR_USE_ACTION and decoded.card_slot is not None:
+        if decoded.card_slot < 3:
+            h["advisers"].append({"player": player_index, "slot": decoded.card_slot})
+        else:
+            site_slot = decoded.card_slot - 3
+            h["cards"].append({"site": player.pawn_site, "slot": site_slot})
+            h["sites"].append(player.pawn_site)
+
+    # Campaign declare / Offer citizenship → highlight target player
+    if at in (ActionType.CAMPAIGN_DECLARE, ActionType.OFFER_CITIZENSHIP):
+        if decoded.target_player is not None:
+            abs_target = (player_index + decoded.target_player) % gs.num_players
+            h["players"].append(abs_target)
+
+    # Campaign target site
+    if at == ActionType.CAMPAIGN_TARGET_SITE and decoded.site_index is not None:
+        h["sites"].append(decoded.site_index)
+
+    # Campaign target relic
+    if at == ActionType.CAMPAIGN_TARGET_RELIC:
+        cs = gs.compound_state
+        if cs and cs.campaign_defender is not None:
+            h["players"].append(cs.campaign_defender)
+
+    # Campaign target pawn
+    if at == ActionType.CAMPAIGN_TARGET_PAWN:
+        cs = gs.compound_state
+        if cs and cs.campaign_defender is not None:
+            h["players"].append(cs.campaign_defender)
+
+    # Search play → highlight player (card goes to their site or advisers)
+    if at == ActionType.SEARCH_PLAY:
+        h["sites"].append(player.pawn_site)
+        h["players"].append(player_index)
+
+    # Search discard — no highlight needed
+
+    # End act phase — highlight the player
+    if at == ActionType.END_ACT_PHASE:
+        h["players"].append(player_index)
+
+    # Accept/decline citizenship
+    if at in (ActionType.ACCEPT_CITIZENSHIP, ActionType.DECLINE_CITIZENSHIP):
+        h["players"].append(player_index)
+
+    # Self-exile
+    if at == ActionType.SELF_EXILE:
+        h["players"].append(player_index)
+
+    # Campaign sacrifice
+    if at == ActionType.CAMPAIGN_SACRIFICE:
+        h["players"].append(player_index)
+
+    # Return only non-empty lists
+    return {k: v for k, v in h.items() if v}
+
+
 def serialize_legal_actions(
     gs: GameState, player_index: int, action_mask: np.ndarray
 ) -> list[dict]:

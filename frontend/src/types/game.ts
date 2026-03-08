@@ -87,13 +87,24 @@ export interface LegalAction {
   description: string;
 }
 
+export interface ActionHighlights {
+  sites?: number[];
+  cards?: { site: number; slot: number }[];
+  advisers?: { player: number; slot: number }[];
+  players?: number[];
+}
+
 export interface ActionLogEntry {
   player: number;
   role: string;
   action_id: number;
   description: string;
   is_human?: boolean;
+  highlights?: ActionHighlights;
 }
+
+// Delay between AI actions in milliseconds (adjust to taste)
+export const AI_ACTION_DELAY_MS = 800;
 
 export interface GameResponse {
   game_id: string;

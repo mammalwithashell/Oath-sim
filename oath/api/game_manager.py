@@ -9,6 +9,7 @@ from typing import Optional
 from oath.agents.heuristic_agent import HeuristicAgent
 from oath.agents.random_agent import RandomAgent
 from oath.api.serializers import (
+    serialize_action_highlights,
     serialize_game_state,
     serialize_legal_actions,
 )
@@ -70,11 +71,14 @@ class GameSession:
             desc = describe_action(action, gs, player_idx)
             role = gs.players[player_idx].role.name
 
+            highlights = serialize_action_highlights(action, gs, player_idx)
+
             log_entry = {
                 "player": player_idx,
                 "role": role,
                 "action_id": action,
                 "description": desc,
+                "highlights": highlights,
             }
             self.action_log.append(log_entry)
             self.pending_ai_actions.append(log_entry)

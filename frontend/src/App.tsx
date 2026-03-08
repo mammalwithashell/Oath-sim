@@ -3,7 +3,10 @@ import GameSetup from "./components/GameSetup";
 import GameBoard from "./components/GameBoard";
 
 export default function App() {
-  const { gameData, loading, error, startGame, takeAction, resetGame } = useGame();
+  const {
+    gameData, loading, error, startGame, takeAction, resetGame,
+    activeHighlights, isAnimating, visibleAiActionCount, animatingAction,
+  } = useGame();
 
   if (!gameData) {
     return (
@@ -25,6 +28,10 @@ export default function App() {
         onAction={takeAction}
         onNewGame={resetGame}
         loading={loading}
+        activeHighlights={activeHighlights}
+        isAnimating={isAnimating}
+        visibleAiActionCount={visibleAiActionCount}
+        animatingAction={animatingAction}
       />
       {error && (
         <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-red-900 text-red-200 px-4 py-2 rounded-lg text-sm z-50">

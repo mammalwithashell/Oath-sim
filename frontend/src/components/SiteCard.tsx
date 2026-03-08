@@ -4,14 +4,20 @@ import { SUIT_COLORS, SUIT_DOT_COLORS, PLAYER_COLORS, REGION_COLORS } from "../t
 interface Props {
   site: SiteState;
   players: PlayerState[];
+  isHighlighted?: boolean;
+  highlightedSlots?: Set<number> | null;
 }
 
-export default function SiteCard({ site, players }: Props) {
+const GLOW_SITE = "ring-2 ring-amber-400/70 shadow-[0_0_20px_rgba(251,191,36,0.3)]";
+const GLOW_SLOT = "bg-amber-400/15 rounded-sm";
+
+export default function SiteCard({ site, players, isHighlighted, highlightedSlots }: Props) {
   const regionColor = REGION_COLORS[site.region] || "border-l-slate-600";
+  const glowClass = isHighlighted ? GLOW_SITE : "";
 
   if (!site.is_faceup) {
     return (
-      <div className={`bg-slate-800/80 rounded-lg border border-slate-700 border-l-4 ${regionColor} p-3 min-w-[220px]`}>
+      <div className={`bg-slate-800/80 rounded-lg border border-slate-700 border-l-4 ${regionColor} p-3 min-w-[220px] transition-shadow duration-300 ${glowClass}`}>
         <div className="flex items-center justify-between mb-1">
           <span className="text-slate-400 font-medium text-sm">{site.name}</span>
           <span className="text-xs text-slate-600">FACEDOWN</span>
@@ -33,7 +39,7 @@ export default function SiteCard({ site, players }: Props) {
   }
 
   return (
-    <div className={`bg-slate-800/80 rounded-lg border border-slate-700 border-l-4 ${regionColor} p-3 min-w-[220px]`}>
+    <div className={`bg-slate-800/80 rounded-lg border border-slate-700 border-l-4 ${regionColor} p-3 min-w-[220px] transition-shadow duration-300 ${glowClass}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-2">
         <span className="text-slate-200 font-medium text-sm">{site.name}</span>
@@ -53,27 +59,30 @@ export default function SiteCard({ site, players }: Props) {
 
       {/* Cards */}
       <div className="space-y-1 mb-2">
-        {site.cards.map((card, slot) => (
-          <div key={slot} className="flex items-center gap-1.5 text-xs">
-            <span className="text-slate-600 w-4">[{slot}]</span>
-            {card ? (
-              <>
-                <span className={`w-2 h-2 rounded-full ${card.suit ? SUIT_DOT_COLORS[card.suit] : "bg-slate-600"}`} />
-                <span className={card.suit ? SUIT_COLORS[card.suit] : "text-slate-400"}>
-                  {card.name}
-                </span>
-                {(card.favor ?? 0) > 0 && (
-                  <span className="text-amber-400">+{card.favor}f</span>
-                )}
-                {(card.secrets ?? 0) > 0 && (
-                  <span className="text-indigo-400">+{card.secrets}s</span>
-                )}
-              </>
-            ) : (
-              <span className="text-slate-600">--</span>
-            )}
-          </div>
-        ))}
+        {site.cards.map((card, slot) => {
+          const slotGlow = highlightedSlots?.has(slot) ? GLOW_SLOT : "";
+          return (
+            <div key={slot} className={`flex items-center gap-1.5 text-xs px-1 py-0.5 -mx-1 transition-colors duration-300 ${slotGlow}`}>
+              <span className="text-slate-600 w-4">[{slot}]</span>
+              {card ? (
+                <>
+                  <span className={`w-2 h-2 rounded-full ${card.suit ? SUIT_DOT_COLORS[card.suit] : "bg-slate-600"}`} />
+                  <span className={card.suit ? SUIT_COLORS[card.suit] : "text-slate-400"}>
+                    {card.name}
+                  </span>
+                  {(card.favor ?? 0) > 0 && (
+                    <span className="text-amber-400">+{card.favor}f</span>
+                  )}
+                  {(card.secrets ?? 0) > 0 && (
+                    <span className="text-indigo-400">+{card.secrets}s</span>
+                  )}
+                </>
+              ) : (
+                <span className="text-slate-600">--</span>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {/* Relics */}
