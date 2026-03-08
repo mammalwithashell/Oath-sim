@@ -6,12 +6,15 @@ vision completion, successor goals, and end-of-round die rolls.
 
 from __future__ import annotations
 
+import logging
 from typing import Optional
 
 from oath.enums import (
     OathGoal, SuccessorGoal, TitleSide, Role, WinType, MAX_ROUNDS,
 )
 from oath.state.game_state import GameState
+
+logger = logging.getLogger(__name__)
 
 
 def check_end_of_round_win(gs: GameState) -> Optional[int]:
@@ -27,11 +30,22 @@ def check_end_of_round_win(gs: GameState) -> Optional[int]:
     end_probability = _end_probability(gs.round_number)
     roll = gs.rng.random()
 
+    logger.debug(
+        "End-of-round die: round=%d, prob=%.2f, roll=%.3f",
+        gs.round_number, end_probability, roll,
+    )
+
     if roll >= end_probability and gs.round_number < MAX_ROUNDS:
-        return None  # Game continues
+        logger.debug("Game continues (roll >= prob)")
+        return None
 
     # Game ends — determine winner
-    return _determine_winner(gs)
+    winner = _determine_winner(gs)
+    logger.info(
+        "Game ending: round=%d, winner=P%d, win_type=%s",
+        gs.round_number, winner, gs.win_type,
+    )
+    return winner
 
 
 def check_usurper_win(gs: GameState, player_index: int) -> bool:
@@ -75,11 +89,13 @@ def check_start_of_turn_wins(gs: GameState, player_index: int) -> Optional[int]:
     # Usurper win check
     if check_usurper_win(gs, player_index):
         gs.win_type = WinType.USURPER
+        logger.info("Usurper win: P%d", player_index)
         return player_index
 
     # Vision win check
     if check_vision_win(gs, player_index):
         gs.win_type = WinType.VISION
+        logger.info("Vision win: P%d (vision=%s)", player_index, gs.players[player_index].revealed_vision)
         return player_index
 
     return None
@@ -95,6 +111,7 @@ def _determine_winner(gs: GameState) -> int:
         if player.role in (Role.EXILE, Role.CITIZEN) and player.revealed_vision is not None:
             if _check_vision_condition(gs, i, player.revealed_vision):
                 gs.win_type = WinType.VISION
+                logger.info("End-of-round vision win: P%d (%s) vision=%d", i, player.role.name, player.revealed_vision)
                 return i
 
     # Check successor goal for citizens
@@ -102,10 +119,13 @@ def _determine_winner(gs: GameState) -> int:
         if player.role == Role.CITIZEN:
             if _check_successor_goal(gs, i):
                 gs.win_type = WinType.SUCCESSOR
+                logger.info("Successor win: P%d (goal=%s)", i, gs.successor_goal.name)
                 return i
 
     # Default: Oathkeeper wins
     gs.win_type = WinType.OATHKEEPER_DEFAULT
+    holder = gs.oathkeeper_holder if gs.oathkeeper_holder is not None else gs.chancellor_index
+    logger.info("Oathkeeper default win: P%d", holder)
     if gs.oathkeeper_holder is not None:
         return gs.oathkeeper_holder
 

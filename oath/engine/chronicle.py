@@ -7,10 +7,13 @@ implements all 8 sub-steps of Section 8.
 
 from __future__ import annotations
 
+import logging
 from collections import Counter
 from typing import Callable, Optional
 
 import numpy as np
+
+logger = logging.getLogger(__name__)
 
 from oath.enums import (
     OathGoal, SuccessorGoal, Role, Suit, Region,
@@ -72,30 +75,42 @@ def apply_chronicle(
         chronicle = ChronicleState()
         _initialize_archive(chronicle, gs)
 
+    logger.info(
+        "Applying chronicle: winner=P%d (%s), win_type=%s, games_played=%d",
+        winner, gs.players[winner].role.name, gs.win_type, chronicle.games_played,
+    )
+
     # Step 8.1: Vow an Oath
     chronicle.oath_goal = _vow_an_oath(gs, winner, oath_choice_callback)
     chronicle.successor_goal = SuccessorGoal(OATH_TO_SUCCESSOR[chronicle.oath_goal])
+    logger.info("8.1 Vow: oath=%s, successor=%s", chronicle.oath_goal.name, chronicle.successor_goal.name)
 
     # Step 8.2: Offer Citizenship
     chronicle.player_boards = _offer_citizenship(gs, winner, citizenship_callback)
+    logger.info("8.2 Citizenship: boards=%s", [r.name for r in chronicle.player_boards])
 
     # Step 8.3: Clean Up Map and Build Edifices
     _clean_up_map(gs, chronicle, winner, rng)
+    logger.debug("8.3 Map cleanup: %d chronicled sites", len(chronicle.chronicled_sites))
 
     # Step 8.4: Add Six Cards to World Deck
     _add_cards_to_world_deck(gs, chronicle, winner, rng)
+    logger.debug("8.4 Added cards to world deck")
 
     # Step 8.5: Remove Six Cards to Dispossessed
     _remove_cards_to_dispossessed(gs, chronicle, winner, rng)
+    logger.debug("8.5 Removed cards to dispossessed")
 
     # Step 8.6: Clean Up Relics
     _clean_up_relics(gs, chronicle, winner, rng)
+    logger.debug("8.6 Relics cleaned up")
 
     # Step 8.7: Save Map and Boards
     _save_map_and_boards(gs, chronicle)
 
     # Step 8.8: Rebuild the World Deck
     _rebuild_world_deck(gs, chronicle, rng)
+    logger.debug("8.8 World deck rebuilt: %d cards", len(chronicle.world_deck))
 
     chronicle.last_winner = winner
     chronicle.games_played += 1

@@ -6,7 +6,10 @@ and returns the modified GameState.
 
 from __future__ import annotations
 
+import logging
 from typing import Optional
+
+logger = logging.getLogger(__name__)
 
 from oath.enums import (
     ActionType, Phase, Role, Region, CompoundStateType,
@@ -764,6 +767,10 @@ def _record_action(
     was_successful: bool = False,
 ) -> None:
     """Record an action in the history."""
+    logger.debug(
+        "P%d %s site=%s target_player=%s",
+        player_index, action_type.name, target_site, target_player,
+    )
     gs.action_history.append(ActionRecord(
         player_index=player_index,
         action_type=action_type,

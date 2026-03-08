@@ -17,6 +17,7 @@ Examples:
 """
 
 import argparse
+import logging
 import sys
 
 from oath.evaluation.evaluator import ChronicleEvaluator
@@ -51,7 +52,15 @@ def main():
                         help="Set agent for player index. TYPE: random, heuristic")
     parser.add_argument("--num-chronicles", type=int, default=1,
                         help="Run multiple chronicle sequences (default: 1)")
+    parser.add_argument("--log-level", default="INFO",
+                        choices=["DEBUG", "INFO", "WARNING", "ERROR"],
+                        help="Logging level (default: INFO)")
     args = parser.parse_args()
+
+    logging.basicConfig(
+        level=getattr(logging, args.log_level),
+        format="%(levelname).1s %(name)s: %(message)s",
+    )
 
     # Build agent dict from --agent flags
     agents = {}

@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Optional
 
 import numpy as np
+
+logger = logging.getLogger(__name__)
 
 from oath.enums import (
     Role, Region, Phase, OathGoal, SuccessorGoal, TitleSide,
@@ -211,6 +214,10 @@ def create_initial_state(
     gs.phase = Phase.WAKE
     gs.round_number = 1
 
+    logger.info(
+        "Game created: %d players, oath=%s, successor=%s, chancellor=P%d, seed=%s",
+        num_players, oath_goal.name, successor_goal.name, chancellor_idx, seed,
+    )
     return gs
 
 
@@ -350,11 +357,17 @@ def advance_turn(gs: GameState) -> GameState:
     if next_pos == 0:
         # End of round
         gs.turn_in_round = 0
+        logger.debug("End of round %d", gs.round_number)
         _end_of_round(gs)
     else:
         gs.turn_in_round = next_pos
         gs.current_player_index = gs.turn_order[next_pos]
         gs.phase = Phase.WAKE
+        player = gs.players[gs.current_player_index]
+        logger.debug(
+            "Turn -> P%d (%s) round=%d",
+            gs.current_player_index, player.role.name, gs.round_number,
+        )
 
     return gs
 
@@ -413,9 +426,12 @@ def _end_of_round(gs: GameState) -> GameState:
 
     if gs.round_number > MAX_ROUNDS:
         gs.is_game_over = True
-        # Chancellor wins if no usurper
         if gs.winner is None:
             gs.winner = gs.oathkeeper_holder
+        logger.info(
+            "Game over (max rounds): winner=P%s, win_type=%s",
+            gs.winner, gs.win_type,
+        )
         return gs
 
     # Check if game can end (round 5+)
@@ -424,6 +440,10 @@ def _end_of_round(gs: GameState) -> GameState:
         if result is not None:
             gs.is_game_over = True
             gs.winner = result
+            logger.info(
+                "Game over (end-of-round): winner=P%d, win_type=%s, round=%d",
+                result, gs.win_type, gs.round_number,
+            )
 
     # Start new round
     gs.current_player_index = gs.turn_order[0]

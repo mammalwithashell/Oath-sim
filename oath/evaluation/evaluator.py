@@ -208,11 +208,15 @@ class ChronicleEvaluator:
         gs = env.game_state
         assert gs is not None
 
+        # Use the winner's role at game end, not at game start
+        winner_idx = gs.winner if gs.winner is not None else 0
+        winner_role = gs.players[winner_idx].role if gs.winner is not None else Role.CHANCELLOR
+
         return GameResult(
             game_index=game_index,
-            winner=gs.winner if gs.winner is not None else 0,
+            winner=winner_idx,
             win_type=gs.win_type,
-            winner_role=initial_roles[gs.winner] if gs.winner is not None else Role.CHANCELLOR,
+            winner_role=winner_role,
             oath_goal=initial_oath_goal,
             successor_goal=initial_successor_goal,
             round_number=gs.round_number,
