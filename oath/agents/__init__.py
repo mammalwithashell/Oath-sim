@@ -7,8 +7,10 @@ Available agents:
         Implements the Clockwork Prince flowchart with threat assessment, Mind
         quadrants, and Ready to Fight calculation. Use with ``clockwork_prince=True``
         in OathEnv for automatic Chancellor play during exile RL training.
+    HumanAgent: Interactive CLI agent that prompts for input.
 """
 
 from oath.agents.clockwork_prince import ClockworkPrinceAgent
+from oath.agents.human_agent import HumanAgent
 
-__all__ = ["ClockworkPrinceAgent"]
+__all__ = ["ClockworkPrinceAgent", "HumanAgent"]
