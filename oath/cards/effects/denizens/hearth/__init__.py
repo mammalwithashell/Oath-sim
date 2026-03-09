@@ -1,0 +1,35 @@
+"""Auto-generated: imports all card effect modules to trigger registration."""
+
+from . import a_round_of_ale  # noqa: F401
+from . import armed_mob  # noqa: F401
+from . import awaited_return  # noqa: F401
+from . import ballot_box  # noqa: F401
+from . import book_binders  # noqa: F401
+from . import charming_friend  # noqa: F401
+from . import crop_rotation  # noqa: F401
+from . import deed_writer  # noqa: F401
+from . import extra_provisions  # noqa: F401
+from . import fabled_feast  # noqa: F401
+from . import family_heirloom  # noqa: F401
+from . import hearts_and_minds  # noqa: F401
+from . import herald  # noqa: F401
+from . import homesteaders  # noqa: F401
+from . import hospital  # noqa: F401
+from . import land_warden  # noqa: F401
+from . import levelers  # noqa: F401
+from . import marriage  # noqa: F401
+from . import memory_of_home  # noqa: F401
+from . import news_from_afar  # noqa: F401
+from . import relic_breaker  # noqa: F401
+from . import rowdy_pub  # noqa: F401
+from . import saddle_makers  # noqa: F401
+from . import salad_days  # noqa: F401
+from . import storyteller  # noqa: F401
+from . import tavern_songs  # noqa: F401
+from . import the_great_levy  # noqa: F401
+from . import tinkers_fair  # noqa: F401
+from . import traveling_doctor  # noqa: F401
+from . import village_constable  # noqa: F401
+from . import vow_of_peace  # noqa: F401
+from . import wayside_inn  # noqa: F401
+from . import welcoming_party  # noqa: F401

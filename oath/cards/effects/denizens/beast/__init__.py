@@ -1,0 +1,35 @@
+"""Auto-generated: imports all card effect modules to trigger registration."""
+
+from . import animal_host  # noqa: F401
+from . import animal_playmates  # noqa: F401
+from . import birdsong  # noqa: F401
+from . import bracken  # noqa: F401
+from . import errand_boy  # noqa: F401
+from . import fae_merchant  # noqa: F401
+from . import forest_council  # noqa: F401
+from . import forest_paths  # noqa: F401
+from . import giant_python  # noqa: F401
+from . import grasping_vines  # noqa: F401
+from . import insect_swarm  # noqa: F401
+from . import long_lost_heir  # noqa: F401
+from . import marsh_spirit  # noqa: F401
+from . import memory_of_nature  # noqa: F401
+from . import mushrooms  # noqa: F401
+from . import nature_worship  # noqa: F401
+from . import new_growth  # noqa: F401
+from . import pied_piper  # noqa: F401
+from . import rangers  # noqa: F401
+from . import roving_terror  # noqa: F401
+from . import second_chance  # noqa: F401
+from . import small_friends  # noqa: F401
+from . import the_old_oak  # noqa: F401
+from . import threatening_roar  # noqa: F401
+from . import true_names  # noqa: F401
+from . import vow_of_beastkin  # noqa: F401
+from . import vow_of_poverty  # noqa: F401
+from . import vow_of_union  # noqa: F401
+from . import walled_garden  # noqa: F401
+from . import war_tortoise  # noqa: F401
+from . import wild_allies  # noqa: F401
+from . import wild_cry  # noqa: F401
+from . import wolves  # noqa: F401

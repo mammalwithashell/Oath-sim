@@ -1,0 +1,35 @@
+"""Auto-generated: imports all card effect modules to trigger registration."""
+
+from . import battle_honors  # noqa: F401
+from . import bear_traps  # noqa: F401
+from . import captains  # noqa: F401
+from . import code_of_honor  # noqa: F401
+from . import council_seat  # noqa: F401
+from . import curfew  # noqa: F401
+from . import encirclement  # noqa: F401
+from . import field_promotion  # noqa: F401
+from . import forced_labor  # noqa: F401
+from . import garrison  # noqa: F401
+from . import hunting_party  # noqa: F401
+from . import keep  # noqa: F401
+from . import knights_errant  # noqa: F401
+from . import longbows  # noqa: F401
+from . import martial_culture  # noqa: F401
+from . import messenger  # noqa: F401
+from . import military_parade  # noqa: F401
+from . import outriders  # noqa: F401
+from . import palanquin  # noqa: F401
+from . import peace_envoy  # noqa: F401
+from . import pressgangs  # noqa: F401
+from . import relic_hunter  # noqa: F401
+from . import royal_tax  # noqa: F401
+from . import scouts  # noqa: F401
+from . import secret_police  # noqa: F401
+from . import shield_wall  # noqa: F401
+from . import siege_engines  # noqa: F401
+from . import specialist  # noqa: F401
+from . import toll_roads  # noqa: F401
+from . import tome_guardians  # noqa: F401
+from . import tyrant  # noqa: F401
+from . import vow_of_obedience  # noqa: F401
+from . import wrestlers  # noqa: F401

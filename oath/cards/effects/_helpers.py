@@ -96,7 +96,10 @@ def place_warbands_at_site(gs: 'GameState', player_index: int,
     actual = min(count, player.warbands_bank)
     player.warbands_bank -= actual
     player.warbands_board += actual
-    gs.sites[site_index].warbands += actual
+    site = gs.sites[site_index]
+    site.warbands += actual
+    if actual > 0:
+        site.warband_color = 0 if gs.is_imperial(player_index) else player_index
     return gs
 
 
@@ -108,6 +111,10 @@ def kill_warbands(gs: 'GameState', target_player: int,
     actual = min(count, site.warbands, player.warbands_board)
     site.warbands -= actual
     player.warbands_board -= actual
+    if site.warbands <= 0:
+        site.warbands = 0
+        site.ruling_player = None
+        site.warband_color = None
     return gs
 
 
@@ -128,7 +135,7 @@ def always_true(gs: 'GameState', player_index: int) -> bool:
 
 def has_rule(gs: 'GameState', player_index: int) -> bool:
     """Check if player rules any site."""
-    return any(s.ruling_player == player_index for s in gs.sites)
+    return gs.count_sites_ruled(player_index) > 0
 
 
 def is_role(role: Role) -> Callable[['GameState', int], bool]:
@@ -154,10 +161,43 @@ def has_min_secrets(amount: int) -> Callable[['GameState', int], bool]:
 
 def player_rules_site(gs: 'GameState', player_index: int,
                       site_index: int) -> bool:
-    """Check if player rules a specific site."""
-    return gs.sites[site_index].ruling_player == player_index
+    """Check if player rules a specific site (Imperial sharing aware)."""
+    site = gs.sites[site_index]
+    if site.ruling_player == player_index:
+        return True
+    # Imperial sharing: Chancellor and Citizens share rule over Imperial sites
+    if (gs.is_imperial(player_index)
+            and site.ruling_player is not None
+            and gs.is_imperial(site.ruling_player)
+            and site.warband_color == 0
+            and site.warbands > 0):
+        return True
+    return False
 
 
 def count_ruled_sites(gs: 'GameState', player_index: int) -> int:
     """Count how many sites a player rules."""
-    return sum(1 for s in gs.sites if s.ruling_player == player_index and s.is_faceup)
+    return gs.count_sites_ruled(player_index)
+
+
+def has_darkest_secret(gs: 'GameState', player_index: int) -> bool:
+    """Check if player holds the Darkest Secret."""
+    return gs.darkest_secret_holder == player_index
+
+
+def has_warbands_on_board(min_count: int):
+    """Return a condition checking player has at least min_count warbands on board."""
+    def _check(gs: 'GameState', player_index: int) -> bool:
+        return gs.players[player_index].warbands_board >= min_count
+    return _check
+
+
+def has_secrets_and_player_at_site(gs: 'GameState', player_index: int) -> bool:
+    """Check if player has secrets and another player is at the same site."""
+    player = gs.players[player_index]
+    if player.secrets < 1:
+        return False
+    for i, p in enumerate(gs.players):
+        if i != player_index and p.pawn_site == player.pawn_site:
+            return True
+    return False

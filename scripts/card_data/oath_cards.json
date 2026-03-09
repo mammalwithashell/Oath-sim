@@ -1,0 +1,4519 @@
+[
+  {
+    "leder_id": "OATH-001",
+    "name": "Wrestlers",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "+ `symbol:diceb` if you sacrifice one warband in your force.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Wrestlers",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-002",
+    "name": "Battle Honors",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "If you're victorious, gain `symbol:favor` `symbol:favor` from the `symbol:suit-order` bank.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Battle Honors",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-003",
+    "name": "Bear Traps",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "- `symbol:dicer` Kill one warband on the attacker's board.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Bear Traps",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-004",
+    "name": "Longbows",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "± `symbol:dicer`",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Longbows",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-005",
+    "name": "Keep",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "+2 `symbol:diceb` if this site is targeted.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Keep",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-006",
+    "name": "Pressgangs",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "You can muster on cards that have `symbol:favor` or `symbol:secret` on them.",
+    "effect_tags": [
+      "Muster",
+      "Power"
+    ],
+    "image_name": "Pressgangs",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-007",
+    "name": "Garrison",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "**When Played**, gain one warband per site you rule, and put one warband from your board on each site you rule.",
+    "effect_tags": [],
+    "image_name": "Garrison",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-008",
+    "name": "Scouts",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "Gain 1 Supply.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Scouts",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-009",
+    "name": "Alchemist",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**Action**: Gain `symbol:favor` `symbol:favor` `symbol:favor` `symbol:favor` from any favor bank or banks.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Alchemist",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-010",
+    "name": "Martial Culture",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "If you're an Exile and defeat another Exile, you may become a Citizen- take no relic, end your Act Phase, and refresh supply to full _(leftmost)_.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Martial Culture",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-011",
+    "name": "Errand Boy",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "You may draw from a discard pile in a different region instead of yours.",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "Errand Boy",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-012",
+    "name": "Mercenaries",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "±3 `symbol:dicer` If you're defeated while using this power, discard Mercenaries.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Mercenaries",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-013",
+    "name": "Tinker's Fair",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**Action**: Negotiate a binding exchange of `symbol:favor`, `symbol:secret`, and relics with any player.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Tinker's Fair",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-014",
+    "name": "Rain Boots",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "Ignore all your enemy's rolls of single shields `symbol:shield`. At end, discard Rain Boots.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Rain Boots",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-015",
+    "name": "A Small Favor",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**When Played**, Gain four warbands.",
+    "effect_tags": [],
+    "image_name": "A Small Favor",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-016",
+    "name": "Second Wind",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "After you're victorious, you may travel and then may campaign, spending no Supply for either.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Second Wind",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-017",
+    "name": "Sleight of Hand",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**Action**: Take `symbol:secret` from a player whose pawn is at your site. You cannot take their last `symbol:secret`.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Sleight of Hand",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-018",
+    "name": "Key to the City",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**When Played**, if the ruler's pawn is not at this site, kill any warbands at this site, then gain a warband and place it here.",
+    "effect_tags": [],
+    "image_name": "Key to the City",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-019",
+    "name": "Scryer",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**Action**: Peek at any one discard pile.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Scryer",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-020",
+    "name": "Disgraced Captain",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "+4 `symbol:dicer` if targeting a site that has an `symbol:suit-order` card.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Disgraced Captain",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-021",
+    "name": "Naysayers",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**Rest**: If any Exile is the Oathkeeper or Usurper, take `symbol:favor` from the Chancellor.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Naysayers",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-022",
+    "name": "Book Burning",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "If you're victorious and targeted the defender's pawn, they also burn all of the `symbol:secret` on their board except their last.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Book Burning",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-023",
+    "name": "Ancient Binding",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "**Action**: Each player burns all their `symbol:secret` except their last. _(The only `symbol:secret` you keep is the one here.)_",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Ancient Binding",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-024",
+    "name": "Horse Archers",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "±3 `symbol:dicer` At end, discard Horse Archers.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Horse Archers",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-025",
+    "name": "Warning Signals",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "Move any warbands to and from your board and any sites you rule _(except the last warband from a site)_. At end, discard Warning Signals.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Warning Signals",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-026",
+    "name": "Elders",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "**Action**: Gain `symbol:favor`.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Elders",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-027",
+    "name": "The Gathering",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "**When Played**, any players in turn order may put their pawn on this site. Then, players with pawns here may negotiate binding exchanges of `symbol:favor`, `symbol:secret`, relics, and advisers.",
+    "effect_tags": [],
+    "image_name": "The Gathering",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-028",
+    "name": "Faithful Friend",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "**When Played**, gain 4 Supply.",
+    "effect_tags": [],
+    "image_name": "Faithful Friend",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-029",
+    "name": "Tents",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "Spend no Supply if you're traveling to a site in your region.",
+    "effect_tags": [
+      "Power",
+      "Travel"
+    ],
+    "image_name": "Tents",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-030",
+    "name": "Great Herd",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "**When Played**, you may swap Great Herd with a `symbol:suit-nomad` card at any site.",
+    "effect_tags": [],
+    "image_name": "Great Herd",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-031",
+    "name": "Fire Talkers",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "±3 `symbol:dicer` if you hold the Darkest Secret.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Fire Talkers",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-032",
+    "name": "Magician's Code",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "If recovering the Darkest Secret, gain `symbol:secret` `symbol:secret` and add them to any other `symbol:secret` you're paying to recover it _(even none)_.",
+    "effect_tags": [
+      "Power",
+      "Recover"
+    ],
+    "image_name": "Magician's Code",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-033",
+    "name": "Spirit Snare",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**Action**: Take `symbol:favor` from any one favor bank.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Spirit Snare",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-034",
+    "name": "Wizard School",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**Action**: Gain `symbol:secret`, then end your Act Phase.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Wizard School",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-035",
+    "name": "Dazzle",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**When Played**, discard all `symbol:suit-hearth` and `symbol:suit-order` cards at sites in your region.",
+    "effect_tags": [],
+    "image_name": "Dazzle",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-036",
+    "name": "Acting Troupe",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "Act as if the Acting Troupe is a `symbol:suit-beast` or `symbol:suit-order` card instead.",
+    "effect_tags": [
+      "Power",
+      "Trade"
+    ],
+    "image_name": "Acting Troupe",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-037",
+    "name": "Taming Charm",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**Action**: Discard a `symbol:suit-beast` or `symbol:suit-nomad` card at your site to gain `symbol:favor` `symbol:favor` from the matching favor bank.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Taming Charm",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-038",
+    "name": "Inquisitor",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**Action**: Peek at an adviser of a player whose pawn is at your site. If it is the Conspiracy, you play it or discard it. If it is not, give them the `symbol:favor` here.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Inquisitor",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-039",
+    "name": "Wolves",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "**Action**: Kill one warband _(even yours)_ on any one board.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Wolves",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-040",
+    "name": "Animal Playmates",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "Spend no Supply if you're mustering on a `symbol:suit-beast` card.",
+    "effect_tags": [
+      "Muster",
+      "Power"
+    ],
+    "image_name": "Animal Playmates",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-041",
+    "name": "True Names",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "Your enemy **cannot** use battle plans that match any of your advisers against you.",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "True Names",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-042",
+    "name": "The Old Oak",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "If trading with The Old Oak for `symbol:secret`, gain one more `symbol:secret` if you have any `symbol:suit-beast` advisers.",
+    "effect_tags": [
+      "Power",
+      "Trade"
+    ],
+    "image_name": "The Old Oak",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-043",
+    "name": "Forest Paths",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "Spend no Supply and ignore the powers of sites if you're traveling to a site with a `symbol:suit-beast` card.",
+    "effect_tags": [
+      "Power",
+      "Travel"
+    ],
+    "image_name": "Forest Paths",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-044",
+    "name": "Long-Lost Heir",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "**When Played**, if you're an Exile, you may become a Citizen- take no relic, end your Act Phase, and refresh Supply to full _(leftmost)_.",
+    "effect_tags": [],
+    "image_name": "Long-Lost Heir",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-045",
+    "name": "Rangers",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "Ignore all skulls `symbol:skull` you roll. +2 `symbol:dicer` if the defense pool has 4+ `symbol:diceb`.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Rangers",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-046",
+    "name": "Roving Terror",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "**Action**: Discard a denizen card at any other site and move this card there.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Roving Terror",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-047",
+    "name": "Wayside Inn",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**Action**: Gain 2 Supply.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Wayside Inn",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-048",
+    "name": "Extra Provisions",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "+2 `symbol:diceb`",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Extra Provisions",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-049",
+    "name": "Memory of Home",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**Action**: Move all `symbol:favor` from any one favor bank to the `symbol:suit-hearth` bank.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Memory of Home",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-050",
+    "name": "Welcoming Party",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "If you play a denizen card that was not a facedown adviser, gain `symbol:favor` from the `symbol:suit-hearth` bank.",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "Welcoming Party",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-051",
+    "name": "Traveling Doctor",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "If you're defeated, kill no warbands in your force and discard Traveling Doctor. **Ignore** powers that kill all of your force.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Traveling Doctor",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-052",
+    "name": "Storyteller",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**Action**: Place `symbol:secret` from the shared bank on the Darkest Secret.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Storyteller",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-053",
+    "name": "Armed Mob",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**Action**: Discard a faceup adviser from a player who holds the Darkest Secret but not the People's Favor.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Armed Mob",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-054",
+    "name": "Tavern Songs",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**Action**: Peek at the top three cards of your region's discard pile.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Tavern Songs",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-055",
+    "name": "Secret Signal",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "If you gain only one `symbol:favor`, gain one more `symbol:favor`.",
+    "effect_tags": [
+      "Power",
+      "Trade"
+    ],
+    "image_name": "Secret Signal",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-056",
+    "name": "Augury",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "Draw one more card. _(Stop after a Vision as normal.)_",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "Augury",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-057",
+    "name": "Rusting Ray",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "If you hold the Darkest Secret, **ignore** all your enemy's rolls of hollow swords `symbol:swordh`.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Rusting Ray",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-058",
+    "name": "Portal",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "Spend no Supply and **ignore** the powers of sites if you're traveling to or from this site.",
+    "effect_tags": [
+      "Power",
+      "Travel"
+    ],
+    "image_name": "Portal",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-059",
+    "name": "Billowing Fog",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "If you're defeated, kill no warbands in your force. **Ignore** powers that kill all of your force.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Billowing Fog",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-060",
+    "name": "Kindred Warriors",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "Ignore all skulls `symbol:skull` you roll. ±X `symbol:dicer` up to the number of other suits you rule.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Kindred Warriors",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-061",
+    "name": "Terror Spells",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**Action**: Kill any two warbands in your region _(at sites or on boards, even yours)_ if you hold the Darkest Secret.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Terror Spells",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-062",
+    "name": "Blood Pact",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**Action**: Sacrifice an even number of warbands on your board. For every two you sacrifice, gain `symbol:secret`.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Blood Pact",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-063",
+    "name": "Revelation",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**When Played**, each player, following turn order, may burn any number of `symbol:favor` to gain an equal number of `symbol:secret`.",
+    "effect_tags": [],
+    "image_name": "Revelation",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-064",
+    "name": "Observatory",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "While your pawn is here, you may draw from any one discard pile.",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "Observatory",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-065",
+    "name": "Plague Engines",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**Action**: Each player _(even you)_ places one `symbol:favor` per site they rule into the `symbol:suit-arcane` bank.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Plague Engines",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-066",
+    "name": "Gleaming Armor",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "Your enemy's battle plans have an added cost of `symbol:secret`.",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "Gleaming Armor",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-067",
+    "name": "Bewitch",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**When Played**, if you're an Exile and have more `symbol:secret` _(even on cards)_ than the Chancellor, you may become a Citizen- take no relic, end your Act Phase, and refresh Supply to full.",
+    "effect_tags": [],
+    "image_name": "Bewitch",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-068",
+    "name": "Jinx",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "If you rule Jinx, after you roll `symbol:dicer` or `symbol:diceb` for any reason, you may use this power to reroll all those dice once. _(This is not a battle plan!)_",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Jinx",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-069",
+    "name": "Tutor",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**Action**: Gain `symbol:secret`",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Tutor",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-070",
+    "name": "Dream Thief",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**Action**: Swap any two facedown advisers.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Dream Thief",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-071",
+    "name": "Cracking Ground",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "± `symbol:dicer` per site targeted.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Cracking Ground",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-072",
+    "name": "Sealing Ward",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "Your relics add one more `symbol:diceb` when targeted.",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "Sealing Ward",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-073",
+    "name": "Initiation Rite",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "To muster, you **must** place `symbol:secret` instead of `symbol:favor`.",
+    "effect_tags": [
+      "Muster"
+    ],
+    "image_name": "Initiation Rite",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-074",
+    "name": "Vow of Silence",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "You **cannot** recover the Darkest Secret or give anyone `symbol:secret`. Whenever a player recovers it, you gain X `symbol:secret` equal to the number of `symbol:secret` they placed.",
+    "effect_tags": [
+      "Recover"
+    ],
+    "image_name": "Vow of Silence",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-075",
+    "name": "Forgotten Vault",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**Action**: Place `symbol:secret` from the shared bank on the Darkest Secret, or burn `symbol:secret` from the Darkest Secret _(not last `symbol:secret`)_.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Forgotten Vault",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-076",
+    "name": "Map Library",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "While your pawn is at this site, you may trade with a card at any site in your region.",
+    "effect_tags": [
+      "Power",
+      "Trade"
+    ],
+    "image_name": "Map Library",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-077",
+    "name": "Witch's Bargain",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "**Action**: Give `symbol:secret` to a player whose pawn is at your site to take `symbol:favor` `symbol:favor` from them, or give `symbol:favor` `symbol:favor` for `symbol:secret`, any number of times.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Witch's Bargain",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-078",
+    "name": "Master of Disguise",
+    "type": "denizen",
+    "suit": "arcane",
+    "effect_text": "Act as if you had another player's advisers instead. _(You can't use your other advisers.)_",
+    "effect_tags": [
+      "Power",
+      "Trade"
+    ],
+    "image_name": "Master of Disguise",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-079",
+    "name": "Charlatan",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**When Played**, burn all `symbol:secret` but one from the Darkest Secret.",
+    "effect_tags": [],
+    "image_name": "Charlatan",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-080",
+    "name": "Assassin",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "You can only have two advisers. **Action**: Discard a faceup adviser of a player whose pawn is at your site.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Assassin",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-081",
+    "name": "Downtrodden",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "Gain two more warbands if mustering on a card whose favor bank has the least `symbol:favor` _(not tied)_.",
+    "effect_tags": [
+      "Muster",
+      "Power"
+    ],
+    "image_name": "Downtrodden",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-082",
+    "name": "Blackmail",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**When Played**, choose a relic held by a player whose pawn is at your site. You take the relic unless they give you `symbol:favor` `symbol:favor` `symbol:favor`.",
+    "effect_tags": [],
+    "image_name": "Blackmail",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-083",
+    "name": "Cracked Sage",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "±4 `symbol:dicer` if your enemy has an `symbol:suit-arcane` adviser.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Cracked Sage",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-084",
+    "name": "Dissent",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**When Played**, each player, except the holder of the People's Favor, places one `symbol:favor` on this card for each suit of card they rule.",
+    "effect_tags": [],
+    "image_name": "Dissent",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-085",
+    "name": "False Prophet",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**When Played**, if you're an Exile, gain one warband and put it on any revealed Vision. You now also have it revealed. If it is ever discarded, kill the warband and play or discard the Vision as if you had searched.",
+    "effect_tags": [],
+    "image_name": "False Prophet",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-086",
+    "name": "Vow of Renewal",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "You **cannot** recover the People's Favor. Whenever any player burns `symbol:favor`, you take the `symbol:favor` instead.",
+    "effect_tags": [],
+    "image_name": "Vow of Renewal",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-087",
+    "name": "Zealots",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "If the defending force is larger than your force, each warband you sacrifice will add three _(not one)_ to your attack.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Zealots",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-088",
+    "name": "Royal Ambitions",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**When Played**, if you're an Exile and rule more sites than the Chancellor, you may become a Citizen- take any one Reliquary relic without peeking, end your Act Phase, and refresh Supply to full.",
+    "effect_tags": [],
+    "image_name": "Royal Ambitions",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-089",
+    "name": "Salt the Earth",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "You **cannot** play Salt the Earth to a site with any locked cards. **When Played**, ignore this site's capacity. Discard all other denizens at this site. This site's capacity is now 1.",
+    "effect_tags": [],
+    "image_name": "Salt the Earth",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-090",
+    "name": "Beast Tamer",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "Enemies cannot use `symbol:suit-beast` or `symbol:suit-nomad` battle plans against you.",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "Beast Tamer",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-091",
+    "name": "Riots",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**When Played**, if the People's Favor is on the Mob side, discard all other cards of the most common suit on the map. If there is a tie, you choose among the tied suits.",
+    "effect_tags": [],
+    "image_name": "Riots",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-092",
+    "name": "Silver Tongue",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "You can only have two advisers. **Rest**: Take `symbol:favor` from a favor bank matching a card at your site.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Silver Tongue",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-093",
+    "name": "Gambling Hall",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**Action**: Roll 4 `symbol:diceb` and take X `symbol:favor` equal to the total `symbol:shield` result from any one favor bank.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Gambling Hall",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-094",
+    "name": "Boiling Lake",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "If you travel to this site and do not rule this card, you **must** kill two warbands on your board if able.",
+    "effect_tags": [
+      "Travel"
+    ],
+    "image_name": "Boiling Lake",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-095",
+    "name": "Relic Thief",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "After a player takes any relics and their pawn is in your region, you may use this power to roll one `symbol:diceb` per relic taken. If you roll no `symbol:shield` / `symbol:shield` `symbol:shield`, take the relics.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Relic Thief",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-096",
+    "name": "Enchantress",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**Action**: Swap this card with any faceup adviser.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Enchantress",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-097",
+    "name": "Insomnia",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "You can only have two advisers. **Rest**: Gain `symbol:secret`.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Insomnia",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-098",
+    "name": "Sneak Attack",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "After another player's campaign, you may campaign, spending no Supply, if you declare them as the defender.",
+    "effect_tags": [
+      "Campaign",
+      "Power"
+    ],
+    "image_name": "Sneak Attack",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-099",
+    "name": "Gossip",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "Enemies of Gossip's ruler **cannot** play cards as facedown advisers.",
+    "effect_tags": [],
+    "image_name": "Gossip",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-100",
+    "name": "Bandit Chief",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "**When Played**, kill one warband at each site. While Bandit Chief is faceup, each site has two more bandits.",
+    "effect_tags": [],
+    "image_name": "Bandit Chief",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-101",
+    "name": "Chaos Cult",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "After another player takes the Oathkeeper title, you take `symbol:favor` from them.",
+    "effect_tags": [],
+    "image_name": "Chaos Cult",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-102",
+    "name": "Slander",
+    "type": "denizen",
+    "suit": "discord",
+    "effect_text": "If you're victorious and targeted the defender's pawn, they burn all of the `symbol:favor` on their board _(not half)_.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Slander",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-103",
+    "name": "Code of Honor",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "±2 `symbol:dicer` but you **cannot** use other battle plans.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Code of Honor",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-104",
+    "name": "Outriders",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "Ignore all skulls `symbol:skull` you roll.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Outriders",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-105",
+    "name": "Messenger",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "**Action**: Move any warbands to and from your board and any sites you rule _(except the last warband from a site)_.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Messenger",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-106",
+    "name": "Field Promotion",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "If you're victorious, gain three warbands.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Field Promotion",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-107",
+    "name": "Palanquin",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "**Action**: Choose a player whose pawn is at your site. Put your pawn on a site that they can travel to. Make them travel to that site, spending no Supply.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Palanquin",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-108",
+    "name": "Shield Wall",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "+2 `symbol:diceb` If you're defeated, **kill** all of your force.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Shield Wall",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-109",
+    "name": "Military Parade",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "If you're victorious, gain `symbol:favor` from the favor banks matching each adviser of your enemy _(including Imperial Allies)_.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Military Parade",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-110",
+    "name": "Tome Guardians",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "Enemies of Tome Guardians' ruler **cannot** target or take the Darkest Secret in any way.",
+    "effect_tags": [],
+    "image_name": "Tome Guardians",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-111",
+    "name": "Tyrant",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "You **must** kill a warband _(even your own)_ at the site you travel to, if able.",
+    "effect_tags": [
+      "Travel"
+    ],
+    "image_name": "Tyrant",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-112",
+    "name": "Forced Labor",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "Enemies **cannot** search if their pawn is at any site ruled by Forced Labor's ruler unless they give `symbol:favor` to its ruler. _(Give it to Chancellor if Empire, burn it if bandits.)_",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Forced Labor",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-113",
+    "name": "Secret Police",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "Enemies **cannot** play Visions faceup while their pawn is at any site ruled by Secret Police's ruler.",
+    "effect_tags": [],
+    "image_name": "Secret Police",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-114",
+    "name": "Specialist",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "The defender **cannot** use battle plans.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Specialist",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-115",
+    "name": "Captains",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "**Action**: Campaign at any site you rule. Act as if your pawn is there. Spend no Supply and add your warbands there to your force.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Captains",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-116",
+    "name": "Siege Engines",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "**Action**: Kill two warbands _(even yours)_ at any one site in your region.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Siege Engines",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-117",
+    "name": "Royal Tax",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "**When Played**: take `symbol:favor` `symbol:favor` from each player whose pawn is at a site you rule in your pawn's region.",
+    "effect_tags": [],
+    "image_name": "Royal Tax",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-118",
+    "name": "Toll Roads",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "Enemies **cannot** travel to sites ruled by Toll Roads' ruler unless they give `symbol:favor` to its ruler. _(Give it to Chancellor if Empire, burn it if bandits.)_",
+    "effect_tags": [
+      "Travel"
+    ],
+    "image_name": "Toll Roads",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-119",
+    "name": "Curfew",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "Enemies **cannot** trade with cards ruled by Curfew's ruler unless they give `symbol:favor` to its ruler. _(Give it to Chancellor if Empire, burn it if bandits.)_",
+    "effect_tags": [
+      "Trade"
+    ],
+    "image_name": "Curfew",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-120",
+    "name": "Knights Errant",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "After mustering, you may campaign, spending no Supply.",
+    "effect_tags": [
+      "Muster",
+      "Power"
+    ],
+    "image_name": "Knights Errant",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-121",
+    "name": "Vow of Obedience",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "You **cannot** play Visions faceup. **Rest**: Take `symbol:favor` from any one favor bank.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Vow of Obedience",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-122",
+    "name": "Hunting Party",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "After searching the world deck, you may campaign, spending no Supply.",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "Hunting Party",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-123",
+    "name": "Council Seat",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "If you're a Citizen, you **cannot** be exiled, even by yourself.",
+    "effect_tags": [],
+    "image_name": "Council Seat",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-124",
+    "name": "Encirclement",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "±2 `symbol:dicer` if your force is larger than your enemy's.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Encirclement",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-125",
+    "name": "Peace Envoy",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "You **cannot** use other battle plans. If your enemy's pawn is at your site, give them one `symbol:favor` per `symbol:diceb` in the pool. You're victorious now. **Ignore** killing warbands.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Peace Envoy",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-126",
+    "name": "Relic Hunter",
+    "type": "denizen",
+    "suit": "order",
+    "effect_text": "You may target facedown relics at targeted sites, adding 1 `symbol:diceb` per relic. You may put any relics you take on the bottom of the relic deck.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Relic Hunter",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-127",
+    "name": "Homesteaders",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**Action**: Move one of your faceup advisers to your site.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Homesteaders",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-128",
+    "name": "Crop Rotation",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "If playing to a site, you may discard a denizen there first.",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "Crop Rotation",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-129",
+    "name": "A Round of Ale",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**Action**: Return all `symbol:favor` and `symbol:secret`, and flip your `symbol:secret`, as in the Rest Phase, except for the `symbol:favor` here.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "A Round of Ale",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-130",
+    "name": "Land Warden",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "You may play two cards you draw _(instead of one)_ if you play at least one card to a site.",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "Land Warden",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-131",
+    "name": "Charming Friend",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**Action**: Take `symbol:favor` from a player whose pawn is at your site.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Charming Friend",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-132",
+    "name": "Village Constable",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "±2 `symbol:dicer` unless your enemy has the People's Favor.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Village Constable",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-133",
+    "name": "Family Heirloom",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**When Played**, draw a relic. Take it or put it on the bottom of the relic deck.",
+    "effect_tags": [],
+    "image_name": "Family Heirloom",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-134",
+    "name": "News from Afar",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "Spend no Supply.",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "News from Afar",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-135",
+    "name": "Levelers",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**Action**: Move `symbol:favor` `symbol:favor` from the favor bank from the most `symbol:favor` to that with the least `symbol:favor`. You decide ties.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Levelers",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-136",
+    "name": "Fabled Feast",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**When Played**, take X `symbol:favor` equal to the number of `symbol:suit-hearth` cards you rule _(including Fabled Feast)_ from any one favor bank.",
+    "effect_tags": [],
+    "image_name": "Fabled Feast",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-137",
+    "name": "The Great Levy",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "±3 `symbol:dicer` and **ignore** all skulls `symbol:skull` you roll, unless your enemy has the People's Favor.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "The Great Levy",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-138",
+    "name": "Hearts and Minds",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "As defender, you're victorious now. At end, discard Hearts and Minds unless you hold the People's Favor.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Hearts and Minds",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-139",
+    "name": "Relic Breaker",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**Action**: Put a facedown relic at your site on the bottom of the relic deck to gain three warbands.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Relic Breaker",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-140",
+    "name": "Book Binders",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "After another player plays a Vision faceup, you gain `symbol:favor` `symbol:favor` from any one favor bank.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Book Binders",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-141",
+    "name": "Ballot Box",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**Action**: If you're an Exile and have the People's Favor, become a Citizen- take no relic, end your Act Phase, and refresh Supply to full.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Ballot Box",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-142",
+    "name": "Saddle Makers",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "After another player plays a `symbol:suit-nomad` or `symbol:suit-order` card, you gain `symbol:favor` `symbol:favor` from the matching favor bank.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Saddle Makers",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-143",
+    "name": "Herald",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "After another player campaigns against a player _(not bandits)_, you gain `symbol:favor` from any favor bank.",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "Herald",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-144",
+    "name": "Rowdy Pub",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "Gain one more warband if mustering from Rowdy Pub.",
+    "effect_tags": [
+      "Muster",
+      "Power"
+    ],
+    "image_name": "Rowdy Pub",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-145",
+    "name": "Vow of Peace",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "You **cannot** campaign. Attackers **cannot** sacrifice warbands to increase their attack against you.",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "Vow of Peace",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-146",
+    "name": "Deed Writer",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**Action**: Negotiate a binding exchange of `symbol:favor`, `symbol:secret`, and ruled sites with any player. Old ruler moves warbands to board, and new ruler moves warbands from board.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Deed Writer",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-147",
+    "name": "Salad Days",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "**When Played**, gain `symbol:favor` `symbol:favor` `symbol:favor`- one each from three different favor banks.",
+    "effect_tags": [],
+    "image_name": "Salad Days",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-148",
+    "name": "Marriage",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "Marriage counts as two `symbol:suit-hearth` advisers, but only counts as one toward your adviser limit.",
+    "effect_tags": [],
+    "image_name": "Marriage",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-149",
+    "name": "Hospital",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "If any of your warbands would be killed, place them on Hospital's site instead if you still rule it.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Hospital",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-150",
+    "name": "Awaited Return",
+    "type": "denizen",
+    "suit": "hearth",
+    "effect_text": "Spend no Supply if you sacrifice one warband from your board.",
+    "effect_tags": [
+      "Power",
+      "Trade"
+    ],
+    "image_name": "Awaited Return",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-151",
+    "name": "Convoys",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "**Action**: Take another region's discard pile and put it on top of your region's discard pile _(even if empty)_.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Convoys",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-152",
+    "name": "Vow of Kinship",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "Move all of your `symbol:favor` to the `symbol:suit-nomad` bank. Any `symbol:favor` you gain or take is put in the `symbol:suit-nomad` bank. You can use `symbol:favor` in the `symbol:suit-nomad` bank as if it is on your board.",
+    "effect_tags": [],
+    "image_name": "Vow of Kinship",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-153",
+    "name": "Wild Mounts",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "If you would discard any number of `symbol:suit-nomad` battle plans, you may instead discard any one `symbol:suit-beast` you rule.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Wild Mounts",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-154",
+    "name": "Lancers",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "Double your total attack roll. At end, discard Lancers.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Lancers",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-155",
+    "name": "Mountain Giant",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "±1 `symbol:dicer` or ±3. At end, discard.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Mountain Giant",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-156",
+    "name": "Rival Khan",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "±4 `symbol:dicer` if your enemy has a `symbol:suit-nomad` adviser. At end, discard Rival Khan.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Rival Khan",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-157",
+    "name": "Lost Tongue",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "Other players **cannot** target or take your relics or banners in any way unless they rule a `symbol:suit-nomad` card.",
+    "effect_tags": [],
+    "image_name": "Lost Tongue",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-158",
+    "name": "Special Envoy",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "Spend no Supply. After traveling, end your Act Phase.",
+    "effect_tags": [
+      "Power",
+      "Travel"
+    ],
+    "image_name": "Special Envoy",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-159",
+    "name": "Resettle",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "**Action**: Move a faceup `symbol:suit-nomad` card from any player's advisers to any site.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Resettle",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-160",
+    "name": "Oracle",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "**Action**: Draw the Vision closest to the top of the world deck. Play or discard it as if you searched.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Oracle",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-161",
+    "name": "Pilgrimage",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "**When Played**, move all denizens at your site to the Dispossessed. Shuffle and draw denizens from the Dispossessed equal to the number you moved. Peek at them and put them on your region's discard pile.",
+    "effect_tags": [],
+    "image_name": "Pilgrimage",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-162",
+    "name": "Spell Breaker",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "Enemies of Spell Breaker's ruler **cannot** use powers that cost any `symbol:secret` or `symbol:secretb`.",
+    "effect_tags": [],
+    "image_name": "Spell Breaker",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-163",
+    "name": "Mounted Patrol",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "The attacker rolls only half the `symbol:dicer` in their attack pool, rounded down. At end, discard Mounted Patrol.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Mounted Patrol",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-164",
+    "name": "Great Crusade",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "± `symbol:dicer` per `symbol:suit-nomad` card you rule. At end, discard Great Crusade.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Great Crusade",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-165",
+    "name": "Ancient Bloodline",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "Your enemies act as if denizens and relics at sites you rule are **locked**.",
+    "effect_tags": [],
+    "image_name": "Ancient Bloodline",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-166",
+    "name": "Ancient Pact",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "**When Played**, you may give the Chancellor the Darkest Secret to become a Citizen- take any one Reliquary relic without peeking, end your Act Phase, and refresh Supply to full.",
+    "effect_tags": [],
+    "image_name": "Ancient Pact",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-167",
+    "name": "Storm Caller",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "+2 `symbol:diceb` At end, discard Storm Caller.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Storm Caller",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-168",
+    "name": "Family Wagon",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "You can only have one adviser that is not a `symbol:suit-nomad`. You can have any number of `symbol:suit-nomad` advisers- they **ignore** your adviser limit.",
+    "effect_tags": [],
+    "image_name": "Family Wagon",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-169",
+    "name": "Way Station",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "Spend no Supply if you're traveling to this site and either rule Way Station or choose to give `symbol:favor` to its ruler. _(Give it to Chancellor if Empire, burn it if bandits.)_",
+    "effect_tags": [
+      "Travel"
+    ],
+    "image_name": "Way Station",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-170",
+    "name": "Twin Brother",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "**When Played**, you may swap this card with a faceup `symbol:suit-nomad` adviser of another player.",
+    "effect_tags": [],
+    "image_name": "Twin Brother",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-171",
+    "name": "Hospitality",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "After traveling, gain `symbol:favor` from one favor bank that matches both a card at your site and one of your advisers.",
+    "effect_tags": [
+      "Power",
+      "Travel"
+    ],
+    "image_name": "Hospitality",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-172",
+    "name": "A Fast Steed",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "Spend no Supply if you have three or fewer warbands on your board.",
+    "effect_tags": [
+      "Power",
+      "Travel"
+    ],
+    "image_name": "A Fast Steed",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-173",
+    "name": "Relic Worship",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "After you recover a relic, gain 3 Supply.",
+    "effect_tags": [
+      "Power",
+      "Recover"
+    ],
+    "image_name": "Relic Worship",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-174",
+    "name": "Sacred Ground",
+    "type": "denizen",
+    "suit": "nomad",
+    "effect_text": "Players **cannot** play Visions, except the Conspiracy, faceup, unless their pawn is at this site.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Sacred Ground",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-175",
+    "name": "Nature Worship",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "± `symbol:dicer` per `symbol:suit-beast` adviser you have.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Nature Worship",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-176",
+    "name": "Birdsong",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "Spend no Supply if you're trading with a `symbol:suit-beast` or `symbol:suit-nomad` card.",
+    "effect_tags": [
+      "Power",
+      "Trade"
+    ],
+    "image_name": "Birdsong",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-177",
+    "name": "Small Friends",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "Act as if your pawn is at any site with a `symbol:suit-beast` card. _(You may use Trade modifiers there.)_",
+    "effect_tags": [
+      "Power",
+      "Trade"
+    ],
+    "image_name": "Small Friends",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-178",
+    "name": "Grasping Vines",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "Enemies traveling from any site ruled by Grasping Vines' ruler **must** kill one warband on their board if able.",
+    "effect_tags": [
+      "Travel"
+    ],
+    "image_name": "Grasping Vines",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-179",
+    "name": "Threatening Roar",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "**When Played**, discard all `symbol:suit-nomad` and `symbol:suit-beast` cards at sites in your region.",
+    "effect_tags": [],
+    "image_name": "Threatening Roar",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-180",
+    "name": "Fae Merchant",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "**Action**: Draw a relic and take it. Put any relic you hold except the Grand Scepter on the bottom of the relic deck.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Fae Merchant",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-181",
+    "name": "Second Chance",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "**Action**: Kill one warband on the board of a player who has an `symbol:suit-order` or `symbol:suit-discord` adviser to gain one warband.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Second Chance",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-182",
+    "name": "Pied Piper",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "This card ignores the adviser limit. **Action**: Move this card to any other player's advisers. Take `symbol:favor` `symbol:favor` from them.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Pied Piper",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-183",
+    "name": "Mushrooms",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "Spend no Supply, but draw only one card _(not three)_ from the bottom of your region's discard pile.",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "Mushrooms",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-184",
+    "name": "Insect Swarm",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "Your enemy's battle plans each have an added cost of `symbol:favorb`.",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "Insect Swarm",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-185",
+    "name": "Vow of Union",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "In campaigns, warbands at sites you rule add to your attacking force. You **cannot** travel from a site you rule if any warbands are on your board.",
+    "effect_tags": [],
+    "image_name": "Vow of Union",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-186",
+    "name": "Giant Python",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "Whenever a player attacks you, they **must** declare targets that add an even total _(2, 4, etc)_ of `symbol:diceb` to your defense pool.",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "Giant Python",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-187",
+    "name": "War Tortoise",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "**Ignore** all attack or defense added by your enemy's rolls of `symbol:sword` `symbol:sword` `symbol:skull` or `symbol:shield` `symbol:shield`. _(Any `symbol:skull` they roll still kill their warbands.)_",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "War Tortoise",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-188",
+    "name": "New Growth",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "You may play `symbol:suit-beast` and `symbol:suit-hearth` cards to any site _(that has space)_.",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "New Growth",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-189",
+    "name": "Wild Cry",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "If you play a `symbol:suit-beast` card, gain 1 Supply and 2 warbands.",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "Wild Cry",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-190",
+    "name": "Animal Host",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "**When Played**, gain warbands equal to the total number of `symbol:suit-beast` cards _(including Animal Host)_ at any sites _(regardless of rule)_.",
+    "effect_tags": [],
+    "image_name": "Animal Host",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-191",
+    "name": "Memory of Nature",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "**Action**: Move a total of X `symbol:favor` from any favor banks to the `symbol:suit-beast` bank. X is the number of `symbol:suit-beast` cards on the map.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Memory of Nature",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-192",
+    "name": "Marsh Spirit",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "Players who target this site **cannot** use battle plans.",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "Marsh Spirit",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-193",
+    "name": "Vow of Poverty",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "You **cannot** gain `symbol:favor` from Trade. **Rest**: If you have no `symbol:favor`, take `symbol:favor` `symbol:favor` from any one favor bank.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Vow of Poverty",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-194",
+    "name": "Forest Council",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "Enemies of Forest Council's rule **cannot** trade with or must from `symbol:suit-beast` cards.",
+    "effect_tags": [],
+    "image_name": "Forest Council",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-195",
+    "name": "Walled Garden",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "± `symbol:diceb` per `symbol:suit-beast` at any sites if this site is targeted.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Walled Garden",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-196",
+    "name": "Vow of Beastkin",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "You **must** muster on a card that matching any of your advisers, but you gain one more warband.",
+    "effect_tags": [
+      "Muster"
+    ],
+    "image_name": "Vow of Beastkin",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-197",
+    "name": "Bracken",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "You may put all the cards you discard on the top or bottom of any one discard pile _(even your region's)_.",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "Bracken",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-198",
+    "name": "Wild Allies",
+    "type": "denizen",
+    "suit": "beast",
+    "effect_text": "**Action**: Campaign at any site with a `symbol:suit-beast` card. Act as if your pawn is there. Spend no Supply and add your warbands there to your force.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Wild Allies",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-199",
+    "name": "Sprawling Rampart",
+    "type": "edifice",
+    "suit": "order",
+    "effect_text": "Each site ruled by Sprawling Rampart's ruler adds one more `symbol:diceb` when targeted.",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "Sprawling Rampart",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-200",
+    "name": "Bandit Rampart",
+    "type": "edifice",
+    "suit": "order",
+    "effect_text": "-2 `symbol:dicer` if this site is targeted.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Bandit Rampart",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-201",
+    "name": "Hall of Debate",
+    "type": "edifice",
+    "suit": "hearth",
+    "effect_text": "Players **cannot** target the People's Favor",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "Hall of Debate",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-202",
+    "name": "Hall of Mockery",
+    "type": "edifice",
+    "suit": "hearth",
+    "effect_text": "Recovering the People's Favor always flips it to the Mob side.",
+    "effect_tags": [
+      "Recover"
+    ],
+    "image_name": "Hall of Mockery",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-203",
+    "name": "Forest Temple",
+    "type": "edifice",
+    "suit": "beast",
+    "effect_text": "In the Chronicle, do not discard sites with any `symbol:suit-beast` cards.",
+    "effect_tags": [],
+    "image_name": "Forest Temple",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-204",
+    "name": "Ruined Temple",
+    "type": "edifice",
+    "suit": "beast",
+    "effect_text": "Enemies of Ruined Temple's ruler **cannot** play `symbol:suit-beast` cards faceup.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Ruined Temple",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-205",
+    "name": "Festival District",
+    "type": "edifice",
+    "suit": "discord",
+    "effect_text": "**Action**: Negotiate a binding exchange of `symbol:favor`, `symbol:secret`, and advisers with any player.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Festival District",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-206",
+    "name": "Squalid District",
+    "type": "edifice",
+    "suit": "discord",
+    "effect_text": "Whenever the `symbol:dicer` is rolled to end the game, Squalid District's ruler may increase or decrease this roll by one. Citizens **cannot** use this power.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Squalid District",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-207",
+    "name": "Great Spire",
+    "type": "edifice",
+    "suit": "arcane",
+    "effect_text": "You may swap any number of denizens you draw with random cards from the Dispossessed.",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "Great Spire",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-208",
+    "name": "Fallen Spire",
+    "type": "edifice",
+    "suit": "arcane",
+    "effect_text": "**Action**: Swap up to five denizens from the top of your region's discard pile _(skipping Visions)_ with random cards from the Dispossessed.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Fallen Spire",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-209",
+    "name": "Ancient Forge",
+    "type": "edifice",
+    "suit": "nomad",
+    "effect_text": "**Action**: Draw a relic. Take it or put it on the bottom of the relic deck.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Ancient Forge",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-210",
+    "name": "Broken Forge",
+    "type": "edifice",
+    "suit": "nomad",
+    "effect_text": "**Action**: Flip this card over.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Broken Forge",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-211",
+    "name": "Sticky Fire",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "If you're victorious, you may kill all the warbands in your enemy's force. If you do, you **must** give them `symbol:favor` if able.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Sticky Fire",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 2
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-212",
+    "name": "Cursed Cauldron",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "If you're victorious, gain one warband per enemy warband killed in this campaign.",
+    "effect_tags": [
+      "Battle Plan"
+    ],
+    "image_name": "Cursed Cauldron",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 3
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-213",
+    "name": "Brass Horse",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "**Action**: Reveal the top card of your discard pile. Travel to a site with a card of this suit. If unable, travel as normal. In either case, spend no Supply.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Brass Horse",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 2
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-214",
+    "name": "Truthful Harp",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "You may choose to draw two more cards. If you do, you **must** reveal every card you draw and the card you keep.",
+    "effect_tags": [
+      "Power",
+      "Search"
+    ],
+    "image_name": "Truthful Harp",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 2
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-215",
+    "name": "Grand Mask",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "If you're an Exile, during your turn you rule cards except battle plans at Imperial sites, and Imperial players do not.",
+    "effect_tags": [],
+    "image_name": "Grand Mask",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 2
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-216",
+    "name": "Horned Mask",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "**Action**: Swap one of your faceup advisers with a card at your site.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Horned Mask",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 2
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-217",
+    "name": "Cup of Plenty",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "Spend no Supply if you're trading with a card that matches any of your advisers.",
+    "effect_tags": [
+      "Trade"
+    ],
+    "image_name": "Cup of Plenty",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 2
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-218",
+    "name": "Whistle",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "**Action**: Choose a pawn at another site. they **must** travel to your site if able, spending no Supply. If they do, give them the `symbol:secret` here.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Whistle",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 2
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-219",
+    "name": "Dowsing Sticks",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "**Action**: Draw a relic. Take it or put it on the bottom of the relic deck.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Dowsing Sticks",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 3
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-220",
+    "name": "Cracked Horn",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "You may put all the cards you discard on the bottom of the world deck.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Cracked Horn",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 2
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-221",
+    "name": "Bandit Crown",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "Act as if bandits are your warbands except at sites ruled by enemies. _(You rule empty sites.)_ They **cannot** be killed, moved, or sacrificed.",
+    "effect_tags": [],
+    "image_name": "Bandit Crown",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 3
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-222",
+    "name": "Ring of Devotion",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "You **cannot** place warbands at sites. When mustering, you gain two more warbands.",
+    "effect_tags": [],
+    "image_name": "Ring of Devotion",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 3
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-223",
+    "name": "Skeleton Key",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "**Action**: If the Chancellor rules your site, peek at any one relic in the Imperial Reliquary, and you may take it.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Skeleton Key",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 3
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-224",
+    "name": "Oracular Pig",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "**Action**: Peek at the top three cards of the world deck.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Oracular Pig",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 2
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-225",
+    "name": "Circlet of Command",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "Players **cannot** target or take your banners or your other relics. In campaigns, banishing your pawn and favor adds one more `symbol:diceb`.",
+    "effect_tags": [],
+    "image_name": "Circlet of Command",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-226",
+    "name": "Ivory Eye",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "**Action**: Peek at any facedown site, adviser, or relic at any site.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Ivory Eye",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 2
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-227",
+    "name": "Map",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "**Action**: Put this relic on the bottom of the relic deck to gain 4 Supply.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "Map",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 3
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-228",
+    "name": "Obsidian Cage",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "If you're victorious, move all unkilled warbands in your enemy's force to the Obsidian Cage. **Action**: Move any number of warbands from Obsidian Cage to any board of the same color.",
+    "effect_tags": [
+      "Battle Plan",
+      "Power"
+    ],
+    "image_name": "Obsidian Cage",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 2
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-229",
+    "name": "Book of Records",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "You **must** gain `symbol:secret` instead of `symbol:favor` when you play to a site.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Book of Records",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 2
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-230",
+    "name": "Dragonskin Drum",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "After traveling, gain one warband.",
+    "effect_tags": [
+      "Power",
+      "Travel"
+    ],
+    "image_name": "Dragonskin Drum",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 2
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-231",
+    "name": "The Grand Scepter",
+    "type": "relic",
+    "suit": null,
+    "effect_text": "You cannot use this if you took it on this turn. **Action**: Peek in the Imperial Reliquary. **Action**: Offer Citizenship to any Exile, or exile a Citizen except yourself.",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "The Grand Scepter",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": 5
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-232",
+    "name": "Conspiracy",
+    "type": "vision",
+    "suit": null,
+    "effect_text": "_If drawn from the world deck, increase Visions Drawn. **Anyone** can play his face up._ **When Played**: You may burn `symbol:secret` to take one relic or banner from a player whose pawn is at your site. If it's a banner, it burns `symbol:favor` `symbol:favor` / `symbol:secret` `symbol:secret`. To do so, you **must** have at least two advisers whose suits match any of their adviers. Return this card to the box.",
+    "effect_tags": [],
+    "image_name": "Conspiracy",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-233",
+    "name": "Vision of Faith",
+    "type": "vision",
+    "suit": null,
+    "effect_text": "_If drawn from the world deck, increase Visions Drawn. **Exiles** can play this face up on their Revealed Vision space._ **Wake**: You win if you hold the Darkest Secret and at least three visions have been drawn from the deck.",
+    "effect_tags": [],
+    "image_name": "Vision of Faith",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-234",
+    "name": "Vision of Rebellion",
+    "type": "vision",
+    "suit": null,
+    "effect_text": "_If drawn from the world deck, increase Visions Drawn. **Exiles** can play this face up on their Revealed Vision space._ **Wake**: You win if you hold the People's Favor and at least three visions have been drawn from the deck.",
+    "effect_tags": [],
+    "image_name": "Vision of Rebellion",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-235",
+    "name": "Vision of Sanctuary",
+    "type": "vision",
+    "suit": null,
+    "effect_text": "_If drawn from the world deck, increase Visions Drawn. **Exiles** can play this face up on their Revealed Vision space._ **Wake**: You win if you hold the most relics and banners, and at least three visions have been drawn from the deck.",
+    "effect_tags": [],
+    "image_name": "Vision of Sanctuary",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-236",
+    "name": "Vision of Conquest",
+    "type": "vision",
+    "suit": null,
+    "effect_text": "_If drawn from the world deck, increase Visions Drawn. **Exiles** can play this face up on their Revealed Vision space._ **Wake**: You win if you rule the most sites and at least three visions have been drawn from the deck.",
+    "effect_tags": [],
+    "image_name": "Vision of Conquest",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-237",
+    "name": "Ancient City",
+    "type": "site",
+    "suit": null,
+    "effect_text": "If you play an `symbol:suit-order` card to this site, and you have not discarded an `symbol:suit-order` card here during this turn, you get 2 warbands.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Ancient City",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 2,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-238",
+    "name": "Barren Coast",
+    "type": "site",
+    "suit": null,
+    "effect_text": "When traveling from here to a Coast site, the Travel cost is 1 Supply and you **ignore** the Narrow Pass tower.",
+    "effect_tags": [
+      "Travel"
+    ],
+    "image_name": "Barren Coast",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 1,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-239",
+    "name": "Buried Giant",
+    "type": "site",
+    "suit": null,
+    "effect_text": "When traveling from here, you may flip one secret on your board facedown to spend no Supply and **ignore** the Narrow Pass power. _(Facedown secrets cannot be used to pay a cost.)_",
+    "effect_tags": [
+      "Travel"
+    ],
+    "image_name": "Buried Giant",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 2,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-240",
+    "name": "Charming Valley",
+    "type": "site",
+    "suit": null,
+    "effect_text": "When traveling from here, increase the Travel cost by 1 Supply. _(For example, traveling from the Provinces costs 3 Supply, not 2 Supply.)_",
+    "effect_tags": [
+      "Travel"
+    ],
+    "image_name": "Charming Valley",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 3,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-241",
+    "name": "Deep Woods",
+    "type": "site",
+    "suit": null,
+    "effect_text": "If you play a `symbol:suit-beast` card to this site, and you have not discarded a `symbol:suit-beast` card here during this turn, you take the relic here, treating this as recovering it.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Deep Woods",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 2,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-242",
+    "name": "Drowned City",
+    "type": "site",
+    "suit": null,
+    "effect_text": "At the end of your Wake Phase, if your pawn is here, you may take one `symbol:secret` from this site.",
+    "effect_tags": [],
+    "image_name": "Drowned City",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 0,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-243",
+    "name": "Fertile Valley",
+    "type": "site",
+    "suit": null,
+    "effect_text": "If you play a `suit:heart` card to this site, and you have not discarded a `symbol:suit-hearth` card here during this turn, you get `symbol:favor`.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Fertile Valley",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 3,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-244",
+    "name": "Great Slum",
+    "type": "site",
+    "suit": null,
+    "effect_text": "When playing or moving a card to this site, you may discard a card here first.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Great Slum",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 3,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-245",
+    "name": "The Tribunal",
+    "type": "site",
+    "suit": null,
+    "effect_text": "**Action**: If you rule this site or your pawn is here, negotiate a binding exchange of `symbol:favor` and `symbol:secret` as well as binding actions at any future time, in any combination, with any player. _(Be as creative as you want with your agreement and your agreed-upon penalties if someone breaks it!)_",
+    "effect_tags": [
+      "Power"
+    ],
+    "image_name": "The Tribunal",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 2,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-246",
+    "name": "Lush Coast",
+    "type": "site",
+    "suit": null,
+    "effect_text": "When traveling from here to a Coast site, the Travel cost is 1 Supply and you **ignore** the Narrow Pass power.",
+    "effect_tags": [
+      "Travel"
+    ],
+    "image_name": "Lush Coast",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 3,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-247",
+    "name": "Marshes",
+    "type": "site",
+    "suit": null,
+    "effect_text": "When searching, you **must** draw one fewer card if your pawn is here.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Marshes",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 2,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-248",
+    "name": "Mine",
+    "type": "site",
+    "suit": null,
+    "effect_text": "At the end of your Wake Phase, if your pawn is here, you may take one `symbol:favor` from this site.",
+    "effect_tags": [],
+    "image_name": "Mine",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 1,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-249",
+    "name": "Mountain",
+    "type": "site",
+    "suit": null,
+    "effect_text": "You **must** subtract one `symbol:dicer` if you declare any number of targets at this site _(even if you rule)_.",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "Mountain",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 2,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-250",
+    "name": "Narrow Pass",
+    "type": "site",
+    "suit": null,
+    "effect_text": "When traveling from another region to this region, you **must** Travel to this site. When campaigning, if you declare any targets in this region and your pawn is in a different region, you **must** target this site unless you rule it.",
+    "effect_tags": [
+      "Campaign",
+      "Travel"
+    ],
+    "image_name": "Narrow Pass",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 1,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-251",
+    "name": "Plains",
+    "type": "site",
+    "suit": null,
+    "effect_text": "You **must** add one `symbol:dicer` if you declare any number of targets at this site _(even if you rule)_.",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "Plains",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 3,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-252",
+    "name": "River",
+    "type": "site",
+    "suit": null,
+    "effect_text": "When mustering from a card at this site, you gain one more warband if you rule this site.",
+    "effect_tags": [
+      "Muster"
+    ],
+    "image_name": "River",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 2,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-253",
+    "name": "Rocky Coast",
+    "type": "site",
+    "suit": null,
+    "effect_text": "When traveling from here to a Coast site, the Travel cost is 1 Supply and you **ignore** the Narrow Pass tower.",
+    "effect_tags": [
+      "Travel"
+    ],
+    "image_name": "Rocky Coast",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 2,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-254",
+    "name": "Salt Flats",
+    "type": "site",
+    "suit": null,
+    "effect_text": "At the end of your Wake Phase, if your pawn is here, you may take one `symbol:favor` or `symbol:secret` from this site.",
+    "effect_tags": [],
+    "image_name": "Salt Flats",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 2,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-255",
+    "name": "Shrouded Wood",
+    "type": "site",
+    "suit": null,
+    "effect_text": "When traveling from here, the Travel cost is 2 Supply, and you **ignore** the Narrow Pass and The Hidden Place powers. If an enemy rules here, you travel to the site of the ruler's choice _(Chancellor's choice if ruled by the Empire)_, even if another player is making you travel.",
+    "effect_tags": [
+      "Travel"
+    ],
+    "image_name": "Shrouded Wood",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 2,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-256",
+    "name": "Standing Stones",
+    "type": "site",
+    "suit": null,
+    "effect_text": "If you play an `symbol:suit-arcane` card to this site, and you have not discarded an `symbol:suit-arcane` card here during this turn, you get `symbol:secret`.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Standing Stones",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 2,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-257",
+    "name": "Steppe",
+    "type": "site",
+    "suit": null,
+    "effect_text": "If you play a `symbol:suit-nomad` card to this site, and you have not discarded a `symbol:suit-nomad` card here during this turn, you get `symbol:secret`.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Steppe",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 2,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-258",
+    "name": "The Hidden Place",
+    "type": "site",
+    "suit": null,
+    "effect_text": "You **cannot** travel to here or declare campaign targets here unless you flip one secret on your board facedown.",
+    "effect_tags": [
+      "Campaign",
+      "Travel"
+    ],
+    "image_name": "The Hidden Place",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 2,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-259",
+    "name": "Wastes",
+    "type": "site",
+    "suit": null,
+    "effect_text": "If you play a `symbol:suit-discord` card to this site, and you have not discarded a `symbol:suit-discord` card here during this turn, you get take the relic here, treating this as recovering it.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Wastes",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": 1,
+      "defense": 1
+    },
+    "in_standard_deck": true
+  },
+  {
+    "leder_id": "OATH-260",
+    "name": "Banner of the Darkest Secret",
+    "type": "reference",
+    "suit": null,
+    "effect_text": "**Recovery**: Players can only recover this from you if there is a card at your site whose suit does not match any of your advisers. _(You can recover it from yourself or the shared bank freely.)_ The new holder must place more `symbol:secret` than old `symbol:secret` here, then takes one `symbol:secret` from the old `symbol:secret` here, and the old holder takes the rest. **Search**: Spend 2 Supply if you're drawing from the world deck _(not the printed cost)_.",
+    "effect_tags": [
+      "Recover",
+      "Search"
+    ],
+    "image_name": "Banner of the Darkest Secret",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": false
+  },
+  {
+    "leder_id": "OATH-261",
+    "name": "Banner of the Mob's Favor",
+    "type": "reference",
+    "suit": null,
+    "effect_text": "**Recovery**: Put more `symbol:favor` here than old `symbol:favor`. Put old `symbol:favor` in the favor banks, one by one, starting with any suit. Then, flip this banner. **Wake**: You **must** put `symbol:favor` here or move `symbol:favor` here to the favor bank with the least `symbol:favor`. Do this twice. **Search**: When playing to site, you may first discard a denizen card at any site in your region, and you may play to any site in your region.",
+    "effect_tags": [
+      "Recover",
+      "Search"
+    ],
+    "image_name": "Banner of the Mob's Favor",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": false
+  },
+  {
+    "leder_id": "OATH-262",
+    "name": "Banner of the People's Favor",
+    "type": "reference",
+    "suit": null,
+    "effect_text": "**Recovery**: Put more `symbol:favor` here than old `symbol:favor`. Put old `symbol:favor` in the favor banks, one by one, starting with any suit. **Wake**: You **must** put `symbol:favor` here or move `symbol:favor` here to the favor bank with the least `symbol:favor`. Then, if this banner has 6+ `symbol:favor`, flip it. **Search**: When playing to site, you may first discard a denizen card at any site in your region, and you may play to any site in your region.",
+    "effect_tags": [
+      "Recover",
+      "Search"
+    ],
+    "image_name": "Banner of the People's Favor",
+    "image_class": "rotated",
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": false
+  },
+  {
+    "leder_id": "OATH-263",
+    "name": "Oathkeeper of Devotion",
+    "type": "reference",
+    "suit": null,
+    "effect_text": "Oathkeeper of Devotion holds the Darkest Secret. Successor to the Chancellor holds the Grand Scepter.",
+    "effect_tags": [],
+    "image_name": "Oathkeeper of Devotion",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": false
+  },
+  {
+    "leder_id": "OATH-264",
+    "name": "Oathkeeper of Protection",
+    "type": "reference",
+    "suit": null,
+    "effect_text": "Oathkeeper of Protection holds the most relics and banners. Successor to the Chancellor holds the People's Favor.",
+    "effect_tags": [],
+    "image_name": "Oathkeeper of Protection",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": false
+  },
+  {
+    "leder_id": "OATH-265",
+    "name": "Oathkeeper of Supremacy",
+    "type": "reference",
+    "suit": null,
+    "effect_text": "Oathkeeper of Supremacy rules the most sites. Successor to the Chancellor holds more relics and banners.",
+    "effect_tags": [],
+    "image_name": "Oathkeeper of Supremacy",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": false
+  },
+  {
+    "leder_id": "OATH-266",
+    "name": "Oathkeeper of the People",
+    "type": "reference",
+    "suit": null,
+    "effect_text": "Oathkeeper of the People holds the People's Favor. Successor to the Chancellor holds the Darkest Secret.",
+    "effect_tags": [],
+    "image_name": "Oathkeeper of the People",
+    "image_class": null,
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": false
+  },
+  {
+    "leder_id": "OATH-267",
+    "name": "Brutal",
+    "type": "reference",
+    "suit": null,
+    "effect_text": "If you're the attacker, the defeated player _(even you)_ **must** kill all warbands in their force.",
+    "effect_tags": [
+      "Campaign"
+    ],
+    "image_name": "Brutal",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": false
+  },
+  {
+    "leder_id": "OATH-268",
+    "name": "Careless",
+    "type": "reference",
+    "suit": null,
+    "effect_text": "You gain one more `symbol:favor` _(even when trading for `symbol:secret`)_. You **must** gain one less `symbol:secret` when trading for `symbol:secret`.",
+    "effect_tags": [
+      "Trade"
+    ],
+    "image_name": "Careless",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": false
+  },
+  {
+    "leder_id": "OATH-269",
+    "name": "Decadent",
+    "type": "reference",
+    "suit": null,
+    "effect_text": "Spend no Supply if you're traveling to a site in the Cradle from a site in the Provinces or Hinterland. If you're traveling to a site in the Hinterland, increase the Travel cost by 1 Supply.",
+    "effect_tags": [
+      "Travel"
+    ],
+    "image_name": "Decadent",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": false
+  },
+  {
+    "leder_id": "OATH-270",
+    "name": "Greedy",
+    "type": "reference",
+    "suit": null,
+    "effect_text": "Draw two more cards. _(Stop after a Vision as normal.)_ You **cannot** search if you would spend more than 2 Supply.",
+    "effect_tags": [
+      "Search"
+    ],
+    "image_name": "Greedy",
+    "image_class": "square",
+    "meta": {
+      "card_capacity": null,
+      "defense": null
+    },
+    "in_standard_deck": false
+  }
+]

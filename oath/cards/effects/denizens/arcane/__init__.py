@@ -1,0 +1,35 @@
+"""Auto-generated: imports all card effect modules to trigger registration."""
+
+from . import acting_troupe  # noqa: F401
+from . import alchemist  # noqa: F401
+from . import augury  # noqa: F401
+from . import bewitch  # noqa: F401
+from . import billowing_fog  # noqa: F401
+from . import blood_pact  # noqa: F401
+from . import cracking_ground  # noqa: F401
+from . import dazzle  # noqa: F401
+from . import dream_thief  # noqa: F401
+from . import fire_talkers  # noqa: F401
+from . import forgotten_vault  # noqa: F401
+from . import gleaming_armor  # noqa: F401
+from . import initiation_rite  # noqa: F401
+from . import inquisitor  # noqa: F401
+from . import jinx  # noqa: F401
+from . import kindred_warriors  # noqa: F401
+from . import magicians_code  # noqa: F401
+from . import map_library  # noqa: F401
+from . import master_of_disguise  # noqa: F401
+from . import observatory  # noqa: F401
+from . import plague_engines  # noqa: F401
+from . import portal  # noqa: F401
+from . import revelation  # noqa: F401
+from . import rusting_ray  # noqa: F401
+from . import sealing_ward  # noqa: F401
+from . import secret_signal  # noqa: F401
+from . import spirit_snare  # noqa: F401
+from . import taming_charm  # noqa: F401
+from . import terror_spells  # noqa: F401
+from . import tutor  # noqa: F401
+from . import vow_of_silence  # noqa: F401
+from . import witchs_bargain  # noqa: F401
+from . import wizard_school  # noqa: F401

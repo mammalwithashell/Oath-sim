@@ -15,14 +15,11 @@ from oath.cards.effects._base import (
 )
 
 # Import all effect modules to trigger registration
-from oath.cards.effects import order  # noqa: F401
-from oath.cards.effects import arcane  # noqa: F401
-from oath.cards.effects import hearth  # noqa: F401
-from oath.cards.effects import beast  # noqa: F401
-from oath.cards.effects import nomad  # noqa: F401
-from oath.cards.effects import discord  # noqa: F401
+from oath.cards.effects import denizens  # noqa: F401
+from oath.cards.effects import sites  # noqa: F401
 from oath.cards.effects import relics  # noqa: F401
 from oath.cards.effects import edifices  # noqa: F401
+from oath.cards.effects import visions  # noqa: F401
 
 __all__ = [
     'CardEffect',

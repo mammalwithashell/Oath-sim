@@ -1,0 +1,35 @@
+"""Auto-generated: imports all card effect modules to trigger registration."""
+
+from . import a_small_favor  # noqa: F401
+from . import assassin  # noqa: F401
+from . import bandit_chief  # noqa: F401
+from . import beast_tamer  # noqa: F401
+from . import blackmail  # noqa: F401
+from . import boiling_lake  # noqa: F401
+from . import book_burning  # noqa: F401
+from . import chaos_cult  # noqa: F401
+from . import charlatan  # noqa: F401
+from . import cracked_sage  # noqa: F401
+from . import disgraced_captain  # noqa: F401
+from . import dissent  # noqa: F401
+from . import downtrodden  # noqa: F401
+from . import enchantress  # noqa: F401
+from . import false_prophet  # noqa: F401
+from . import gambling_hall  # noqa: F401
+from . import gossip  # noqa: F401
+from . import insomnia  # noqa: F401
+from . import key_to_the_city  # noqa: F401
+from . import mercenaries  # noqa: F401
+from . import naysayers  # noqa: F401
+from . import relic_thief  # noqa: F401
+from . import riots  # noqa: F401
+from . import royal_ambitions  # noqa: F401
+from . import salt_the_earth  # noqa: F401
+from . import scryer  # noqa: F401
+from . import second_wind  # noqa: F401
+from . import silver_tongue  # noqa: F401
+from . import slander  # noqa: F401
+from . import sleight_of_hand  # noqa: F401
+from . import sneak_attack  # noqa: F401
+from . import vow_of_renewal  # noqa: F401
+from . import zealots  # noqa: F401

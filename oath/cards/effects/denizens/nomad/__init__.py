@@ -1,0 +1,35 @@
+"""Auto-generated: imports all card effect modules to trigger registration."""
+
+from . import a_fast_steed  # noqa: F401
+from . import ancient_binding  # noqa: F401
+from . import ancient_bloodline  # noqa: F401
+from . import ancient_pact  # noqa: F401
+from . import convoys  # noqa: F401
+from . import elders  # noqa: F401
+from . import faithful_friend  # noqa: F401
+from . import family_wagon  # noqa: F401
+from . import great_crusade  # noqa: F401
+from . import great_herd  # noqa: F401
+from . import horse_archers  # noqa: F401
+from . import hospitality  # noqa: F401
+from . import lancers  # noqa: F401
+from . import lost_tongue  # noqa: F401
+from . import mountain_giant  # noqa: F401
+from . import mounted_patrol  # noqa: F401
+from . import oracle  # noqa: F401
+from . import pilgrimage  # noqa: F401
+from . import rain_boots  # noqa: F401
+from . import relic_worship  # noqa: F401
+from . import resettle  # noqa: F401
+from . import rival_khan  # noqa: F401
+from . import sacred_ground  # noqa: F401
+from . import special_envoy  # noqa: F401
+from . import spell_breaker  # noqa: F401
+from . import storm_caller  # noqa: F401
+from . import tents  # noqa: F401
+from . import the_gathering  # noqa: F401
+from . import twin_brother  # noqa: F401
+from . import vow_of_kinship  # noqa: F401
+from . import warning_signals  # noqa: F401
+from . import way_station  # noqa: F401
+from . import wild_mounts  # noqa: F401
