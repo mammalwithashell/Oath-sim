@@ -141,7 +141,7 @@ class TestEnvironmentAPI:
     def test_action_space(self):
         env = OathEnv(num_players=4)
         space = env.action_space("player_0")
-        assert space.n == 119
+        assert space.n == 137
 
     def test_observation_space(self):
         env = OathEnv(num_players=4)

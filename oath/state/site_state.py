@@ -21,6 +21,7 @@ class SiteState:
     relics: list[int] = field(default_factory=list)
     ruling_player: Optional[int] = None
     warbands: int = 0
+    warband_color: Optional[int] = None  # Which player color's warbands are here (0=Imperial)
     site_favor: int = 0
     site_secrets: int = 0
 

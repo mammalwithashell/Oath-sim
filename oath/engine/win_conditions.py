@@ -12,6 +12,7 @@ from typing import Optional
 from oath.enums import (
     OathGoal, SuccessorGoal, TitleSide, Role, WinType, MAX_ROUNDS,
 )
+from oath.cards.database import GRAND_SCEPTER_ID
 from oath.state.game_state import GameState
 
 logger = logging.getLogger(__name__)
@@ -104,32 +105,59 @@ def check_start_of_turn_wins(gs: GameState, player_index: int) -> Optional[int]:
 def _determine_winner(gs: GameState) -> int:
     """Determine the winner when the game ends by die roll or round 8.
 
+    Follows §3.4 War Exhaustion priority order:
+    1. §3.4.1 Empire if Oathkeeper — Chancellor/Citizen is Oathkeeper
+    2. §3.4.2 Usurper — any Exile holds Usurper title
+    3. §3.4.3 Visionary — any Exile has revealed Vision meeting goal
+    4. §3.4.4 Empire fallback — Chancellor wins (Citizen successor override)
+
     Also sets gs.win_type to indicate how the winner won.
     """
-    # Check if any exile has met their vision condition
-    for i, player in enumerate(gs.players):
-        if player.role in (Role.EXILE, Role.CITIZEN) and player.revealed_vision is not None:
-            if _check_vision_condition(gs, i, player.revealed_vision):
-                gs.win_type = WinType.VISION
-                logger.info("End-of-round vision win: P%d (%s) vision=%d", i, player.role.name, player.revealed_vision)
-                return i
-
-    # Check successor goal for citizens
-    for i, player in enumerate(gs.players):
-        if player.role == Role.CITIZEN:
-            if _check_successor_goal(gs, i):
-                gs.win_type = WinType.SUCCESSOR
-                logger.info("Successor win: P%d (goal=%s)", i, gs.successor_goal.name)
-                return i
-
-    # Default: Oathkeeper wins
-    gs.win_type = WinType.OATHKEEPER_DEFAULT
     holder = gs.oathkeeper_holder if gs.oathkeeper_holder is not None else gs.chancellor_index
-    logger.info("Oathkeeper default win: P%d", holder)
-    if gs.oathkeeper_holder is not None:
+
+    # §3.4.1 Empire if Oathkeeper: Chancellor or Citizen is the Oathkeeper
+    holder_player = gs.players[holder]
+    if holder_player.role in (Role.CHANCELLOR, Role.CITIZEN):
+        # Citizen successor override: if a Citizen meets successor goal, they win instead
+        for i, player in enumerate(gs.players):
+            if player.role == Role.CITIZEN and _check_successor_goal(gs, i):
+                gs.win_type = WinType.SUCCESSOR
+                logger.info("§3.4.1 Successor win: P%d (goal=%s)", i, gs.successor_goal.name)
+                return i
+        # Otherwise Oathkeeper wins
+        gs.win_type = WinType.OATHKEEPER_DEFAULT
+        logger.info("§3.4.1 Empire Oathkeeper win: P%d", holder)
+        return holder
+
+    # §3.4.2 Usurper: any Exile with Usurper title wins
+    if (gs.oathkeeper_side == TitleSide.USURPER and
+            gs.oathkeeper_holder is not None and
+            gs.players[gs.oathkeeper_holder].role == Role.EXILE):
+        gs.win_type = WinType.USURPER
+        logger.info("§3.4.2 Usurper win: P%d", gs.oathkeeper_holder)
         return gs.oathkeeper_holder
 
-    # Fallback: Chancellor
+    # §3.4.3 Visionary: any Exile with revealed Vision meeting goal
+    # Tiebreaker: Conquest(221) > Rebellion(223) > Sanctuary(224) > Faith(222)
+    vision_priority = [221, 223, 224, 222]
+    for vision_id in vision_priority:
+        for i, player in enumerate(gs.players):
+            if (player.role == Role.EXILE and
+                    player.revealed_vision == vision_id and
+                    _check_vision_condition(gs, i, vision_id)):
+                gs.win_type = WinType.VISION
+                logger.info("§3.4.3 Visionary win: P%d (vision=%d)", i, vision_id)
+                return i
+
+    # §3.4.4 Empire fallback: Chancellor wins, Citizen successor override
+    for i, player in enumerate(gs.players):
+        if player.role == Role.CITIZEN and _check_successor_goal(gs, i):
+            gs.win_type = WinType.SUCCESSOR
+            logger.info("§3.4.4 Successor win: P%d (goal=%s)", i, gs.successor_goal.name)
+            return i
+
+    gs.win_type = WinType.OATHKEEPER_DEFAULT
+    logger.info("§3.4.4 Empire fallback win: P%d (Chancellor)", gs.chancellor_index)
     return gs.chancellor_index
 
 
@@ -192,24 +220,33 @@ def _check_vision_condition(gs: GameState, player_index: int, vision_id: int) ->
 
 
 def _check_successor_goal(gs: GameState, player_index: int) -> bool:
-    """Check if a Citizen meets the successor goal."""
+    """Check if a Citizen meets the successor goal (§3.3.1)."""
     goal = gs.successor_goal
 
-    if goal == SuccessorGoal.MOST_SITES:
-        my_sites = gs.count_sites_ruled(player_index)
-        chancellor_sites = gs.count_sites_ruled(gs.chancellor_index)
-        return my_sites > chancellor_sites
-
-    elif goal == SuccessorGoal.MOST_RELICS_BANNERS:
+    if goal == SuccessorGoal.MOST_RELICS_BANNERS:
+        # Supremacy successor: hold more relics+banners than Chancellor AND any other Citizen
         my_count = _count_relics_and_banners(gs, player_index)
         chancellor_count = _count_relics_and_banners(gs, gs.chancellor_index)
-        return my_count > chancellor_count
+        if my_count <= chancellor_count:
+            return False
+        # Also must beat all other Citizens
+        for i, p in enumerate(gs.players):
+            if i != player_index and p.role == Role.CITIZEN:
+                if _count_relics_and_banners(gs, i) >= my_count:
+                    return False
+        return True
 
     elif goal == SuccessorGoal.DARKEST_SECRET:
+        # People successor: hold Darkest Secret
         return gs.darkest_secret_holder == player_index
 
     elif goal == SuccessorGoal.PEOPLES_FAVOR:
+        # Sanctuary/Protection successor: hold People's Favor
         return gs.peoples_favor_holder == player_index
+
+    elif goal == SuccessorGoal.GRAND_SCEPTER:
+        # Devotion successor: hold Grand Scepter (§3.3.1)
+        return GRAND_SCEPTER_ID in gs.players[player_index].relics
 
     return False
 

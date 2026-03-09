@@ -1,6 +1,6 @@
 """Action ID → game action decoder for Oath simulator.
 
-Maps integer action IDs (0–118) to concrete game actions and
+Maps integer action IDs (0–122) to concrete game actions and
 computes legal action masks.
 """
 
@@ -12,9 +12,10 @@ from typing import Optional
 import numpy as np
 
 from oath.enums import (
-    ActionType, Phase, CompoundStateType, Role, CardRestriction,
+    ActionType, Phase, CompoundStateType, Role, CardRestriction, OathGoal,
     MAX_SITES, MAX_CARDS_PER_SITE, MAX_ADVISERS, MAX_PLAYERS,
     MAX_RELICS_PER_SITE, MAX_RELIQUARY, NUM_ACTIONS,
+    VISION_TO_OATH_GOAL,
 )
 from oath.state.game_state import GameState
 from oath.cards.database import get_card
@@ -39,7 +40,7 @@ class ActionDecoder:
     """Decodes integer action IDs to concrete game actions."""
 
     def decode(self, action_id: int) -> DecodedAction:
-        """Convert action ID (0–118) to DecodedAction."""
+        """Convert action ID (0–122) to DecodedAction."""
         if action_id < 0 or action_id >= NUM_ACTIONS:
             raise ValueError(f"Invalid action ID: {action_id}")
 
@@ -154,9 +155,9 @@ class ActionDecoder:
             return DecodedAction(ActionType.SEARCH_DISCARD,
                                 search_card_index=action_id - 81)
 
-        # CAMPAIGN_ADD_TARGET (86)
+        # CAMPAIGN_DECLARE_BANDITS (86)
         if action_id == 86:
-            return DecodedAction(ActionType.CAMPAIGN_ADD_TARGET)
+            return DecodedAction(ActionType.CAMPAIGN_DECLARE_BANDITS)
 
         # CAMPAIGN_DONE_TARGETS (87)
         if action_id == 87:
@@ -186,11 +187,36 @@ class ActionDecoder:
             return DecodedAction(ActionType.COMM_TARGET,
                                 signal_target=action_id - 110)
 
+        # VOW (119–122)
+        if action_id == 119:
+            return DecodedAction(ActionType.VOW_SUPREMACY)
+        if action_id == 120:
+            return DecodedAction(ActionType.VOW_PEOPLE)
+        if action_id == 121:
+            return DecodedAction(ActionType.VOW_DEVOTION)
+        if action_id == 122:
+            return DecodedAction(ActionType.VOW_SANCTUARY)
+
+        # CAMPAIGN_PLACE_WARBANDS (123–131): place 0–8 warbands on targeted site
+        if 123 <= action_id <= 131:
+            return DecodedAction(ActionType.CAMPAIGN_PLACE_WARBANDS,
+                                sacrifice_count=action_id - 123)
+
+        # EXILE_CITIZEN (132–136): target relative players 1–5
+        if 132 <= action_id <= 136:
+            return DecodedAction(ActionType.EXILE_CITIZEN,
+                                target_player=action_id - 132 + 1)
+
         raise ValueError(f"Unhandled action ID: {action_id}")
 
     def get_legal_mask(self, gs: GameState, player_index: int) -> np.ndarray:
         """Compute binary mask of legal actions for the given player."""
         mask = np.zeros(NUM_ACTIONS, dtype=np.float32)
+
+        # Vow phase: only VOW actions are legal for the winner
+        if gs.in_vow_phase:
+            return self._get_vow_mask(gs, player_index)
+
         player = gs.players[player_index]
 
         # If in a compound state, only that state's actions are legal
@@ -214,8 +240,10 @@ class ActionDecoder:
             can_search_deck, can_search_discard, can_recover_relic,
             can_recover_peoples_favor, can_recover_darkest_secret,
             can_flip_adviser, can_use_card_action, can_offer_citizenship,
+            can_self_exile, can_exile_citizen,
+            can_move_warbands_to_board, can_move_warbands_to_site,
         )
-        from oath.engine.campaign import can_campaign
+        from oath.engine.campaign import can_campaign, can_campaign_bandits
 
         # Travel (0–7)
         for site_idx in range(MAX_SITES):
@@ -252,11 +280,15 @@ class ActionDecoder:
         if can_recover_darkest_secret(gs, player_index):
             mask[23] = 1.0
 
-        # Campaign (24–28)
+        # Campaign (24–28): target players
         for rel_player in range(1, 6):
             abs_player = (player_index + rel_player) % gs.num_players
             if abs_player != player_index and can_campaign(gs, player_index, abs_player):
                 mask[24 + rel_player - 1] = 1.0
+
+        # Campaign bandits (86): target bandits at unruled site
+        if can_campaign_bandits(gs, player_index):
+            mask[86] = 1.0
 
         # Minor: flip adviser (29–31)
         for slot in range(MAX_ADVISERS):
@@ -268,6 +300,12 @@ class ActionDecoder:
             if can_use_card_action(gs, player_index, source):
                 mask[32 + source] = 1.0
 
+        # Minor: move warbands (38–39)
+        if can_move_warbands_to_board(gs, player_index):
+            mask[38] = 1.0
+        if can_move_warbands_to_site(gs, player_index):
+            mask[39] = 1.0
+
         # End act phase (43) — always legal during act
         mask[43] = 1.0
 
@@ -278,8 +316,14 @@ class ActionDecoder:
                 mask[44 + rel - 1] = 1.0
 
         # Self-exile (51)
-        if player.role == Role.CITIZEN:
+        if can_self_exile(gs, player_index):
             mask[51] = 1.0
+
+        # Exile citizen (132–136): target relative players 1–5
+        for rel_player in range(1, 6):
+            abs_player = (player_index + rel_player) % gs.num_players
+            if abs_player != player_index and can_exile_citizen(gs, player_index, abs_player):
+                mask[132 + rel_player - 1] = 1.0
 
         # Communication (102–118) — always legal during act
         for i in range(8):
@@ -306,13 +350,27 @@ class ActionDecoder:
                 card_data = get_card(card_id)
 
                 # Play to site
+                # People's Favor holder can also play to full sites (auto-discard)
+                has_pf = gs.peoples_favor_holder == player_index
+                site_has_room = site.has_empty_card_slot() or has_pf
                 if (card_data.restriction != CardRestriction.ADVISER_ONLY and
-                        site.has_empty_card_slot()):
+                        site_has_room):
                     mask[66 + i * 3 + 0] = 1.0  # site
 
                 # Play as adviser (up/down)
                 if card_data.restriction != CardRestriction.SITE_ONLY:
-                    has_slot = player.first_empty_adviser_slot() is not None or player.num_advisers > 0
+                    has_empty = player.first_empty_adviser_slot() is not None
+                    if has_empty:
+                        has_slot = True
+                    else:
+                        # All slots full: check if at least one non-LOCKED adviser
+                        has_slot = False
+                        for _s in range(MAX_ADVISERS):
+                            if player.advisers[_s] is not None:
+                                _adv = get_card(player.advisers[_s])
+                                if _adv.restriction != CardRestriction.LOCKED:
+                                    has_slot = True
+                                    break
                     if has_slot:
                         mask[66 + i * 3 + 1] = 1.0  # adviser_up
                         mask[66 + i * 3 + 2] = 1.0  # adviser_down
@@ -331,33 +389,57 @@ class ActionDecoder:
                 pass
 
         elif cs.state_type == CompoundStateType.CAMPAIGN_TARGETS:
-            # Target sites (88–95)
+            # §5.5.2: Declare targets and collect dice pools
             player = gs.players[player_index]
-            player_site = gs.sites[player.pawn_site]
             defender = cs.campaign_defender
-            if defender is not None:
+
+            if defender == -1:
+                # Bandit campaign: only target is attacker's site
+                pawn_site = player.pawn_site
+                if f"site:{pawn_site}" not in cs.campaign_targets:
+                    mask[88 + pawn_site] = 1.0
+                # Done targets — always available once site is targeted
+                if cs.campaign_targets:
+                    mask[87] = 1.0
+            elif defender is not None and defender >= 0:
+                defender_player = gs.players[defender]
+                defender_at_attacker_site = (
+                    defender_player.pawn_site == player.pawn_site
+                )
+                attacker_site_ruled_by_defender = (
+                    gs.sites[player.pawn_site].ruling_player == defender
+                )
+
+                # Site targets: any site ruled by defender, anywhere on map
                 for site_idx in range(MAX_SITES):
                     site = gs.sites[site_idx]
-                    if site.ruling_player == defender and site.region == player_site.region:
+                    if site.ruling_player == defender:
                         if f"site:{site_idx}" not in cs.campaign_targets:
                             mask[88 + site_idx] = 1.0
 
-                # Target relics (96–100)
-                defender_player = gs.players[defender]
-                for slot in range(min(5, len(defender_player.relics))):
-                    if f"relic:{slot}" not in cs.campaign_targets:
-                        mask[96 + slot] = 1.0
+                # Relic targets: only if defender's pawn is at attacker's site
+                if defender_at_attacker_site:
+                    for slot in range(min(5, len(defender_player.relics))):
+                        if f"relic:{slot}" not in cs.campaign_targets:
+                            mask[96 + slot] = 1.0
 
-                # Target pawn (101)
-                if "pawn" not in cs.campaign_targets:
-                    mask[101] = 1.0
+                # Pawn target: only if defender's pawn is at attacker's site
+                if defender_at_attacker_site:
+                    if "pawn" not in cs.campaign_targets:
+                        mask[101] = 1.0
 
-            # Done targets (87) — must have at least one target
-            if cs.campaign_targets:
-                mask[87] = 1.0
+                # Done targets (87) — must have at least one target
+                # §5.5.2: if defender rules your site, you must target your site
+                if cs.campaign_targets:
+                    if gs.sites[player.pawn_site].ruling_player == defender:
+                        # Must include attacker's site before finishing
+                        if f"site:{player.pawn_site}" in cs.campaign_targets:
+                            mask[87] = 1.0
+                    else:
+                        mask[87] = 1.0
 
         elif cs.state_type == CompoundStateType.CAMPAIGN_BATTLE:
-            # Battle plan cards (56–58)
+            # Attacker battle plan cards (56–58)
             player = gs.players[player_index]
             from oath.cards.effects import get_battle_plan_effects
             for slot in range(MAX_ADVISERS):
@@ -370,12 +452,34 @@ class ActionDecoder:
             # No battle plan (59) — always legal
             mask[59] = 1.0
 
+        elif cs.state_type == CompoundStateType.CAMPAIGN_BATTLE_DEFENDER:
+            # §5.5.3: Defender battle plan cards (56–58)
+            # Bandits (defender == -1) should never reach this state,
+            # but guard against it just in case.
+            defender = cs.campaign_defender
+            if defender is not None and defender >= 0:
+                defender_player = gs.players[defender]
+                from oath.cards.effects import get_battle_plan_effects
+                for slot in range(MAX_ADVISERS):
+                    if (defender_player.advisers[slot] is not None and
+                            defender_player.adviser_faceup[slot]):
+                        effects = get_battle_plan_effects(
+                            defender_player.advisers[slot])
+                        if effects:
+                            mask[56 + slot] = 1.0
+
+            # No battle plan (59) — always legal
+            mask[59] = 1.0
+
         elif cs.state_type == CompoundStateType.CAMPAIGN_SACRIFICE:
-            # Sacrifice count (60–65)
+            # Per §5.5.5: either decline (0 = accept defeat) or sacrifice
+            # exactly enough to win (attack must strictly exceed defense)
+            mask[60] = 1.0  # Sacrifice 0 = decline, accept defeat
+            deficit = cs.campaign_defense_result - cs.campaign_attack_result
+            needed = deficit + 1  # Must exceed, not just tie
             player = gs.players[player_index]
-            max_sac = min(player.warbands_board, 5)
-            for count in range(max_sac + 1):
-                mask[60 + count] = 1.0
+            if needed <= min(player.warbands_board, 5):
+                mask[60 + needed] = 1.0
 
         elif cs.state_type == CompoundStateType.RELIQUARY_CHOOSE:
             # Reliquary slots (52–55)
@@ -389,4 +493,47 @@ class ActionDecoder:
             mask[49] = 1.0  # Accept
             mask[50] = 1.0  # Decline
 
+        elif cs.state_type == CompoundStateType.CAMPAIGN_BANISH_TRAVEL:
+            # §5.5.7.III: Attacker chooses destination site or skips
+            from oath.engine.campaign import can_banish_travel_to
+            mask[59] = 1.0  # Skip travel (CAMPAIGN_NO_BATTLE reused)
+            if cs.banish_target is not None:
+                for site_idx in range(MAX_SITES):
+                    if can_banish_travel_to(gs, cs.banish_target, site_idx):
+                        mask[site_idx] = 1.0  # TRAVEL IDs 0-7 reused
+
+        elif cs.state_type == CompoundStateType.CAMPAIGN_BANISH_BURN:
+            # §5.5.7.III: Attacker chooses to burn half favor or skip
+            mask[59] = 1.0  # Skip burn (CAMPAIGN_NO_BATTLE reused)
+            if cs.banish_target is not None:
+                defender = gs.players[cs.banish_target]
+                if defender.favor > 0:
+                    mask[87] = 1.0  # Burn favor (CAMPAIGN_DONE_TARGETS reused)
+
+        elif cs.state_type == CompoundStateType.CAMPAIGN_PLACE_WARBANDS:
+            # §5.5.7.I: Attacker chooses 0 to force_remaining warbands
+            # to place on the current targeted site (actions 123–131)
+            max_place = min(cs.campaign_force_remaining, 8)
+            for i in range(max_place + 1):
+                mask[123 + i] = 1.0
+
+        return mask
+
+    def _get_vow_mask(self, gs: GameState, player_index: int) -> np.ndarray:
+        """Get legal mask during vow phase — only VOW actions for the winner."""
+        mask = np.zeros(NUM_ACTIONS, dtype=np.float32)
+        if gs.winner != player_index:
+            return mask
+
+        # Vision-locked rule (§8.1): vision winner must vow matching oath
+        winner_player = gs.players[gs.winner]
+        if winner_player.revealed_vision is not None:
+            locked_goal = VISION_TO_OATH_GOAL.get(winner_player.revealed_vision)
+            if locked_goal is not None:
+                mask[119 + int(locked_goal)] = 1.0
+                return mask
+
+        # Otherwise all 4 oath goals are legal
+        for goal in OathGoal:
+            mask[119 + int(goal)] = 1.0
         return mask

@@ -10,8 +10,8 @@ import numpy as np
 from gymnasium import spaces
 
 from oath.enums import (
-    CompoundStateType, Phase, NUM_ACTIONS, NUM_CARD_IDS, MAX_SITES,
-    MAX_CARDS_PER_SITE, MAX_ADVISERS, MAX_PLAYERS,
+    CompoundStateType, Phase, Role, TitleSide, NUM_ACTIONS, NUM_CARD_IDS,
+    MAX_SITES, MAX_CARDS_PER_SITE, MAX_ADVISERS, MAX_PLAYERS,
 )
 from oath.state.game_state import GameState
 from oath.engine.game import (
@@ -41,6 +41,7 @@ class OathEnv:
         first_game: bool = True,
         clockwork_prince: bool = False,
         chronicle_mode: bool = False,
+        oath_goal=None,
     ):
         self.num_players = num_players
         self.render_mode = render_mode
@@ -48,6 +49,7 @@ class OathEnv:
         self._first_game = first_game
         self._clockwork_prince = clockwork_prince
         self._chronicle_mode = chronicle_mode
+        self._oath_goal = oath_goal
         self._chronicle_state = None  # ChronicleState persists between resets
         self._prince_agent = None
 
@@ -109,6 +111,7 @@ class OathEnv:
             seed=self._seed,
             first_game=self._first_game and self._chronicle_state is None,
             chronicle=self._chronicle_state,
+            oath_goal=self._oath_goal,
         )
 
         self.agents = list(self.possible_agents)
@@ -167,9 +170,18 @@ class OathEnv:
         self.rewards[agent] = reward
         self._cumulative_rewards[agent] += reward
 
-        # Check if game is over
+        # Check if vow phase just completed
+        if gs.is_game_over and gs.vowed_oath is not None and not gs.in_vow_phase:
+            self._finalize_vow()
+            return
+
+        # Check if game is over (enters vow phase for winner)
         if gs.is_game_over:
             self._handle_game_over()
+            return
+
+        # Still in vow phase, waiting for VOW action
+        if gs.in_vow_phase:
             return
 
         # Check if compound action continues
@@ -181,6 +193,15 @@ class OathEnv:
                 target_agent = f"player_{gs.compound_state.citizenship_target}"
                 if target_agent in self.agents:
                     self.agent_selection = target_agent
+                    return
+            # §5.5.3: Defender battle plan phase — switch to defender
+            # (Bandits use defender == -1 and skip this phase entirely)
+            if (gs.compound_state.state_type == CompoundStateType.CAMPAIGN_BATTLE_DEFENDER and
+                    gs.compound_state.campaign_defender is not None and
+                    gs.compound_state.campaign_defender >= 0):
+                defender_agent = f"player_{gs.compound_state.campaign_defender}"
+                if defender_agent in self.agents:
+                    self.agent_selection = defender_agent
                     return
             # Otherwise same player continues the compound action
             return
@@ -273,15 +294,39 @@ class OathEnv:
             execute_end_act_phase, execute_offer_citizenship,
             execute_reliquary_choose, execute_accept_citizenship,
             execute_decline_citizenship, execute_self_exile,
+            execute_move_warbands_to_board, execute_move_warbands_to_site,
+            execute_exile_citizen,
         )
         from oath.engine.campaign import (
             execute_campaign_declare, execute_campaign_target_site,
             execute_campaign_target_relic, execute_campaign_target_pawn,
             execute_campaign_done_targets, execute_campaign_battle_plan,
             execute_campaign_no_battle, execute_campaign_sacrifice,
+            execute_campaign_defender_battle_plan,
+            execute_banish_travel, execute_banish_skip_travel,
+            execute_banish_burn, execute_banish_skip_burn,
+            execute_campaign_place_warbands,
         )
 
         at = decoded.action_type
+
+        # Route actions through banish compound states (§5.5.7.III)
+        if gs.compound_state is not None:
+            cst = gs.compound_state.state_type
+            if cst == CompoundStateType.CAMPAIGN_BANISH_TRAVEL:
+                if at == ActionType.TRAVEL:
+                    execute_banish_travel(gs, player_idx, decoded.site_index)
+                    return
+                elif at == ActionType.CAMPAIGN_NO_BATTLE:
+                    execute_banish_skip_travel(gs, player_idx)
+                    return
+            elif cst == CompoundStateType.CAMPAIGN_BANISH_BURN:
+                if at == ActionType.CAMPAIGN_DONE_TARGETS:
+                    execute_banish_burn(gs, player_idx)
+                    return
+                elif at == ActionType.CAMPAIGN_NO_BATTLE:
+                    execute_banish_skip_burn(gs, player_idx)
+                    return
 
         if at == ActionType.TRAVEL:
             execute_travel(gs, player_idx, decoded.site_index)
@@ -320,8 +365,16 @@ class OathEnv:
             execute_decline_citizenship(gs, player_idx)
         elif at == ActionType.SELF_EXILE:
             execute_self_exile(gs, player_idx)
+        elif at == ActionType.EXILE_CITIZEN:
+            abs_target = (player_idx + decoded.target_player) % gs.num_players
+            execute_exile_citizen(gs, player_idx, abs_target)
         elif at == ActionType.CAMPAIGN_BATTLE_PLAN:
-            execute_campaign_battle_plan(gs, player_idx, decoded.card_slot)
+            # Route to attacker or defender battle plan based on state
+            if (gs.compound_state is not None and
+                    gs.compound_state.state_type == CompoundStateType.CAMPAIGN_BATTLE_DEFENDER):
+                execute_campaign_defender_battle_plan(gs, player_idx, decoded.card_slot)
+            else:
+                execute_campaign_battle_plan(gs, player_idx, decoded.card_slot)
         elif at == ActionType.CAMPAIGN_NO_BATTLE:
             execute_campaign_no_battle(gs, player_idx)
         elif at == ActionType.CAMPAIGN_SACRIFICE:
@@ -339,11 +392,26 @@ class OathEnv:
             execute_campaign_target_relic(gs, player_idx, decoded.target_relic_slot)
         elif at == ActionType.CAMPAIGN_TARGET_PAWN:
             execute_campaign_target_pawn(gs, player_idx)
+        elif at == ActionType.CAMPAIGN_PLACE_WARBANDS:
+            execute_campaign_place_warbands(gs, player_idx, decoded.sacrifice_count)
         elif at in (ActionType.COMM_SIGNAL, ActionType.COMM_TARGET):
             pass  # Communication is a no-op for now
-        elif at in (ActionType.MINOR_WARBANDS, ActionType.MINOR_PEEK_RELIC,
-                    ActionType.CAMPAIGN_ADD_TARGET):
-            pass  # Stubs
+        elif at == ActionType.MINOR_WARBANDS:
+            # card_slot 0 = move to board, 1 = move to site
+            if decoded.card_slot == 0:
+                execute_move_warbands_to_board(gs, player_idx)
+            elif decoded.card_slot == 1:
+                execute_move_warbands_to_site(gs, player_idx)
+        elif at == ActionType.CAMPAIGN_DECLARE_BANDITS:
+            execute_campaign_declare(gs, player_idx, -1)
+        elif at == ActionType.MINOR_PEEK_RELIC:
+            pass  # Stub
+        elif at in (ActionType.VOW_SUPREMACY, ActionType.VOW_PEOPLE,
+                    ActionType.VOW_DEVOTION, ActionType.VOW_SANCTUARY):
+            from oath.enums import OathGoal
+            vow_index = int(at) - int(ActionType.VOW_SUPREMACY)
+            gs.vowed_oath = OathGoal(vow_index)
+            gs.in_vow_phase = False
 
     def _auto_advance_phases(self):
         """Auto-advance through wake phase to act phase.
@@ -364,6 +432,12 @@ class OathEnv:
                 self._handle_game_over()
                 return
             do_wake_phase(gs)
+            # §4.1.3: Flip to Usurper if Exile holds Oathkeeper on its Oathkeeper side
+            player = gs.players[gs.current_player_index]
+            if (player.role == Role.EXILE
+                    and gs.oathkeeper_holder == gs.current_player_index
+                    and gs.oathkeeper_side == TitleSide.OATHKEEPER):
+                gs.oathkeeper_side = TitleSide.USURPER
             start_act_phase(gs)
 
         # If Clockwork Prince is active and it's Chancellor's turn, auto-play
@@ -441,22 +515,71 @@ class OathEnv:
             self.agent_selection = agent
 
     def _handle_game_over(self):
-        """Set all agents to terminated."""
+        """Handle game over: terminate losers, enter vow phase for winner.
+
+        Non-winners are terminated immediately with -1.0 reward.
+        The winner enters the vow phase (chooses next oath) before terminating.
+        If the winner is the Clockwork Prince (Chancellor), auto-vow randomly.
+        """
         gs = self.game_state
         if gs is None:
             return
 
-        for agent in self.agents:
-            player_idx = int(agent.split("_")[1])
-            self.terminations[agent] = True
-            if gs.winner == player_idx:
-                self.rewards[agent] = 1.0
-            else:
-                self.rewards[agent] = -1.0
-            self._cumulative_rewards[agent] += self.rewards[agent]
-            self.infos[agent]["winner"] = gs.winner
-            self.infos[agent]["win_type"] = gs.win_type
+        winner_agent = f"player_{gs.winner}" if gs.winner is not None else None
 
+        # Auto-vow for Clockwork Prince (Chancellor wins, no RL agent to pick)
+        if (self._clockwork_prince and gs.winner is not None
+                and gs.winner == gs.chancellor_index):
+            from oath.enums import OathGoal
+            gs.vowed_oath = gs.rng.choice(list(OathGoal))
+            # Terminate all agents (no vow phase needed)
+            for agent in self.agents:
+                player_idx = int(agent.split("_")[1])
+                self.terminations[agent] = True
+                if player_idx == gs.winner:
+                    self.rewards[agent] = 1.0
+                else:
+                    self.rewards[agent] = -1.0
+                self._cumulative_rewards[agent] += self.rewards[agent]
+                self.infos[agent]["winner"] = gs.winner
+                self.infos[agent]["win_type"] = gs.win_type
+                self.infos[agent]["vowed_oath"] = int(gs.vowed_oath)
+            self.agents = []
+            return
+
+        # Terminate non-winners with -1.0 reward
+        for agent in list(self.agents):
+            player_idx = int(agent.split("_")[1])
+            if agent != winner_agent:
+                self.terminations[agent] = True
+                self.rewards[agent] = -1.0
+                self._cumulative_rewards[agent] += -1.0
+                self.infos[agent]["winner"] = gs.winner
+                self.infos[agent]["win_type"] = gs.win_type
+
+        # Enter vow phase for winner
+        if winner_agent and winner_agent in self.agents:
+            self.agents = [winner_agent]
+            gs.in_vow_phase = True
+            self.agent_selection = winner_agent
+        else:
+            # No winner or winner not in agents — terminate all
+            for agent in self.agents:
+                self.terminations[agent] = True
+            self.agents = []
+
+    def _finalize_vow(self):
+        """Complete the vow phase: terminate winner with +1.0 reward."""
+        gs = self.game_state
+        if gs is None:
+            return
+        winner_agent = f"player_{gs.winner}"
+        self.terminations[winner_agent] = True
+        self.rewards[winner_agent] = 1.0
+        self._cumulative_rewards[winner_agent] += 1.0
+        self.infos[winner_agent]["winner"] = gs.winner
+        self.infos[winner_agent]["win_type"] = gs.win_type
+        self.infos[winner_agent]["vowed_oath"] = int(gs.vowed_oath)
         self.agents = []
 
     def _was_dead_step(self, action):

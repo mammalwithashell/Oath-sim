@@ -18,6 +18,17 @@ dev = [
     "pytest>=7.0",
     "pytest-timeout>=2.1",
 ]
+train = [
+    "stable-baselines3>=2.2",
+    "sb3-contrib>=2.2",
+    "tensorboard>=2.14",
+]
+wandb = [
+    "stable-baselines3>=2.2",
+    "sb3-contrib>=2.2",
+    "tensorboard>=2.14",
+    "wandb>=0.16",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

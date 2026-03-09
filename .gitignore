@@ -7,3 +7,5 @@ build/
 *.egg
 docs/pdfs/*.pdf
 scripts/card_data/images/
+.claude/settings.local.json
+.playwright-mcp/*

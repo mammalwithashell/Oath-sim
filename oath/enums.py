@@ -32,10 +32,11 @@ class OathGoal(IntEnum):
 
 
 class SuccessorGoal(IntEnum):
-    MOST_SITES = 0
-    MOST_RELICS_BANNERS = 1
-    DARKEST_SECRET = 2
-    PEOPLES_FAVOR = 3
+    MOST_SITES = 0           # Unused legacy value
+    MOST_RELICS_BANNERS = 1  # Supremacy successor: more relics+banners than Chancellor
+    DARKEST_SECRET = 2       # People successor: hold Darkest Secret
+    PEOPLES_FAVOR = 3        # Protection/Sanctuary successor: hold People's Favor
+    GRAND_SCEPTER = 4        # Devotion successor: hold Grand Scepter (§3.3.1)
 
 
 class WinType(IntEnum):
@@ -54,6 +55,7 @@ class CardRestriction(IntEnum):
     NONE = 0
     SITE_ONLY = 1
     ADVISER_ONLY = 2
+    LOCKED = 3
 
 
 class EffectTrigger(IntEnum):
@@ -106,22 +108,32 @@ class ActionType(IntEnum):
     CAMPAIGN_SACRIFICE = 21
     SEARCH_PLAY = 22
     SEARCH_DISCARD = 23
-    CAMPAIGN_ADD_TARGET = 24
+    CAMPAIGN_DECLARE_BANDITS = 24
     CAMPAIGN_DONE_TARGETS = 25
     CAMPAIGN_TARGET_SITE = 26
     CAMPAIGN_TARGET_RELIC = 27
     CAMPAIGN_TARGET_PAWN = 28
     COMM_SIGNAL = 29
     COMM_TARGET = 30
+    VOW_SUPREMACY = 31
+    VOW_PEOPLE = 32
+    VOW_DEVOTION = 33
+    VOW_SANCTUARY = 34
+    CAMPAIGN_PLACE_WARBANDS = 35
+    EXILE_CITIZEN = 36
 
 
 class CompoundStateType(IntEnum):
     SEARCH_CHOOSE = 0
     CAMPAIGN_TARGETS = 1
-    CAMPAIGN_BATTLE = 2
+    CAMPAIGN_BATTLE = 2          # Attacker battle plan phase
     CAMPAIGN_SACRIFICE = 3
     CITIZENSHIP_RESPONSE = 4
     RELIQUARY_CHOOSE = 5
+    CAMPAIGN_BATTLE_DEFENDER = 6  # Defender battle plan phase (§5.5.3)
+    CAMPAIGN_BANISH_TRAVEL = 7    # Attacker chooses banish destination (§5.5.7.III)
+    CAMPAIGN_BANISH_BURN = 8      # Attacker chooses whether to burn favor (§5.5.7.III)
+    CAMPAIGN_PLACE_WARBANDS = 9   # Attacker chooses warbands to place on each site (§5.5.7.I)
 
 
 # Game constants
@@ -141,10 +153,10 @@ NUM_SUITS = 6
 NUM_CARD_IDS = 230
 NUM_REGIONS = 3
 NUM_OATH_GOALS = 4
-NUM_SUCCESSOR_GOALS = 4
+NUM_SUCCESSOR_GOALS = 5
 MAX_FAVOR_TOTAL = 36
 MAX_SECRETS_TOTAL = 20
-NUM_ACTIONS = 119
+NUM_ACTIONS = 137
 
 # Clockwise suit order matching the favor bank layout on the map
 # (See rulebook section 8.4: the suit order for adding cards)
@@ -153,12 +165,16 @@ SUIT_CLOCKWISE_ORDER = [
     Suit.HEARTH, Suit.NOMAD, Suit.ORDER,
 ]
 
-# Maps OathGoal to the corresponding SuccessorGoal
+# Maps OathGoal to the corresponding SuccessorGoal (§3.3.1)
+# Supremacy (sites) → Successor holds more relics+banners than Chancellor
+# People (People's Favor) → Successor holds Darkest Secret
+# Devotion (Darkest Secret) → Successor holds Grand Scepter
+# Sanctuary/Protection (relics+banners) → Successor holds People's Favor
 OATH_TO_SUCCESSOR: dict[int, int] = {
-    OathGoal.SUPREMACY: SuccessorGoal.MOST_SITES,
-    OathGoal.PEOPLE: SuccessorGoal.PEOPLES_FAVOR,
-    OathGoal.DEVOTION: SuccessorGoal.DARKEST_SECRET,
-    OathGoal.SANCTUARY: SuccessorGoal.MOST_RELICS_BANNERS,
+    OathGoal.SUPREMACY: SuccessorGoal.MOST_RELICS_BANNERS,
+    OathGoal.PEOPLE: SuccessorGoal.DARKEST_SECRET,
+    OathGoal.DEVOTION: SuccessorGoal.GRAND_SCEPTER,
+    OathGoal.SANCTUARY: SuccessorGoal.PEOPLES_FAVOR,
 }
 
 # Maps Vision card IDs to the OathGoal they correspond to

@@ -24,8 +24,8 @@ def compute_reward(
     """Compute shaped reward for a player after an action."""
     reward = 0.0
 
-    # Terminal rewards
-    if new_state.is_game_over:
+    # Terminal rewards (deferred during vow phase — winner gets +1.0 via _finalize_vow)
+    if new_state.is_game_over and not new_state.in_vow_phase and new_state.vowed_oath is None:
         if new_state.winner == player_idx:
             return 1.0
         else:
@@ -119,16 +119,7 @@ def _citizen_rewards(
 
     chanc_idx = new_state.chancellor_index
 
-    if goal == SuccessorGoal.MOST_SITES:
-        my_sites = new_state.count_sites_ruled(player_idx)
-        chanc_sites = new_state.count_sites_ruled(chanc_idx)
-        old_my = prev_state.count_sites_ruled(player_idx)
-        old_chanc = prev_state.count_sites_ruled(prev_state.chancellor_index)
-        new_gap = my_sites - chanc_sites
-        old_gap = old_my - old_chanc
-        reward += (new_gap - old_gap) * 1.5 * SCALE
-
-    elif goal == SuccessorGoal.PEOPLES_FAVOR:
+    if goal == SuccessorGoal.PEOPLES_FAVOR:
         if (new_state.peoples_favor_holder == player_idx and
                 prev_state.peoples_favor_holder != player_idx):
             reward += 3.0 * SCALE
@@ -152,6 +143,15 @@ def _citizen_rewards(
         new_gap = my_count - chanc_count
         old_gap = old_my - old_chanc
         reward += (new_gap - old_gap) * 1.5 * SCALE
+
+    elif goal == SuccessorGoal.GRAND_SCEPTER:
+        from oath.cards.database import GRAND_SCEPTER_ID
+        has_now = GRAND_SCEPTER_ID in new_state.players[player_idx].relics
+        had_before = GRAND_SCEPTER_ID in prev_state.players[player_idx].relics
+        if has_now and not had_before:
+            reward += 3.0 * SCALE
+        elif had_before and not has_now:
+            reward -= 3.0 * SCALE
 
     return reward
 

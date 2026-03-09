@@ -46,6 +46,13 @@ class CompoundState:
     citizenship_offerer: Optional[int] = None
     citizenship_target: Optional[int] = None
     reliquary_slot: Optional[int] = None
+    # Banish state (§5.5.7.III)
+    banish_target: Optional[int] = None
+    # Warband placement state (§5.5.7.I)
+    campaign_remaining_sites: list[int] = field(default_factory=list)
+    campaign_force_remaining: int = 0
+    # Imperial alliance (§5.5.3): player indices of allies who joined defense
+    campaign_allies: list[int] = field(default_factory=list)
 
 
 @dataclass
@@ -106,6 +113,8 @@ class GameState:
     is_game_over: bool = False
     winner: Optional[int] = None
     win_type: Optional[WinType] = None
+    in_vow_phase: bool = False
+    vowed_oath: Optional[OathGoal] = None
 
     # Supply spent this turn
     supply_spent_this_turn: int = 0
@@ -135,8 +144,38 @@ class GameState:
                 return i
         return 0
 
+    def is_imperial(self, player_index: int) -> bool:
+        """Return True if the player is Chancellor or Citizen (Imperial faction)."""
+        return self.players[player_index].role in (Role.CHANCELLOR, Role.CITIZEN)
+
     def count_sites_ruled(self, player_index: int) -> int:
-        return sum(1 for s in self.sites if s.ruling_player == player_index and s.is_faceup)
+        """Count faceup sites ruled by a player.
+
+        Imperial players (Chancellor + Citizens) share rule over all sites
+        with Imperial warbands (warband_color == 0).  Exiles rule sites
+        where warband_color matches their player index.
+
+        Uses ruling_player as primary key with Imperial sharing overlay:
+        a site counts as ruled if ruling_player matches OR if the player is
+        Imperial and the site has Imperial warbands (warband_color == 0)
+        ruled by another Imperial player.
+        """
+        count = 0
+        for s in self.sites:
+            if not s.is_faceup:
+                continue
+            # Direct ruler
+            if s.ruling_player == player_index:
+                count += 1
+            # Imperial sharing: player is Imperial, site is ruled by
+            # another Imperial player with Imperial warbands
+            elif (self.is_imperial(player_index)
+                  and s.ruling_player is not None
+                  and self.is_imperial(s.ruling_player)
+                  and s.warband_color == 0
+                  and s.warbands > 0):
+                count += 1
+        return count
 
     def get_player_site(self, player_index: int) -> SiteState:
         return self.sites[self.players[player_index].pawn_site]

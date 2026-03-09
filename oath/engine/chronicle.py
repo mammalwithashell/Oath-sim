@@ -131,6 +131,10 @@ def _vow_an_oath(
     - If won with a Vision alone, goal = that Vision's oath goal.
     - Otherwise, choose any goal except the current one.
     """
+    # If RL agent already vowed during the vow phase, use that choice
+    if gs.vowed_oath is not None:
+        return gs.vowed_oath
+
     # Check if winner won via vision
     winner_player = gs.players[winner]
     vision = winner_player.revealed_vision

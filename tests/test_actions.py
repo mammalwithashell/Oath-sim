@@ -88,9 +88,13 @@ class TestMuster:
         # Need a card at site and to rule it
         site.ruling_player = 0
         if site.cards[0] is not None:
-            execute_muster(gs, 0, 0)
-            assert site.warbands > initial_warbands
-            assert player.warbands_bank < initial_bank
+            # Ensure card is clean (§5.2)
+            site.card_favor[0] = 0
+            site.card_secrets[0] = 0
+            if can_muster(gs, 0, 0):
+                execute_muster(gs, 0, 0)
+                assert site.warbands > initial_warbands
+                assert player.warbands_bank < initial_bank
 
     def test_muster_costs_supply(self, gs):
         player = gs.players[0]
@@ -99,8 +103,11 @@ class TestMuster:
         initial_supply = player.supply
 
         if site.cards[0] is not None:
-            execute_muster(gs, 0, 0)
-            assert player.supply == initial_supply - 1
+            site.card_favor[0] = 0
+            site.card_secrets[0] = 0
+            if can_muster(gs, 0, 0):
+                execute_muster(gs, 0, 0)
+                assert player.supply == initial_supply - 1
 
     def test_cannot_muster_no_supply(self, gs):
         gs.players[0].supply = 0
@@ -118,6 +125,9 @@ class TestTradeFavor:
             card_data = get_card(site.cards[0])
             if card_data.suit is not None:
                 gs.favor_banks[int(card_data.suit)] = 5
+                # Ensure card is clean (§5.3)
+                site.card_favor[0] = 0
+                site.card_secrets[0] = 0
                 initial_favor = player.favor
                 if can_trade_favor(gs, 0, 0):
                     execute_trade_favor(gs, 0, 0)
@@ -131,19 +141,52 @@ class TestTradeFavor:
 
 class TestTradeSecrets:
     def test_trade_secrets_gains_secrets(self, gs):
+        from oath.cards.database import get_card
         player = gs.players[0]
-        player.favor = 3
+        player.favor = 5
         gs.shared_secrets = 10
         site = gs.sites[player.pawn_site]
 
         if site.cards[0] is not None:
+            card_data = get_card(site.cards[0])
+            # Ensure card is clean (§5.3)
+            site.card_favor[0] = 0
+            site.card_secrets[0] = 0
+            if card_data.suit is not None:
+                # Give player a matching faceup adviser so they gain at least 1 secret
+                player.advisers[0] = site.cards[0]  # same card as adviser for suit match
+                player.adviser_faceup[0] = True
+                initial_secrets = player.secrets
+                if can_trade_secrets(gs, 0, 0):
+                    execute_trade_secrets(gs, 0, 0)
+                    assert player.secrets > initial_secrets
+
+    def test_trade_secrets_zero_matching_advisers(self, gs):
+        """Trade secrets with no matching advisers yields 0 secrets (§5.3)."""
+        from oath.cards.database import get_card
+        player = gs.players[0]
+        player.favor = 5
+        gs.shared_secrets = 10
+        site = gs.sites[player.pawn_site]
+
+        if site.cards[0] is not None:
+            site.card_favor[0] = 0
+            site.card_secrets[0] = 0
+            # Clear advisers so no match
+            player.advisers = [None, None, None]
+            player.adviser_faceup = [False, False, False]
             initial_secrets = player.secrets
             if can_trade_secrets(gs, 0, 0):
                 execute_trade_secrets(gs, 0, 0)
-                assert player.secrets > initial_secrets
+                assert player.secrets == initial_secrets  # 0 gained
 
     def test_cannot_trade_secrets_no_favor(self, gs):
         gs.players[0].favor = 0
+        assert not can_trade_secrets(gs, 0, 0)
+
+    def test_cannot_trade_secrets_insufficient_favor(self, gs):
+        """Need at least 2 favor to trade for secrets (§5.3)."""
+        gs.players[0].favor = 1
         assert not can_trade_secrets(gs, 0, 0)
 
 

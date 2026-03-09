@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 from oath.enums import (
     Role, Region, Phase, OathGoal, SuccessorGoal, TitleSide,
     Suit, MAX_SITES, MAX_WARBANDS_CHANCELLOR, MAX_WARBANDS_EXILE,
-    MAX_ROUNDS, ActionType,
+    MAX_ROUNDS, MAX_SUPPLY, ActionType, SUIT_CLOCKWISE_ORDER,
 )
 from oath.state.game_state import GameState, ActionRecord
 from oath.state.player_state import PlayerState
@@ -20,6 +20,7 @@ from oath.state.site_state import SiteState
 from oath.cards.database import (
     get_card, get_first_game_denizen_ids, get_first_game_site_ids,
     get_first_game_relic_ids, get_vision_ids, get_all_denizen_ids,
+    RESOURCE_SITE_IDS,
 )
 from oath.cards.effects import get_wake_effects, get_rest_effects
 from oath.enums import MAX_ADVISERS
@@ -30,6 +31,7 @@ def create_initial_state(
     seed: Optional[int] = None,
     first_game: bool = True,
     chronicle: Optional['ChronicleState'] = None,
+    oath_goal: Optional[OathGoal] = None,
 ) -> GameState:
     """Create a fresh game state for a new game.
 
@@ -45,7 +47,11 @@ def create_initial_state(
     rng = np.random.default_rng(seed)
 
     # Determine oath/successor goals
-    if chronicle is not None:
+    if oath_goal is not None:
+        # Explicit oath_goal overrides chronicle and default
+        from oath.enums import OATH_TO_SUCCESSOR
+        successor_goal = OATH_TO_SUCCESSOR.get(oath_goal, SuccessorGoal.MOST_SITES)
+    elif chronicle is not None:
         oath_goal = chronicle.oath_goal
         successor_goal = chronicle.successor_goal
     else:
@@ -162,6 +168,7 @@ def create_initial_state(
     gs.players[chancellor_idx].pawn_site = 0
     gs.sites[0].ruling_player = chancellor_idx
     gs.sites[0].warbands = 3
+    gs.sites[0].warband_color = 0  # Imperial color
     gs.players[chancellor_idx].warbands_board = 3
     gs.players[chancellor_idx].warbands_bank -= 3
 
@@ -373,9 +380,23 @@ def advance_turn(gs: GameState) -> GameState:
 
 
 def do_wake_phase(gs: GameState) -> GameState:
-    """Execute wake phase: trigger WAKE effects on faceup advisers."""
+    """Execute wake phase: People's Favor power, site powers, then WAKE effects.
+
+    Order per rules:
+    1. People's Favor wake power (§4.1.1)
+    2. Site powers (§4.1.4)
+    3. Card wake effects on faceup advisers
+    """
     player = gs.current_player
     pi = gs.current_player_index
+
+    # ── 1. People's Favor wake power (§4.1.1) ──────────────────────
+    _resolve_peoples_favor_wake(gs, pi)
+
+    # ── 2. Site powers (§4.1.4) ─────────────────────────────────────
+    _resolve_site_power_wake(gs, pi)
+
+    # ── 3. Card wake effects on faceup advisers ─────────────────────
     for slot in range(MAX_ADVISERS):
         card_id = player.advisers[slot]
         if card_id is not None and player.adviser_faceup[slot]:
@@ -385,6 +406,81 @@ def do_wake_phase(gs: GameState) -> GameState:
     return gs
 
 
+def _resolve_peoples_favor_wake(gs: GameState, player_index: int) -> None:
+    """Auto-resolve People's Favor wake power (§4.1.1).
+
+    §4.1.1.I: Place 1 favor from PF banner onto the bank with least favor.
+               On ties, pick the first bank in SUIT_CLOCKWISE_ORDER.
+               If the PF banner has 0 tokens, skip.
+    §4.1.1.II: If PF is on Mob side, repeat step I once more.
+    §4.1.1.III: If PF now has 6+ tokens, flip to Mob. If under 6 and Mob, flip back.
+
+    Heuristic: always PLACE (move 1 token from PF banner to least-filled bank).
+    """
+    if gs.peoples_favor_holder != player_index:
+        return
+
+    iterations = 2 if gs.peoples_favor_is_mob else 1
+
+    for _ in range(iterations):
+        if gs.peoples_favor_tokens <= 0:
+            break
+
+        # Find the bank with the least favor (ties: first in clockwise order)
+        min_favor = None
+        min_suit = None
+        for suit in SUIT_CLOCKWISE_ORDER:
+            bank_val = gs.favor_banks[suit]
+            if min_favor is None or bank_val < min_favor:
+                min_favor = bank_val
+                min_suit = suit
+
+        if min_suit is not None:
+            gs.peoples_favor_tokens -= 1
+            gs.favor_banks[min_suit] += 1
+            logger.debug(
+                "PF wake: P%d placed 1 favor on %s bank (now %d), PF tokens=%d",
+                player_index, Suit(min_suit).name,
+                gs.favor_banks[min_suit], gs.peoples_favor_tokens,
+            )
+
+    # §4.1.1.III: Check Mob flip condition
+    if gs.peoples_favor_tokens >= 6 and not gs.peoples_favor_is_mob:
+        gs.peoples_favor_is_mob = True
+        logger.debug("PF flipped to MOB side (tokens=%d)", gs.peoples_favor_tokens)
+    elif gs.peoples_favor_tokens < 6 and gs.peoples_favor_is_mob:
+        gs.peoples_favor_is_mob = False
+        logger.debug("PF flipped back from MOB side (tokens=%d)", gs.peoples_favor_tokens)
+
+
+def _resolve_site_power_wake(gs: GameState, player_index: int) -> None:
+    """Auto-resolve site powers during wake phase (§4.1.4).
+
+    Salt Flats, Mine, Drowned City: take 1 favor or 1 secret from shared bank.
+    Heuristic: always take 1 secret (more valuable for RL).
+    """
+    player = gs.players[player_index]
+    site = gs.sites[player.pawn_site]
+
+    if site.site_id in RESOURCE_SITE_IDS:
+        if gs.shared_secrets > 0:
+            gs.shared_secrets -= 1
+            player.secrets += 1
+            logger.debug(
+                "Site power: P%d at %s took 1 secret (now %d)",
+                player_index, get_card(site.site_id).name, player.secrets,
+            )
+        else:
+            # Fall back to favor if no secrets available
+            # (favor comes from the player's own supply conceptually,
+            # but the rule says "from the bank" — we give 1 favor)
+            player.favor += 1
+            logger.debug(
+                "Site power: P%d at %s took 1 favor (no secrets, now %d)",
+                player_index, get_card(site.site_id).name, player.favor,
+            )
+
+
 def start_act_phase(gs: GameState) -> GameState:
     """Transition from wake to act phase."""
     gs.phase = Phase.ACT
@@ -392,10 +488,18 @@ def start_act_phase(gs: GameState) -> GameState:
 
 
 def do_rest_phase(gs: GameState) -> GameState:
-    """Execute the automated rest phase for the current player."""
+    """Execute the automated rest phase for the current player.
+
+    Supply refresh follows §4.3.3-4.3.4:
+    1. Refresh: set supply to the position based on warbands in bank.
+    2. Save: add unspent supply (what remains after spending during act phase),
+       capped at MAX_SUPPLY.
+    """
     player = gs.current_player
     pi = gs.current_player_index
-    player.supply = _calculate_supply_refresh(gs, pi)
+    unspent_supply = player.supply  # Supply remaining after act phase
+    refresh = _calculate_supply_refresh(gs, pi)
+    player.supply = min(refresh + unspent_supply, MAX_SUPPLY)
 
     # Trigger REST effects on faceup advisers
     for slot in range(MAX_ADVISERS):
@@ -409,10 +513,18 @@ def do_rest_phase(gs: GameState) -> GameState:
 
 
 def _calculate_supply_refresh(gs: GameState, player_index: int) -> int:
-    """Calculate supply refresh based on role and advisers."""
+    """Calculate supply refresh based on role and advisers.
+
+    §4.3.3: Chancellor refreshes to 6. Exiles refresh to (6 - num_advisers).
+    Citizens refresh to the Chancellor's supply value (same formula as Chancellor).
+    """
     player = gs.players[player_index]
     if player.role == Role.CHANCELLOR:
         return 6
+    elif player.role == Role.CITIZEN:
+        # Citizens refresh to the Chancellor's supply value (§4.3.3)
+        chancellor_idx = gs.chancellor_index
+        return _calculate_supply_refresh(gs, chancellor_idx)
     else:
         # Exiles get supply = 6 - number of advisers
         return max(1, 6 - player.num_advisers)

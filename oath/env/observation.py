@@ -25,7 +25,7 @@ from oath.cards.database import get_card
 
 # Observation size constants
 CARD_ENCODING_SIZE = 14
-GLOBAL_SIZE = 85
+GLOBAL_SIZE = 86
 SITE_SIZE = 100
 PLAYER_SIZE = 167
 DISCARD_TOPS_SIZE = 42
@@ -33,8 +33,8 @@ COMM_SIZE = 75
 TURN_CONTEXT_SIZE = 14
 WIN_PROXIMITY_SIZE = 30
 ACTION_HISTORY_SIZE = 200
-OBS_SIZE = 2248  # Total without action mask
-TOTAL_OBS_SIZE = 2367  # With action mask
+OBS_SIZE = 2249  # Total without action mask
+TOTAL_OBS_SIZE = 2386  # With action mask (2249 + 137)
 
 
 def encode_observation(gs: GameState, player_index: int) -> dict:
@@ -42,7 +42,7 @@ def encode_observation(gs: GameState, player_index: int) -> dict:
 
     Returns dict with:
         - "observation": np.ndarray of shape (2248,)
-        - "action_mask": np.ndarray of shape (119,)
+        - "action_mask": np.ndarray of shape (123,)
         - "card_ids": dict of integer arrays for embedding lookup
     """
     obs = np.zeros(OBS_SIZE, dtype=np.float32)
@@ -139,8 +139,8 @@ def _encode_global(gs: GameState, obs: np.ndarray, offset: int) -> int:
     # Oath goal one-hot (4)
     obs[offset + int(gs.oath_goal)] = 1.0; offset += 4
 
-    # Successor goal one-hot (4)
-    obs[offset + int(gs.successor_goal)] = 1.0; offset += 4
+    # Successor goal one-hot (5) — includes GRAND_SCEPTER
+    obs[offset + int(gs.successor_goal)] = 1.0; offset += 5
 
     # Favor banks (6)
     for i in range(NUM_SUITS):
@@ -318,7 +318,7 @@ def _encode_turn_context(gs: GameState, obs: np.ndarray, offset: int) -> int:
     from oath.enums import CompoundStateType
     obs[offset] = 1.0 if (cs and cs.state_type == CompoundStateType.SEARCH_CHOOSE) else 0.0; offset += 1
     obs[offset] = 1.0 if (cs and cs.state_type == CompoundStateType.CAMPAIGN_TARGETS) else 0.0; offset += 1
-    obs[offset] = 1.0 if (cs and cs.state_type == CompoundStateType.CAMPAIGN_BATTLE) else 0.0; offset += 1
+    obs[offset] = 1.0 if (cs and cs.state_type in (CompoundStateType.CAMPAIGN_BATTLE, CompoundStateType.CAMPAIGN_BATTLE_DEFENDER)) else 0.0; offset += 1
     obs[offset] = 1.0 if (cs and cs.state_type == CompoundStateType.CAMPAIGN_SACRIFICE) else 0.0; offset += 1
     obs[offset] = 1.0 if (cs and cs.state_type == CompoundStateType.CITIZENSHIP_RESPONSE) else 0.0; offset += 1
 
@@ -500,7 +500,7 @@ def _extract_card_ids(gs: GameState, player_index: int) -> dict:
 
 # ── Chronicle Citizenship Observation ──────────────────────────────
 
-CHRONICLE_OBS_SIZE = 50
+CHRONICLE_OBS_SIZE = 51
 
 
 def encode_chronicle_citizenship_observation(

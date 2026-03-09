@@ -35,6 +35,8 @@ _register(CardData(card_id=205, name="Narrow Pass", is_site=True, capacity=1, de
 _register(CardData(card_id=206, name="Mine", is_site=True, capacity=2, defense=2, starting_secrets=1))
 _register(CardData(card_id=207, name="Wastes", is_site=True, capacity=2, defense=1, starting_favor=1))
 _register(CardData(card_id=208, name="Salt Flats", is_site=True, capacity=1, defense=2, starting_secrets=1))
+_register(CardData(card_id=209, name="Drowned City", is_site=True, capacity=2, defense=2, starting_favor=1))
+_register(CardData(card_id=210, name="Shrouded Wood", is_site=True, capacity=2, defense=3, starting_secrets=1))
 
 # ── Visions (IDs 221–225) ──────────────────────────────────────────
 _register(CardData(card_id=221, name="Vision of Conquest", is_vision=True))
@@ -326,3 +328,12 @@ def get_denizens_by_suit(suit: Suit) -> list[int]:
 
 
 GRAND_SCEPTER_ID = 211
+
+# Site IDs with special powers
+SALT_FLATS_ID = 208
+MINE_ID = 206
+DROWNED_CITY_ID = 209
+SHROUDED_WOOD_ID = 210
+
+# Sites that grant 1 favor or 1 secret during Wake (§4.1.4)
+RESOURCE_SITE_IDS = {SALT_FLATS_ID, MINE_ID, DROWNED_CITY_ID}

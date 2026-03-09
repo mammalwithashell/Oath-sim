@@ -53,12 +53,14 @@ class TestPlayerRelativeObservation:
 
     def test_self_always_first_in_encoding(self, gs):
         """The observing player's data should always be at the self-player offset."""
+        from oath.env.observation import GLOBAL_SIZE, SITE_SIZE
+        from oath.enums import MAX_SITES
+        self_offset = GLOBAL_SIZE + SITE_SIZE * MAX_SITES
         obs0 = encode_observation(gs, 0)["observation"]
         obs1 = encode_observation(gs, 1)["observation"]
         # Both should have is_active=1 at the self-player section
-        # Self player starts at offset 885
-        assert obs0[885] == 1.0  # is_active for player 0 viewing
-        assert obs1[885] == 1.0  # is_active for player 1 viewing
+        assert obs0[self_offset] == 1.0  # is_active for player 0 viewing
+        assert obs1[self_offset] == 1.0  # is_active for player 1 viewing
 
 
 class TestCardIDs:
