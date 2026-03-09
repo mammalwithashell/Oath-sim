@@ -237,8 +237,170 @@ model.learn(total_timesteps=1_000_000)
 model.save("oath_exile_ppo")
 ```
 
-> **Note**: The wrapper above is a starting point. For production training, consider:
-> - Using `SubprocVecEnv` for parallel environments
-> - Implementing proper action masking (see `sb3-contrib` `MaskablePPO`)
-> - Adding evaluation callbacks
-> - Logging win rates against the Clockwork Prince
+> **Note**: The wrapper above is a starting point. For production training, use
+> `scripts/train_agent.py` which includes action masking, curriculum learning,
+> self-play, and diagnostic checkpoints.
+
+---
+
+## 4-Stage Curriculum Pipeline
+
+The recommended training methodology uses a 4-stage curriculum that progressively increases difficulty. Each stage builds on skills learned in the previous one.
+
+### Stage Overview
+
+| Stage | Fill Agent (Exiles 2-3) | Chancellor (Player 0) | What the Agent Learns |
+|-------|------------------------|-----------------------|----------------------|
+| 0: random | RandomAgent | RandomAgent | Legal actions, basic game mechanics, resource collection |
+| 1: heuristic | HeuristicAgent | HeuristicAgent | Beat priority-based opponents, campaign timing |
+| 2: clockwork-prince | HeuristicAgent | Clockwork Prince automa | Beat the adaptive official AI, handle threat response |
+| 3: self-play | Frozen snapshots | Clockwork Prince automa | Counter-strategies, robust play against trained agents |
+
+### How Stages Work
+
+- **Stages 0-1** run with `clockwork_prince=False`. The Chancellor is just another fill agent (random or heuristic), making these stages easier. The agent can focus on learning mechanics without facing the full automa.
+
+- **Stage 2** enables the Clockwork Prince automa (`clockwork_prince=True`). This is a significant difficulty jump — the Prince adapts its strategy, targets threats, and campaigns intelligently. Other exiles remain heuristic.
+
+- **Stage 3** keeps the Clockwork Prince and swaps exile opponents with frozen snapshots of the agent itself. A snapshot pool (default 5 recent models) provides diversity. The agent learns to beat earlier versions of itself.
+
+### Promotion
+
+The agent advances to the next stage when its rolling win rate exceeds a threshold:
+
+- **Default threshold**: 35% win rate (`--promote-threshold 0.35`)
+- **Rolling window**: Last 200 games (`--promote-window 200`)
+- **Check frequency**: Every 50 completed games
+- Win tracking resets on promotion for clean stage evaluation
+
+### Run Commands
+
+```bash
+# Full curriculum with self-play (recommended)
+python scripts/train_agent.py --curriculum --self-play --timesteps 2000000 --seed 42
+
+# Curriculum without self-play (stops after clockwork-prince stage)
+python scripts/train_agent.py --curriculum --timesteps 1000000
+
+# Skip curriculum, train directly against heuristic with Clockwork Prince
+python scripts/train_agent.py --opponent heuristic --timesteps 500000
+```
+
+### Expected Training Progression
+
+| Stage | Typical Duration | Signs of Progress |
+|-------|-----------------|-------------------|
+| random | 50K-100K steps | Win rate climbs from ~25% to 35%+ |
+| heuristic | 200K-400K steps | Learns to campaign, use search, manage resources |
+| clockwork-prince | 300K-500K steps | Adapts to Prince's threat-response behavior |
+| self-play | Remainder | Win rate stabilizes, diverse strategies emerge |
+
+---
+
+## Smoke Test
+
+Before any full training run, validate the pipeline end-to-end:
+
+```bash
+python scripts/train_agent.py --smoke-test
+```
+
+This runs 20K timesteps through all 4 stages with lowered promotion thresholds (15% win rate, 20-game window). It automatically enables curriculum and self-play.
+
+### What It Validates
+
+- Environment creation with and without Clockwork Prince
+- Curriculum promotion between all 4 stages
+- Self-play snapshot saving and loading
+- Diagnostic QA checkpoints at each stage transition
+- Model saving and loading
+
+### Expected Behavior
+
+- Runtime: ~2-5 minutes
+- May not reach all stages in 20K steps (depends on game length)
+- **Pass criteria**: No crashes, model saves successfully, at least one QA checkpoint runs
+- Promotions happen quickly due to lowered thresholds — this is intentional for validation
+
+---
+
+## QA Checkpoints
+
+Diagnostic QA runs automatically between curriculum stages and after training completes. Each checkpoint:
+
+1. **Saves the model** to `models/stage_{name}.zip`
+2. **Plays 20 games** with deterministic policy against heuristic opponents
+3. **Checks for degenerate behavior**:
+   - Single action used >80% of the time
+   - Fewer than 5 distinct actions (strategy collapse)
+   - 0% win rate (agent not learning)
+4. **Prints a QA report** with win rate, win types, action diversity, and warnings
+
+### Example QA Output
+
+```
+  [QA] Stage 'heuristic' checkpoint (20 games):
+    Win rate: 40.0%
+    Win types: {'OATHKEEPER': 4, 'TIMEOUT': 12, 'VISION': 4}
+    Distinct actions: 23
+    Top actions: #43(85x), #8(42x), #10(31x)
+    No degenerate behavior detected
+    Checkpoint saved: models/stage_heuristic.zip
+```
+
+### Warning Signs
+
+| Warning | What It Means | Action |
+|---------|---------------|--------|
+| Single action >80% | Agent found a degenerate loop | Increase entropy coefficient, lower learning rate |
+| <5 distinct actions | Strategy collapse | Reset to earlier checkpoint, increase exploration |
+| 0% win rate after promotion | Stage too hard too fast | Lower promote-threshold, increase promote-window |
+| All wins via TIMEOUT | Agent stalls without pursuing victory | Check reward shaping, ensure shaped rewards are reaching agent |
+
+### Manual Diagnostics
+
+Run detailed diagnostics on any checkpoint:
+
+```bash
+# Full action trace with Clockwork Prince
+python scripts/diagnose_agent.py models/stage_clockwork-prince.zip --num-games 20
+
+# Without Clockwork Prince (for stages 0-1)
+python scripts/diagnose_agent.py models/stage_random.zip --no-clockwork-prince --num-games 20
+
+# Statistical evaluation with confidence intervals
+python scripts/evaluate_agent.py models/stage_final.zip --num-games 100
+python scripts/evaluate_agent.py models/stage_heuristic.zip --no-clockwork-prince --num-games 50
+```
+
+---
+
+## Tuning Promotion Thresholds
+
+| Parameter | Default | Conservative | Aggressive |
+|-----------|---------|-------------|------------|
+| `--promote-threshold` | 0.35 | 0.45-0.50 | 0.20-0.25 |
+| `--promote-window` | 200 | 300-500 | 50-100 |
+
+- **Higher thresholds** = more time per stage, stronger fundamentals before advancing
+- **Lower thresholds** = faster progression, risk of underfitting early stages
+- The per-stage default is uniform (35% for all). For longer runs, consider restarting with higher thresholds after reviewing QA output from an initial run
+
+---
+
+## Full Training Run Checklist
+
+1. **Smoke test**: `python scripts/train_agent.py --smoke-test`
+2. **Review smoke test output**: Check for crashes, verify QA checkpoints ran
+3. **Start full run**:
+   ```bash
+   python scripts/train_agent.py --curriculum --self-play --timesteps 2000000 --seed 42
+   ```
+4. **Monitor**: Watch TensorBoard (`tensorboard --logdir logs/`) for win rate curves
+5. **Review QA checkpoints**: Check console output between stage promotions
+6. **Post-training QA**:
+   ```bash
+   python scripts/diagnose_agent.py models/oath_exile_latest.zip --num-games 20 --verbose
+   python scripts/evaluate_agent.py models/oath_exile_latest.zip --num-games 100
+   ```
+7. **Validate win conditions**: Verify win types are diverse (not all TIMEOUT), action usage is varied, and the agent uses meaningful strategies (campaigns, searches, site control)
