@@ -1,0 +1,16 @@
+[package]
+name = "oath-py"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+name = "oath_rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+oath-core = { path = "../oath-core" }
+oath-mcts = { path = "../oath-mcts" }
+pyo3 = { version = "0.22", features = ["extension-module"] }
+numpy = "0.22"
+rayon = "1.10"
+serde_json = "1"

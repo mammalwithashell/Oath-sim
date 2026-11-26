@@ -1,0 +1,8 @@
+[package]
+name = "oath-mcts"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+oath-core = { path = "../oath-core" }
+rayon = "1.10"

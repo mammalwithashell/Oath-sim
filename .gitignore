@@ -9,3 +9,9 @@ docs/pdfs/*.pdf
 scripts/card_data/images/
 .claude/settings.local.json
 .playwright-mcp/*
+target/
+frontend/node_modules/
+frontend/dist/
+replays/
+logs/
+models/*.pt
