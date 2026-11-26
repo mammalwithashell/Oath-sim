@@ -1,38 +1,30 @@
 [build-system]
-requires = ["setuptools>=68.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["maturin>=1.7,<2.0"]
+build-backend = "maturin"
 
 [project]
 name = "oath-rl"
-version = "0.1.0"
-description = "Oath: Chronicles of Empire & Exile — RL Simulator"
+version = "0.2.0"
+description = "Oath: Chronicles of Empire & Exile — Rust RL Simulator, IS-MCTS, LSTM Trainer & Replay Lab"
 requires-python = ">=3.11"
 dependencies = [
     "numpy>=1.24",
-    "pettingzoo>=1.24",
-    "gymnasium>=0.29",
+    "torch>=2.2",
+    "fastapi>=0.110",
+    "uvicorn>=0.30",
+    "websockets>=12.0",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0",
-    "pytest-timeout>=2.1",
+    "httpx>=0.27",
+    "maturin>=1.7",
 ]
-train = [
-    "stable-baselines3>=2.2",
-    "sb3-contrib>=2.2",
-    "tensorboard>=2.14",
-]
-wandb = [
-    "stable-baselines3>=2.2",
-    "sb3-contrib>=2.2",
-    "tensorboard>=2.14",
-    "wandb>=0.16",
-]
+
+[tool.maturin]
+manifest-path = "crates/oath-py/Cargo.toml"
+module-name = "oath_rs"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-timeout = 60
-
-[tool.setuptools.packages.find]
-include = ["oath*"]
